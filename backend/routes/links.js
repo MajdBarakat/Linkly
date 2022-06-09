@@ -1,14 +1,19 @@
-const { User } = require("../models/user");
+const { User, validateLink } = require("../models/user");
 const authMiddleware = require("../middleware/auth");
 const _ = require("lodash");
-const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 
 //CHANGING SPECIFIC LINK
 router.put("/edit", authMiddleware, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
-  //validate they are string
+
+  const dataError = validateLink(req.body).error;
+  if (dataError)
+    return res
+      .status(400)
+      .send("Joi USER DATA ERROR:" + dataError.details[0].message);
+
   if (!user)
     return res.status(404).send("Something went wrong! User not found...");
 
@@ -46,7 +51,11 @@ router.put("/edit", authMiddleware, async (req, res) => {
 router.post("/new", authMiddleware, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
 
-  //validate they are string
+  const dataError = validateLink(req.body).error;
+  if (dataError)
+    return res
+      .status(400)
+      .send("Joi USER DATA ERROR:" + dataError.details[0].message);
 
   if (!user)
     return res.status(404).send("Something went wrong! User not found...");
@@ -83,7 +92,7 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
   if (!user)
     return res.status(404).send("Something went wrong! User not found...");
 
-  const linkToDelete = req.params.id;
+  const linkToDelete = parseInt(req.params.id);
 
   const index = user.links
     .map(function (x) {
