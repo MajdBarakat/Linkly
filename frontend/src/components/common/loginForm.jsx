@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Joi from "joi-browser";
 import http from "../services/httpService";
 import config from "../../config.json";
@@ -6,27 +6,34 @@ import Form from "./form";
 
 class LoginFrom extends Form {
   state = {
-    data: { name: "", password: "" },
+    data: { email: "", password: "" },
     errors: {},
   };
 
   schema = {
-    name: Joi.string().required().label("Name"),
-    password: Joi.string().required().label("Password"),
+    email: Joi.string().min(5).max(255).required().email().label("Email"),
+    password: Joi.string().min(8).max(30).required().label("Password"),
   };
 
   doSubmit = async () => {
-    const res = await http.get(config.api + "/auth");
-    console.log("submitted", res);
+    const result = await http
+      .post(config.api + "/auth", this.state.data)
+      .catch((err) => alert(err.response.data));
+
+    if (!result) return;
+
+    console.log(
+      "authenticated successfully! here is your token: ",
+      result.data
+    );
   };
 
   render() {
-    const { data, errors } = this.state;
     return (
       <React.Fragment>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("name", "Name")}
+          {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Login")}
         </form>

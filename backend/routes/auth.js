@@ -13,10 +13,7 @@ router.get("/", async (req, res) => {
 //LOGGING IN USER
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
-  if (error)
-    return res
-      .status(400)
-      .send("Joi USER DATA ERROR:" + dataError.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({
     email: req.body.email,
