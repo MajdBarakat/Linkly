@@ -6,6 +6,10 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  res.send("hello");
+});
+
 //LOGGING IN USER
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);

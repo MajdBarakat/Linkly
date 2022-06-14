@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
-import Input from "./input";
+import http from "../services/httpService";
+import config from "../../config.json";
 import Form from "./form";
 
 class LoginFrom extends Form {
@@ -14,8 +15,9 @@ class LoginFrom extends Form {
     password: Joi.string().required().label("Password"),
   };
 
-  doSubmit = () => {
-    console.log("submitted");
+  doSubmit = async () => {
+    const res = await http.get(config.api + "/auth");
+    console.log("submitted", res);
   };
 
   render() {
