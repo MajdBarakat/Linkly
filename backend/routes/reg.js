@@ -6,11 +6,11 @@ const router = express.Router();
 
 //REGISTERING NEW USER
 router.post("/", async (req, res) => {
-  const dataError = validate(req.body).error;
-  if (dataError)
+  const error = validate(req.body).error;
+  if (error)
     return res
       .status(400)
-      .send("Joi USER DATA ERROR:" + dataError.details[0].message);
+      .send("Joi USER DATA ERROR:" + error.details[0].message);
 
   const passwordError = validatePassword(req.body.password).error;
   if (passwordError)
@@ -18,13 +18,18 @@ router.post("/", async (req, res) => {
       .status(400)
       .send("Joi PASSWORD ERROR:" + passwordError.details[0].message);
 
-  let user = await User.findOne({
+  let email = await User.findOne({
     email: req.body.email,
   });
 
-  if (user) return res.status(400).send("User already registered.");
+  let username = await User.findOne({
+    username: req.body.username,
+  });
 
-  user = new User(_.pick(req.body, ["name", "email", "password", "links"]));
+  if (email) return res.status(400).send("User already registered.");
+  if (username) return res.status(400).send("Username is already taken.");
+
+  user = new User(_.pick(req.body, ["username", "email", "password", "links"]));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
 
@@ -40,9 +45,9 @@ router.post("/", async (req, res) => {
 
   //header auth token - after registry
   const token = user.generateAuthToken();
-  res.header("x-auth-token", token).send(_.pick(user, ["_id", "name"]));
+  res.header("x-auth-token", token).send(_.pick(user, ["_id", "username"]));
 
-  //   res.send(_.pick(user, ["_id", "name", "email"]));
+  //   res.send(_.pick(user, ["_id", "username", "email"]));
 });
 
 module.exports = router;
