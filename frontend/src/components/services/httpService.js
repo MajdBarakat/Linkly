@@ -1,5 +1,7 @@
 import axios from "axios";
 
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&

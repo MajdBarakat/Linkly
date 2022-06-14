@@ -3,9 +3,55 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const passwordComplexity = require("joi-password-complexity");
 const mongoose = require("mongoose");
+const { string, bool, number } = require("joi");
+
+// userModel = {
+//   username: string,
+//   email: email,
+//   password: password,
+//   isVerified: bool,
+//   links: [
+//     {
+//       linkName: string,
+//       linkURL: string,
+//       linkType: string,
+//       linkDescription: string,
+//     },
+//   ],
+//   appearance: {
+//     profile: {
+//       profilePicURL: string,
+//       profilePicShape: number,
+//       Name: string,
+//       Title: string,
+//       Bio: string,
+//     },
+//     layoutId: number,
+//     themes: {
+//       isUsingTheme: bool,
+//       themeId: number,
+//     },
+//     custom: {
+//       colors: {
+//         bgdPrimary: hex,
+//         bgdSecondary: hex,
+//         font: hex,
+//         links: hex,
+//       },
+//       isUsingBackgroundImage: bool,
+//       backgroundImageURL: string,
+//       backgroundId: number,
+//       linkLayout: number,
+//       fontId: number,
+//     },
+//   },
+//   settings: {
+//     websiteTheme: string,
+//   },
+// };
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlength: 3, maxlength: 50 },
+  username: { type: String, required: true, minlength: 3, maxlength: 50 },
   email: {
     type: String,
     required: true,
@@ -15,6 +61,8 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String, required: true, minlength: 8, maxlength: 1024 },
   links: { type: Array },
+  appearance: { type: Object },
+  settings: { type: Object },
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -22,12 +70,15 @@ userSchema.methods.generateAuthToken = function () {
 };
 
 const User = mongoose.model("User", userSchema);
+
 function validateUser(user) {
   const schema = Joi.object({
-    name: Joi.string().min(3).max(50).required(),
+    username: Joi.string().min(3).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),
     password: Joi.string().min(8).max(255).required(),
     links: Joi.array(),
+    appearance: Joi.object(),
+    settings: Joi.object(),
   });
   return schema.validate(user);
 }

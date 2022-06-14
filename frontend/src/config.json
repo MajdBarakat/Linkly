@@ -1,3 +1,37 @@
 {
-  "api": "http://localhost:3001/api"
+  "api": "http://localhost:3001/api",
+
+  "defaultAppearance": {
+    "profile": {
+      "profilePicURL": "CDNLinkForDefaultProfilePic",
+      "profilePicShape": 0,
+      "name": "",
+      "title": "",
+      "bio": ""
+    },
+    "layoutId": 0,
+    "theme": {
+      "isUsingTheme": true,
+      "themeId": 0
+    },
+    "custom": {
+      "colors": {
+        "bgdPrimary": "hex",
+        "bgdSecondary": "hex",
+        "font": "hex",
+        "links": "hex"
+      },
+      "background": {
+        "isUsingBackgroundImage": false,
+        "backgroundImageURL": "CDNLinkForDefaultBgdImage",
+        "backgroundId": null,
+        "linkLayout": null,
+        "fontId": 0
+      }
+    }
+  },
+
+  "defaultSettings": {
+    "websiteTheme": "dark"
+  }
 }

@@ -6,7 +6,14 @@ import Form from "./form";
 
 class RegisterForm extends Form {
   state = {
-    data: { username: "", email: "", password: "", links: [] },
+    data: {
+      username: "",
+      email: "",
+      password: "",
+      links: [],
+      appearance: config.defaultAppearance,
+      settings: config.defaultSettings,
+    },
     errors: {},
   };
 
@@ -15,6 +22,8 @@ class RegisterForm extends Form {
     email: Joi.string().min(5).max(255).required().email().label("Email"),
     password: Joi.string().min(8).max(30).required().label("Password"),
     links: Joi.array(),
+    appearance: Joi.object(),
+    settings: Joi.object(),
   };
 
   doSubmit = async () => {
