@@ -1,4 +1,6 @@
 const { User, validate, validatePassword } = require("../models/user");
+const env = require("dotenv").config();
+const nodemailer = require("nodemailer");
 const formatter = require("../middleware/formatter");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
@@ -60,7 +62,34 @@ router.post("/", formatter, async (req, res) => {
   const token = user.generateAuthToken();
   res.header("x-auth-token", token).send(_.pick(user, ["_id", "username"]));
 
+  //CHANGE POST PRODUCTION
+  await sendConfirmationEmail(
+    "",
+    "",
+    `http://localhost:3001/api/confirm/${user.verificationToken}`
+  ).catch(res.send(error));
+
   //   res.send(_.pick(user, ["_id", "username", "email"]));
 });
+
+sendConfirmationEmail = async (email, username, link) => {
+  let transporter = nodemailer.createTransport({
+    host: "mx.mailslurp.com",
+    port: 2525,
+    auth: {
+      user: process.env.mailname,
+      pass: process.env.mailpassword,
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: '"Linkly" <noreply@linkly.com>', // sender address
+    to: "76bbca9f-391d-475e-8e33-3283a048b3db@mailslurp.com", // list of receivers
+    subject: "Hello", // Subject line
+    html: `<b>To confirm your email, click <a href="${link}">this link</a></b>`, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+};
 
 module.exports = router;
