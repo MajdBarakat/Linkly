@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 
-export default ({ name, label, value, onChange, onBlur, error }) => {
+export default ({ name, label, value, onChange, onBlur, type, error }) => {
   return (
     <div>
       <label>{label}</label>
       <input
         name={name}
         value={value}
+        type={type}
         onChange={onChange}
         onBlur={onBlur}
-        type="text"
       ></input>
       {error && <div>{error}</div>}
     </div>

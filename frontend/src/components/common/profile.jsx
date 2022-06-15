@@ -4,15 +4,35 @@ import http from "../services/httpService";
 import config from "../../config.json";
 import Form from "./form";
 
-class LoginFrom extends Form {
+class Profile extends Form {
   state = {
-    data: { email: "", password: "" },
+    data: {
+      profilePicURL: "",
+      name: "",
+      title: "",
+      username: "",
+      email: "",
+      bio: "",
+      isAccountPrivate: "",
+      websiteTheme: "",
+    },
     errors: {},
   };
 
   schema = {
+    profilePicURL: Joi.string()
+      //   .min(5)
+      //   .max(255)
+      //   .required()
+      //   .uri()
+      .label("Profile"),
+    name: Joi.string().max(30).label("Name"),
+    title: Joi.string().min(3).max(30).label("Title"),
+    username: Joi.string().min(3).max(255).required().label("UserName"),
     email: Joi.string().min(5).max(255).required().email().label("Email"),
-    password: Joi.string().min(8).max(30).required().label("Password"),
+    bio: Joi.string().max(50).label("Bio"),
+    isAccountPrivate: Joi.boolean().label("Privacy"),
+    websiteTheme: Joi.string().min(1).max(30).required().label("Website Theme"),
   };
 
   formatInput = () => {
@@ -41,13 +61,17 @@ class LoginFrom extends Form {
       <React.Fragment>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
+          {this.renderInput("name", "Name")}
+          {this.renderInput("title", "Title")}
+          {this.renderInput("username", "Username")}
           {this.renderInput("email", "Email")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderButton("Login")}
+          {this.renderInput("bio", "Bio")}
+          {this.renderInput("isAccountPrivate", "Account Privacy")}
         </form>
+        {this.renderButton("Login")}
       </React.Fragment>
     );
   }
 }
 
-export default LoginFrom;
+export default Profile;

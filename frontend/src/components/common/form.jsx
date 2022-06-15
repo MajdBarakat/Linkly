@@ -111,13 +111,14 @@ class Form extends Component {
     // disabled={this.validate() ? true : false} if i wanted to disable button on invalid inputs but it looks ugly
     return <button>{label}</button>;
   }
+
   renderInput(name, label, type = "text") {
     const { data, errors } = this.state;
     return (
       <Input
-        type={type}
-        name={name}
         label={label}
+        name={name}
+        type={type}
         value={data[name]}
         onChange={this.handleChange}
         onBlur={this.handleBlur}

@@ -10,6 +10,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.3.6",
+    "nanoid": "^3.3.4",
     "nodemon": "^2.0.16"
   }
 }

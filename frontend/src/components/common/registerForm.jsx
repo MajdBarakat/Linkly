@@ -10,9 +10,6 @@ class RegisterForm extends Form {
       username: "",
       email: "",
       password: "",
-      links: [],
-      appearance: config.defaultAppearance,
-      settings: config.defaultSettings,
     },
     errors: {},
   };
@@ -21,12 +18,17 @@ class RegisterForm extends Form {
     username: Joi.string().min(3).max(255).required().label("UserName"),
     email: Joi.string().min(5).max(255).required().email().label("Email"),
     password: Joi.string().min(8).max(30).required().label("Password"),
-    links: Joi.array(),
-    appearance: Joi.object(),
-    settings: Joi.object(),
+  };
+
+  formatInput = () => {
+    const data = { ...this.state.data };
+    data.username = data.username.toLowerCase().trim();
+    data.email = data.email.toLowerCase().trim();
+    this.setState({ data: data });
   };
 
   doSubmit = async () => {
+    await this.formatInput();
     const result = await http
       .post(config.api + "/register", this.state.data)
       .catch((err) => alert(err.response.data));

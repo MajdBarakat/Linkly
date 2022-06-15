@@ -1,54 +1,10 @@
 const env = require("dotenv").config();
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
+const { nanoid } = require("nanoid");
 const passwordComplexity = require("joi-password-complexity");
 const mongoose = require("mongoose");
 const { string, bool, number } = require("joi");
-
-// userModel = {
-//   username: string,
-//   email: email,
-//   password: password,
-//   isVerified: bool,
-//   links: [
-//     {
-//       linkName: string,
-//       linkURL: string,
-//       linkType: string,
-//       linkDescription: string,
-//     },
-//   ],
-//   appearance: {
-//     profile: {
-//       profilePicURL: string,
-//       profilePicShape: number,
-//       Name: string,
-//       Title: string,
-//       Bio: string,
-//     },
-//     layoutId: number,
-//     themes: {
-//       isUsingTheme: bool,
-//       themeId: number,
-//     },
-//     custom: {
-//       colors: {
-//         bgdPrimary: hex,
-//         bgdSecondary: hex,
-//         font: hex,
-//         links: hex,
-//       },
-//       isUsingBackgroundImage: bool,
-//       backgroundImageURL: string,
-//       backgroundId: number,
-//       linkLayout: number,
-//       fontId: number,
-//     },
-//   },
-//   settings: {
-//     websiteTheme: string,
-//   },
-// };
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, minlength: 3, maxlength: 50 },
@@ -60,6 +16,13 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   password: { type: String, required: true, minlength: 8, maxlength: 1024 },
+  isVerified: { type: Boolean, required: true },
+  verificationToken: {
+    type: String,
+    required: true,
+    minlength: 8,
+    maxlength: 1024,
+  },
   links: { type: Array },
   appearance: { type: Object },
   settings: { type: Object },
@@ -73,9 +36,11 @@ const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
   const schema = Joi.object({
-    username: Joi.string().min(3).max(50).required(),
+    username: Joi.string().lowercase().min(3).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),
-    password: Joi.string().min(8).max(255).required(),
+    password: Joi.string().min(8).max(1024).required(),
+    isVerified: Joi.boolean().required(),
+    verificationToken: Joi.string().max(22).required(),
     links: Joi.array(),
     appearance: Joi.object(),
     settings: Joi.object(),
@@ -95,22 +60,6 @@ function validateUserPassword(password) {
   };
   return passwordComplexity(complexity).validate(password);
 }
-
-// const linkSchema = new mongoose.Schema({
-//   linkName: { type: String, required: true, minlength: 1, maxlength: 50 },
-//   linkURL: {
-//     type: String,
-//     required: true,
-//     minlength: 5,
-//     maxlength: 255,
-//   },
-//   linkType: { type: String, required: true, minlength: 3, maxlength: 50 },
-//   linkDescription: {
-//     type: String,
-//     required: false,
-//     maxlength: 255,
-//   },
-// });
 
 function validateLink(link) {
   const schema = Joi.object({

@@ -1,11 +1,12 @@
 const { User, validate, validatePassword } = require("../models/user");
+const formatter = require("../middleware/formatter");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 
 //REGISTERING NEW USER
-router.post("/", async (req, res) => {
+router.post("/", formatter, async (req, res) => {
   const error = validate(req.body).error;
   if (error)
     return res
@@ -34,11 +35,14 @@ router.post("/", async (req, res) => {
       "username",
       "email",
       "password",
+      "isVerified",
+      "verificationToken",
       "links",
       "appearance",
       "settings",
     ])
   );
+
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
 
