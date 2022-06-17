@@ -5,10 +5,11 @@ const formatter = require("../middleware/formatter");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const express = require("express");
+const parser = require("../middleware/parser");
 const router = express.Router();
 
 //REGISTERING NEW USER
-router.post("/", formatter, async (req, res) => {
+router.post("/", formatter, parser, async (req, res) => {
   const error = validate(req.body).error;
   if (error)
     return res

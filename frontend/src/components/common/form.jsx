@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import passwordJoi from "joi-password-complexity";
 import Input from "./input";
+import Select from "./select";
 
 class Form extends Component {
-  state = { data: {}, errors: {} };
+  state = { data: {}, errors: {}, loaded: {}, fetchedData: {} };
 
   visited = [];
 
@@ -92,7 +93,10 @@ class Form extends Component {
     }
 
     const data = { ...this.state.data };
-    data[input.name] = input.value;
+    if (input.value === "false" || input.value === "true") {
+      data[input.name] = input.value === "true";
+    } else data[input.name] = input.value;
+
     this.setState({ data });
   };
 
@@ -104,12 +108,22 @@ class Form extends Component {
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
     this.setState({ errors });
-    // if (!this.validate()) this.doSubmit();
   };
 
-  renderButton(label) {
-    // disabled={this.validate() ? true : false} if i wanted to disable button on invalid inputs but it looks ugly
-    return <button>{label}</button>;
+  handleDiscard = () => {
+    this.setState({ data: this.state.fetchedData });
+  };
+
+  renderButton(label, disabled, onclick, type = "submit") {
+    return (
+      <button
+        type={type}
+        disabled={disabled}
+        onClick={onclick === "discard" ? this.handleDiscard : undefined}
+      >
+        {label}
+      </button>
+    );
   }
 
   renderInput(name, label, type = "text") {
@@ -123,6 +137,20 @@ class Form extends Component {
         onChange={this.handleChange}
         onBlur={this.handleBlur}
         error={errors[name]}
+      />
+    );
+  }
+
+  renderSelect(name, label, error, defaultValue, options) {
+    return (
+      <Select
+        label={label}
+        name={name}
+        options={options}
+        onChange={this.handleChange}
+        onBlur={this.handleBlur}
+        defaultValue={defaultValue}
+        error={error}
       />
     );
   }

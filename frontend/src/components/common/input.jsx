@@ -1,5 +1,3 @@
-import React, { Component } from "react";
-
 export default ({ name, label, value, onChange, onBlur, type, error }) => {
   return (
     <div>

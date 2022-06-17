@@ -3,7 +3,7 @@
 
   "defaultAppearance": {
     "profile": {
-      "profilePicURL": "CDNLinkForDefaultProfilePic",
+      "profilePicURL": "https://putcdnlinkhere.com",
       "profilePicShape": 0,
       "name": "",
       "title": "",
@@ -23,7 +23,7 @@
       },
       "background": {
         "isUsingBackgroundImage": false,
-        "backgroundImageURL": "CDNLinkForDefaultBgdImage",
+        "backgroundImageURL": "https://putcdnlinkhere.com",
         "backgroundId": null,
         "linkLayout": null,
         "fontId": 0

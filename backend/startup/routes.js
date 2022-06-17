@@ -16,7 +16,7 @@ module.exports = function (app) {
   app.use("/api/auth", auth); //LOGGING IN EXISTING USER
   app.use("/api/confirm", email);
   app.use("/api/users", users); //FIND OR DELETE USER
-  app.use("/api/users/me", update); //UPDATING DETAILS
+  app.use("/api/users", update); //UPDATING DETAILS
   app.use("/api/links", links); //UPDATING DETAILS
 
   app.use(error);
