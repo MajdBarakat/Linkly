@@ -5,13 +5,13 @@ import config from "./config.json";
 import RegisterForm from "./components/common/registerForm";
 import Profile from "./components/common/profile";
 import React from "react";
+import Links from "./components/common/links";
 
 function App() {
   axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
   return (
     <React.Fragment>
-      <LoginFrom />
-      <Profile />
+      <Links />
     </React.Fragment>
   );
 }

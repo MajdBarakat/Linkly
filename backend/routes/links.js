@@ -1,8 +1,60 @@
 const { User, validateLink } = require("../models/user");
 const authMiddleware = require("../middleware/auth");
+const assignDefaults = require("../middleware/default");
 const _ = require("lodash");
 const express = require("express");
+const { nanoid } = require("nanoid");
+const { flatten } = require("lodash");
 const router = express.Router();
+
+//ADDING LINKS
+router.post("/new", authMiddleware, assignDefaults, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+
+  const dataError = validateLink(req.body).error;
+  if (dataError)
+    return res
+      .status(400)
+      .send("Joi USER DATA ERROR:" + dataError.details[0].message);
+
+  if (!user)
+    return res.status(404).send("Something went wrong! User not found...");
+
+  const link = req.body;
+  const id = nanoid(10);
+
+  if (!link) return res.status(400).send("Something went wrong!");
+
+  try {
+    user.links.push({
+      id: id,
+      order: link.order,
+      linkName: link.linkName,
+      isVisible: link.isVisible,
+      linkURL: link.linkURL,
+      linkPictureURL: link.linkPictureURL,
+      linkThumbnailURL: link.linkThumbnailURL,
+      linkDescription: link.linkDescription,
+    });
+    console.log(user.links);
+    user.markModified();
+    await user.save();
+
+    const reOrdered = await updateOrder(id, link.order, user.links);
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          links: reOrdered,
+        },
+      }
+    );
+  } catch (err) {
+    return res.status(400).send("Something went wrong!");
+  }
+
+  res.send(_.pick(user, ["_id", "name", "email", "links"]));
+});
 
 //CHANGING SPECIFIC LINK
 router.put("/edit", authMiddleware, async (req, res) => {
@@ -40,44 +92,16 @@ router.put("/edit", authMiddleware, async (req, res) => {
         },
       }
     );
-  } catch (err) {
-    return res.status(400).send("Something went wrong!");
-  }
 
-  res.send(_.pick(user, ["_id", "name", "email", "links"]));
-});
-
-//ADDING LINKS
-router.post("/new", authMiddleware, async (req, res) => {
-  const user = await User.findById(req.user._id).select("-password");
-
-  const dataError = validateLink(req.body).error;
-  if (dataError)
-    return res
-      .status(400)
-      .send("Joi USER DATA ERROR:" + dataError.details[0].message);
-
-  if (!user)
-    return res.status(404).send("Something went wrong! User not found...");
-
-  const link = req.body;
-
-  const id =
-    user.links.length > 0
-      ? parseInt(user.links[user.links.length - 1].id) + 1
-      : 1;
-
-  if (!link) return res.status(400).send("Something went wrong!");
-
-  try {
-    user.links.push({
-      id: id,
-      linkName: link.linkName,
-      linkType: link.linkType,
-      linkURL: link.linkURL,
-      linkDescription: link.linkDescription,
-    });
-    await user.save();
+    const reOrdered = await updateOrder(id, link.order, user.links);
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          links: reOrdered,
+        },
+      }
+    );
   } catch (err) {
     return res.status(400).send("Something went wrong!");
   }
@@ -107,12 +131,39 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
 
   try {
     user.links.splice(index, 1);
+    user.links = updateOrderAfterDelete(link.order, user.links);
     await user.save();
+
+    const reOrdered = await updateOrderAfterDelete(link.order, user.links);
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          links: reOrdered,
+        },
+      }
+    );
   } catch (err) {
     return res.status(400).send("Something went wrong!");
   }
 
   res.send(_.pick(user, ["_id", "name", "email", "links"]));
 });
+
+updateOrder = (id, order, arr) => {
+  if (arr.find((link) => link.id !== id && link.order === order)) {
+    arr.forEach((link) => {
+      if (link.order >= order && link.id !== id) link.order += 1;
+    });
+  }
+  return arr;
+};
+
+updateOrderAfterDelete = (order, arr) => {
+  arr.forEach((link) => {
+    if (link.order > order) link.order -= 1;
+  });
+  return arr;
+};
 
 module.exports = router;

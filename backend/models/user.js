@@ -58,10 +58,14 @@ function validateUserPassword(password) {
 
 function validateLink(link) {
   const schema = Joi.object({
+    order: Joi.number().required(),
     linkName: Joi.string().min(1).max(50).required(),
+    isVisible: Joi.boolean().required(),
     linkURL: Joi.string().min(3).max(255).required(),
     linkType: Joi.string().min(3).max(50).required(),
-    linkDescription: Joi.string().max(255),
+    linkPictureURL: Joi.string().min(3).max(50).required(),
+    linkThumbnailURL: Joi.string().min(3).max(50).required(),
+    linkDescription: Joi.string().allow("").max(255),
   });
   return schema.validate(link);
 }
