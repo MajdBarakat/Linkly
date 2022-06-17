@@ -36,8 +36,6 @@ router.post("/new", authMiddleware, assignDefaults, async (req, res) => {
       linkThumbnailURL: link.linkThumbnailURL,
       linkDescription: link.linkDescription,
     });
-    console.log(user.links);
-    user.markModified();
     await user.save();
 
     const reOrdered = await updateOrder(id, link.order, user.links);
@@ -116,25 +114,24 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
   if (!user)
     return res.status(404).send("Something went wrong! User not found...");
 
-  const linkToDelete = parseInt(req.params.id);
+  const linkToDelete = user.links.find((link) => link.id === req.params.id);
 
-  const index = user.links
-    .map(function (x) {
-      return x.id;
-    })
-    .indexOf(linkToDelete);
+  const index = user.links.indexOf(linkToDelete);
 
-  if (!linkToDelete) return res.status(400).send("Something went wrong!");
+  if (!linkToDelete)
+    return res.status(400).send("Something went wrong cannot find link!");
 
   if (!user.links[index] || index === -1)
     return res.status(404).send("Something went wrong! Link not found...");
 
   try {
     user.links.splice(index, 1);
-    user.links = updateOrderAfterDelete(link.order, user.links);
-    await user.save();
+    const result = await user.save();
 
-    const reOrdered = await updateOrderAfterDelete(link.order, user.links);
+    const reOrdered = await updateOrderAfterDelete(
+      req.headers.order,
+      user.links
+    );
     await User.updateOne(
       { _id: user._id },
       {

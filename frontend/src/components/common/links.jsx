@@ -4,6 +4,7 @@ import http from "../services/httpService";
 import getUser from "../services/getUser";
 import config from "../../config.json";
 import { Component } from "react";
+import Link from "./link";
 
 class Links extends Component {
   state = {
@@ -41,7 +42,7 @@ class Links extends Component {
 
   async getLinks() {
     const result = await getUser(this.jwt);
-    if (result) this.state.data.links = result.links;
+    if (result) this.setState({ links: result.links });
   }
 
   schema = {
@@ -50,7 +51,6 @@ class Links extends Component {
     linkName: Joi.string().min(1).max(50).required(),
     isVisible: Joi.boolean().required(),
     linkURL: Joi.string().min(3).max(255).required(),
-    linkType: Joi.string().min(3).max(50).required(),
     linkPictureURL: Joi.string().min(3).max(50).required(),
     linkThumbnailURL: Joi.string().min(3).max(50).required(),
     linkDescription: Joi.string().allow("").max(255),
@@ -73,12 +73,44 @@ class Links extends Component {
     this.setState({ newLinkType: "" });
   };
 
+  handleDelete = async (id, order) => {
+    const links = [...this.state.links];
+    const index = links.indexOf(links.find((link) => link.id === id));
+    links.splice(index, 1);
+    this.setState({ links });
+    const result = await http
+      .delete(config.api + `/links/delete/${id}`, {
+        headers: { "x-auth-token": this.jwt, order: order },
+      })
+      .catch((err) => alert(err.response.data));
+
+    await this.getLinks();
+    if (!result) return;
+    console.log("Link deleted successfully!");
+  };
+
   render() {
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
         <React.Fragment>
-          <h1>Profile</h1>
+          <h1>Links</h1>
+          {this.state.links.map((link) => (
+            <Link
+              key={link.id}
+              w
+              id={link.id}
+              order={link.order}
+              name={link.linkName}
+              isVisible={link.isVisible}
+              linkURL={link.linkURL}
+              linkPictureURL={link.linkPictureURL}
+              linkThumbnailURL={link.linkThumbnailURL}
+              linkDescription={link.linkDescription}
+              onEdit={this.handleEdit}
+              onDelete={this.handleDelete}
+            />
+          ))}
         </React.Fragment>
       );
     }
