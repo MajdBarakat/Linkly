@@ -1,22 +1,38 @@
+import LinkEdit from "./linkEdit";
+
 export default ({
-  id,
-  order,
-  name,
-  isVisible,
-  linkURL,
-  linkPictureURL,
-  linkThumbnailURL,
-  linkDescription,
+  link,
+  fetchedLink,
+  isEditing,
   onEdit,
+  onChange,
   onDelete,
+  onSubmit,
+  onDiscard,
+  onToggleVisiblity,
+  errors,
 }) => {
   return (
-    <div order={order}>
-      <button>{`${isVisible}`}</button>
-      <h1>{name}</h1>
-      <h2>{linkURL}</h2>
-      <button onClick={onEdit}>Edit</button>
-      <button onClick={() => onDelete(id, order)}>Delete</button>
+    <div isediting={isEditing} order={link.order}>
+      <h1>{fetchedLink.linkName}</h1>
+      <button
+        onClick={() => onToggleVisiblity(link)}
+      >{`${link.isVisible}`}</button>
+      <h2>{fetchedLink.linkURL}</h2>
+      <button onClick={() => onEdit(link)}>Edit</button>
+      <button onClick={() => onDelete(link)}>Delete</button>
+      {link.isEditing ? (
+        <LinkEdit
+          link={link}
+          fetchedLink={fetchedLink}
+          onChange={onChange}
+          onSubmit={onSubmit}
+          onDiscard={onDiscard}
+          errors={errors}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

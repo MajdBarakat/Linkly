@@ -21,13 +21,12 @@ router.post("/new", authMiddleware, assignDefaults, async (req, res) => {
     return res.status(404).send("Something went wrong! User not found...");
 
   const link = req.body;
-  const id = nanoid(10);
 
   if (!link) return res.status(400).send("Something went wrong!");
 
   try {
     user.links.push({
-      id: id,
+      id: link.id,
       order: link.order,
       linkName: link.linkName,
       isVisible: link.isVisible,
@@ -38,7 +37,7 @@ router.post("/new", authMiddleware, assignDefaults, async (req, res) => {
     });
     await user.save();
 
-    const reOrdered = await updateOrder(id, link.order, user.links);
+    const reOrdered = await updateOrder(link.id, link.order, user.links);
     await User.updateOne(
       { _id: user._id },
       {
@@ -68,17 +67,30 @@ router.put("/edit", authMiddleware, async (req, res) => {
     return res.status(404).send("Something went wrong! User not found...");
 
   const link = req.body;
+  const index = user.links.findIndex((x) => x.id === link.id);
 
-  const index = user.links
-    .map(function (x) {
-      return x.id;
-    })
-    .indexOf(link.id);
-
+  console.log("here");
   if (!link) return res.status(400).send("Something went wrong!");
 
   if (!user.links[index] || index === -1)
     return res.status(404).send("Something went wrong! Link not found...");
+
+  try {
+    const reOrdered = await updateOrder(link.id, link.order, user.links);
+    console.log(reOrdered);
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          links: reOrdered,
+        },
+      }
+    );
+  } catch (err) {
+    return res
+      .status(400)
+      .send("Something went wrong with re-ordering the links");
+  }
 
   try {
     const linkToUpdate = `links.${index}`;
@@ -87,16 +99,6 @@ router.put("/edit", authMiddleware, async (req, res) => {
       {
         $set: {
           [linkToUpdate]: link,
-        },
-      }
-    );
-
-    const reOrdered = await updateOrder(id, link.order, user.links);
-    await User.updateOne(
-      { _id: user._id },
-      {
-        $set: {
-          links: reOrdered,
         },
       }
     );
@@ -118,8 +120,7 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
 
   const index = user.links.indexOf(linkToDelete);
 
-  if (!linkToDelete)
-    return res.status(400).send("Something went wrong cannot find link!");
+  if (!linkToDelete) return res.status(400).send("Something went wrong!");
 
   if (!user.links[index] || index === -1)
     return res.status(404).send("Something went wrong! Link not found...");
@@ -149,6 +150,7 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
 
 updateOrder = (id, order, arr) => {
   if (arr.find((link) => link.id !== id && link.order === order)) {
+    console.log("hello");
     arr.forEach((link) => {
       if (link.order >= order && link.id !== id) link.order += 1;
     });

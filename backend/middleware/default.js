@@ -8,6 +8,7 @@ module.exports = function (req, res, next) {
       .send("Failed to create new link, no link type was chosen.");
 
   req.body = {
+    id: nanoid(10),
     order: order,
     linkName: `${type.charAt(0).toUpperCase() + type.slice(1)}`,
     isVisible: false,

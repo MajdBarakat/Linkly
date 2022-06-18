@@ -58,6 +58,7 @@ function validateUserPassword(password) {
 
 function validateLink(link) {
   const schema = Joi.object({
+    id: Joi.string().required(),
     order: Joi.number().required(),
     linkName: Joi.string().min(1).max(50).required(),
     isVisible: Joi.boolean().required(),

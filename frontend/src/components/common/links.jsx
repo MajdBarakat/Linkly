@@ -35,18 +35,36 @@ class Links extends Component {
       data.username = result.username;
       data.email = result.email;
       data.websiteTheme = result.settings.websiteTheme;
+      result.links = await this.initStates(result.links);
       this.state.links = result.links;
-      this.setState({ data, loaded: true, fetchedLinks: this.state.links });
+      const deepClone = JSON.parse(JSON.stringify(this.state.links));
+      this.setState({
+        data,
+        loaded: true,
+        fetchedLinks: deepClone,
+      });
     }
   }
 
   async getLinks() {
-    const result = await getUser(this.jwt);
-    if (result) this.setState({ links: result.links });
+    let { links } = await getUser(this.jwt);
+    if (links) {
+      this.setState({ links });
+      const deepClone = JSON.parse(JSON.stringify(this.state.links));
+      this.setState({
+        fetchedLinks: deepClone,
+      });
+    } else return "An error occured while fetching links.";
   }
+
+  initStates = (links) => {
+    links.forEach((link) => (link.isEditing = false));
+    return links;
+  };
 
   schema = {
     id: Joi.string().required(),
+    isEditing: Joi.boolean(),
     order: Joi.number().required(),
     linkName: Joi.string().min(1).max(50).required(),
     isVisible: Joi.boolean().required(),
@@ -56,12 +74,11 @@ class Links extends Component {
     linkDescription: Joi.string().allow("").max(255),
   };
 
-  doAdd = async () => {
-    const { data } = this.state;
+  handleAdd = async () => {
     const result = await http
       .post(
         config.api + "/links/new",
-        { type: data.newLinkType },
+        { type: this.state.newLinkType },
         { headers: { "x-auth-token": this.jwt } }
       )
       .catch((err) => alert(err.response.data));
@@ -73,20 +90,120 @@ class Links extends Component {
     this.setState({ newLinkType: "" });
   };
 
-  handleDelete = async (id, order) => {
+  handleDelete = async (link) => {
     const links = [...this.state.links];
-    const index = links.indexOf(links.find((link) => link.id === id));
+    const index = links.indexOf(link);
     links.splice(index, 1);
     this.setState({ links });
     const result = await http
-      .delete(config.api + `/links/delete/${id}`, {
-        headers: { "x-auth-token": this.jwt, order: order },
+      .delete(config.api + `/links/delete/${link.id}`, {
+        headers: { "x-auth-token": this.jwt, order: link.order },
       })
       .catch((err) => alert(err.response.data));
 
     await this.getLinks();
     if (!result) return;
     console.log("Link deleted successfully!");
+  };
+
+  handleSubmit = (e, link) => {
+    e.preventDefault();
+    let errors = this.validate(link);
+    console.log("submitting", errors);
+    this.setState({ errors: errors || {} });
+    if (errors) return;
+    this.doSubmit(link);
+  };
+
+  doSubmit = async (link) => {
+    const copiedLink = { ...link };
+    delete copiedLink.isEditing;
+    const result = await http
+      .put(config.api + "/links/edit", copiedLink, {
+        headers: { "x-auth-token": this.jwt },
+      })
+      .catch((err) => alert(err.response.data));
+
+    if (!result) return;
+
+    console.log("Link edited successfully!", result);
+    this.getLinks();
+  };
+
+  handleEdit = async (link) => {
+    const links = [...this.state.links];
+    const index = links.indexOf(link);
+    links[index].isEditing = !links[index].isEditing;
+    for (let i = 0; i < links.length; i++) {
+      if (i !== index) links[i].isEditing = false;
+    }
+    this.setState({ links });
+
+    const fetchedLinks = [...this.state.fetchedLinks];
+    fetchedLinks[index].isEditing = !fetchedLinks[index].isEditing;
+    for (let i = 0; i < fetchedLinks.length; i++) {
+      if (i !== index) fetchedLinks[i].isEditing = false;
+    }
+    this.setState({ fetchedLinks });
+  };
+
+  handleChange = ({ currentTarget: input }) => {
+    const errors = { ...this.state.errors };
+    const errorMessage = this.validateProperty(input);
+    if (errorMessage) errors[input.name] = errorMessage;
+    else delete errors[input.name];
+    this.setState({ errors });
+
+    const links = [...this.state.links];
+    const index = links.findIndex((link) => link.id === input.parentElement.id);
+
+    links[index][input.name] = input.value;
+
+    this.setState({ links });
+  };
+
+  handleDiscard = (link, fetchedLink) => {
+    const links = [...this.state.links];
+    const index = links.indexOf(link);
+    links[index] = JSON.parse(JSON.stringify(fetchedLink));
+    this.setState({ links });
+  };
+
+  handleVisibility = (link) => {
+    const links = [...this.state.links];
+    const index = links.indexOf(link);
+    links[index].isVisible = !links[index].isVisible;
+    this.setState({ links });
+    //save visibility changes
+  };
+
+  validate = (link) => {
+    const options = { abortEarly: false };
+    const index = this.state.links.indexOf(link);
+    const { error } = Joi.validate(
+      this.state.links[index],
+      this.schema,
+      options
+    );
+    if (!error) return null;
+    const errors = {};
+    error.details.forEach(
+      (error) => (errors[error.path[0]] = this.cleanErr(error.message))
+    );
+    return errors;
+  };
+
+  validateProperty = ({ name, value }) => {
+    const obj = { [name]: value };
+    let result;
+    const schema = { [name]: this.schema[name] };
+    result = Joi.validate(obj, schema);
+    const { error } = result;
+    return error ? this.cleanErr(error.details[0].message) : null;
+  };
+
+  cleanErr = (error) => {
+    return error.replace(/[^\s]*/, "value");
   };
 
   render() {
@@ -98,17 +215,18 @@ class Links extends Component {
           {this.state.links.map((link) => (
             <Link
               key={link.id}
-              w
-              id={link.id}
-              order={link.order}
-              name={link.linkName}
-              isVisible={link.isVisible}
-              linkURL={link.linkURL}
-              linkPictureURL={link.linkPictureURL}
-              linkThumbnailURL={link.linkThumbnailURL}
-              linkDescription={link.linkDescription}
+              link={link}
+              fetchedLink={
+                this.state.fetchedLinks[this.state.links.indexOf(link)]
+              }
+              isEditing={this.isEditing}
               onEdit={this.handleEdit}
+              onChange={this.handleChange}
               onDelete={this.handleDelete}
+              onSubmit={this.handleSubmit}
+              onDiscard={this.handleDiscard}
+              onToggleVisiblity={this.handleVisibility}
+              errors={this.state.errors}
             />
           ))}
         </React.Fragment>
