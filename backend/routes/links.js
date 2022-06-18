@@ -69,7 +69,6 @@ router.put("/edit", authMiddleware, async (req, res) => {
   const link = req.body;
   const index = user.links.findIndex((x) => x.id === link.id);
 
-  console.log("here");
   if (!link) return res.status(400).send("Something went wrong!");
 
   if (!user.links[index] || index === -1)
@@ -77,7 +76,6 @@ router.put("/edit", authMiddleware, async (req, res) => {
 
   try {
     const reOrdered = await updateOrder(link.id, link.order, user.links);
-    console.log(reOrdered);
     await User.updateOne(
       { _id: user._id },
       {
@@ -99,6 +97,44 @@ router.put("/edit", authMiddleware, async (req, res) => {
       {
         $set: {
           [linkToUpdate]: link,
+        },
+      }
+    );
+  } catch (err) {
+    return res.status(400).send("Something went wrong!");
+  }
+
+  res.send(_.pick(user, ["_id", "name", "email", "links"]));
+});
+
+//CHANGING VISIBILITY OF A LINK
+router.put("/vis-toggle", authMiddleware, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+
+  const dataError = validateLink(req.body).error;
+  if (dataError)
+    return res
+      .status(400)
+      .send("Joi USER DATA ERROR:" + dataError.details[0].message);
+
+  if (!user)
+    return res.status(404).send("Something went wrong! User not found...");
+
+  const link = req.body;
+  const index = user.links.findIndex((x) => x.id === link.id);
+
+  if (!link) return res.status(400).send("Something went wrong!");
+
+  if (!user.links[index] || index === -1)
+    return res.status(404).send("Something went wrong! Link not found...");
+
+  try {
+    const valueToUpdate = `links.${index}.isVisible`;
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          [valueToUpdate]: link.isVisible,
         },
       }
     );

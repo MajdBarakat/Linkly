@@ -169,12 +169,23 @@ class Links extends Component {
     this.setState({ links });
   };
 
-  handleVisibility = (link) => {
+  handleVisibility = async (link) => {
     const links = [...this.state.links];
     const index = links.indexOf(link);
     links[index].isVisible = !links[index].isVisible;
     this.setState({ links });
-    //save visibility changes
+
+    const copiedLink = { ...link };
+    delete copiedLink.isEditing;
+    const result = await http
+      .put(config.api + "/links/vis-toggle", copiedLink, {
+        headers: { "x-auth-token": this.jwt },
+      })
+      .catch((err) => alert(err.response.data));
+
+    if (!result) return;
+
+    console.log("Link visibility edited successfully!", result);
   };
 
   validate = (link) => {
