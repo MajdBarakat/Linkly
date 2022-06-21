@@ -1,0 +1,18 @@
+@use "../abstracts" as *;
+
+button {
+  font: $label;
+  font-weight: 700;
+  padding: 0.8rem;
+  border: 0px;
+  border-radius: 5px;
+  background-color: $accent;
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
