@@ -1,0 +1,36 @@
+@use "../abstracts" as *;
+
+form.container {
+  background-color: $secondary;
+  padding: 20px 30px;
+
+  &.sign-in {
+    border-radius: 10px;
+  }
+}
+
+.under-text-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  font: $fine-print;
+
+  .text-error {
+    color: $error;
+  }
+  .text-help {
+    color: $text-secondary;
+
+    a {
+      text-decoration: none;
+      color: $accent;
+    }
+  }
+}
+
+div.sign-in {
+  position: relative;
+  max-width: 400px;
+  margin: auto;
+  top: 100px;
+}
