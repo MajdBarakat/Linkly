@@ -1,0 +1,37 @@
+@use "../abstracts" as *;
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+
+  label {
+    font: $label;
+    color: $text-primary;
+  }
+
+  input {
+    font: $body;
+    background-color: $text-input;
+    color: $text-primary;
+    padding: 0.8rem;
+    border: 0 solid $border-primary;
+    border-radius: 5px;
+    margin-top: 5px;
+
+    &::placeholder {
+      color: $text-secondary;
+    }
+
+    &.error {
+      outline: 1px solid $error;
+    }
+
+    &:focus {
+      outline: 1px solid;
+    }
+  }
+
+  //   input[type="file"] {
+  //   }
+}
