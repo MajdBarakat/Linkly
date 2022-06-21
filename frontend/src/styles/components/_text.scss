@@ -1,0 +1,13 @@
+@use "../abstracts" as *;
+
+h1 {
+  font: $header;
+  color: $text-primary;
+  text-align: center;
+  margin-bottom: 50px;
+
+  span {
+    color: $accent;
+    font-weight: 600;
+  }
+}
