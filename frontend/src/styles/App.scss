@@ -1,0 +1,11 @@
+// @use "input";
+@use "abstracts" as *;
+@use "components";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $primary;
+}
