@@ -117,6 +117,7 @@ class Form extends Component {
   renderButton(label, disabled, onclick, type = "submit") {
     return (
       <button
+        className="full-width"
         type={type}
         disabled={disabled}
         onClick={onclick === "discard" ? this.handleDiscard : undefined}
@@ -126,13 +127,15 @@ class Form extends Component {
     );
   }
 
-  renderInput(name, label, type = "text") {
+  renderInput(name, label, placeholder, help, type = "text") {
     const { data, errors } = this.state;
     return (
       <Input
         label={label}
         name={name}
         type={type}
+        placeholder={placeholder}
+        help={help}
         value={data[name]}
         onChange={this.handleChange}
         onBlur={this.handleBlur}

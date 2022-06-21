@@ -1,15 +1,39 @@
-export default ({ name, label, value, onChange, onBlur, type, error }) => {
+export default ({
+  name,
+  label,
+  value,
+  onChange,
+  onBlur,
+  type,
+  placeholder,
+  help,
+  error,
+}) => {
   return (
-    <div>
+    <div className={"input-container"}>
       <label>{label}</label>
       <input
+        className={error ? "error" : undefined}
         name={name}
         value={value}
         type={type}
+        placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
       ></input>
-      {error && <div>{error}</div>}
+      {error || help ? (
+        <div className="under-text-container">
+          <div className="text-error">{error ? error : ""}</div>
+          {help && (
+            <div className="text-help">
+              {help.text}
+              <a href={help.href}>{help.label}</a>
+            </div>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
     //if error is truthy returns the div of errors
   );

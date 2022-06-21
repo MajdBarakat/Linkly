@@ -140,7 +140,7 @@ class Links extends Component {
     this.setState({ links });
 
     const fetchedLinks = [...this.state.fetchedLinks];
-    fetchedLinks[index].isEditing = !fetchedLinks[index].isEditing;
+    fetchedLinks[index].isEditing = links[index].isEditing;
     for (let i = 0; i < fetchedLinks.length; i++) {
       if (i !== index) fetchedLinks[i].isEditing = false;
     }
@@ -184,6 +184,9 @@ class Links extends Component {
       .catch((err) => alert(err.response.data));
 
     if (!result) return;
+    const fetchedLinks = [...this.state.fetchedLinks];
+    fetchedLinks[index].isVisible = links[index].isVisible;
+    this.setState({ fetchedLinks });
 
     console.log("Link visibility edited successfully!", result);
   };

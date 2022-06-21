@@ -38,14 +38,28 @@ class LoginFrom extends Form {
 
   render() {
     return (
-      <React.Fragment>
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("email", "Email")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderButton("Login")}
+      <div className="sign-in">
+        <h1>
+          Sign In to <span>Linkly</span>
+        </h1>
+        <form className="container sign-in" onSubmit={this.handleSubmit}>
+          {this.renderInput("email", "Email address", "example@email.com")}
+          {this.renderInput(
+            "password",
+            "Password",
+            "",
+            { text: "", label: "Forgot password?", href: "" },
+            "password"
+          )}
+          {this.renderButton("Sign In")}
+          <div className="under-text-container">
+            <div className="text-help">
+              New to Linkly?
+              <a href=""> Register</a>
+            </div>
+          </div>
         </form>
-      </React.Fragment>
+      </div>
     );
   }
 }
