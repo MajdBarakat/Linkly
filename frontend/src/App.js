@@ -11,7 +11,7 @@ function App() {
   axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
   return (
     <React.Fragment>
-      <LoginFrom />
+      <RegisterForm />
     </React.Fragment>
   );
 }

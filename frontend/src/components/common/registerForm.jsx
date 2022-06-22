@@ -15,7 +15,7 @@ class RegisterForm extends Form {
   };
 
   schema = {
-    username: Joi.string().min(3).max(255).required().label("UserName"),
+    username: Joi.string().min(3).max(255).required().label("Username"),
     email: Joi.string().min(5).max(255).required().email().label("Email"),
     password: Joi.string().min(8).max(30).required().label("Password"),
   };
@@ -39,15 +39,37 @@ class RegisterForm extends Form {
 
   render() {
     return (
-      <React.Fragment>
-        <h1>Register</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
-          {this.renderInput("email", "Email")}
-          {this.renderInput("password", "Password", "password")}
+      <div className="register">
+        <h1>
+          Register to <span>Linkly</span>
+        </h1>
+        <form className="container register" onSubmit={this.handleSubmit}>
+          {this.renderInput(
+            "username",
+            "Username",
+            "http://linkly.com/username"
+          )}
+          {this.renderInput("email", "Email address", "example@email.com")}
+          {this.renderInput(
+            "password",
+            "Password",
+            "",
+            {
+              text: "",
+              label: "Need Help?",
+              href: "",
+            },
+            "password"
+          )}
           {this.renderButton("Create Account")}
+          <div className="under-text-container">
+            <div className="text-help">
+              Already a member?
+              <a href=""> Sign In</a>
+            </div>
+          </div>
         </form>
-      </React.Fragment>
+      </div>
     );
   }
 }

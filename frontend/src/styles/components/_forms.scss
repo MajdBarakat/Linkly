@@ -4,7 +4,8 @@ form.container {
   background-color: $secondary;
   padding: 20px 30px;
 
-  &.sign-in {
+  &.sign-in,
+  &.register {
     border-radius: 10px;
   }
 }
@@ -28,7 +29,8 @@ form.container {
   }
 }
 
-div.sign-in {
+div.sign-in,
+div.register {
   position: relative;
   max-width: 400px;
   margin: auto;
