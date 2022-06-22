@@ -114,10 +114,10 @@ class Form extends Component {
     this.setState({ data: this.state.fetchedData });
   };
 
-  renderButton(label, disabled, onclick, type = "submit") {
+  renderButton(label, className, disabled, onclick, type = "submit") {
     return (
       <button
-        className="full-width"
+        className={className}
         type={type}
         disabled={disabled}
         onClick={onclick === "discard" ? this.handleDiscard : undefined}

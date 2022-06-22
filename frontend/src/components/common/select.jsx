@@ -8,7 +8,7 @@ export default ({
   options,
 }) => {
   return (
-    <div>
+    <div className={"select-container"}>
       <label>{label}</label>
       <select
         name={name}

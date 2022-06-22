@@ -107,30 +107,40 @@ class Profile extends Form {
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
-        <React.Fragment>
+        <div className="middle-container profile">
           <h1>Profile</h1>
-          <form onSubmit={this.handleSubmit}>
+          <form class="container profile" onSubmit={this.handleSubmit}>
             {this.renderInput("name", "Name")}
             {this.renderInput("title", "Title")}
             {this.renderInput("username", "Username")}
             {this.renderInput("email", "Email")}
             {this.renderInput("bio", "Bio")}
-            {this.renderSelect(
-              "isAccountPrivate",
-              "Account Privacy",
-              isVerified ? "" : "verify email to publish account",
-              isAccountPrivate,
-              [
-                { value: false, label: "Public" },
-                { value: true, label: "Private" },
-              ]
-            )}
-            {this.renderButton("Save changes", !valuesChanged)}
-            {valuesChanged
-              ? this.renderButton("Cancel", false, "discard", "button")
-              : ""}
+            <div className="profile-bottom">
+              {this.renderSelect(
+                "isAccountPrivate",
+                "Account Privacy",
+                isVerified ? "" : "verify email to publish account",
+                isAccountPrivate,
+                [
+                  { value: false, label: "Public" },
+                  { value: true, label: "Private" },
+                ]
+              )}
+              <div className="buttons">
+                {valuesChanged
+                  ? this.renderButton(
+                      "Cancel",
+                      "medium",
+                      false,
+                      "discard",
+                      "button"
+                    )
+                  : ""}
+                {this.renderButton("Save", !valuesChanged)}
+              </div>
+            </div>
           </form>
-        </React.Fragment>
+        </div>
       );
     }
   }

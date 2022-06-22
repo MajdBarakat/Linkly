@@ -39,7 +39,7 @@ class LoginFrom extends Form {
 
   render() {
     return (
-      <div className="sign-in">
+      <div className="middle-container sign-in">
         <h1>
           Sign In to <span>Linkly</span>
         </h1>
@@ -52,7 +52,7 @@ class LoginFrom extends Form {
             { text: "", label: "Forgot password?", href: "" },
             "password"
           )}
-          {this.renderButton("Sign In")}
+          {this.renderButton("Sign In", "full-width")}
           <div className="under-text-container">
             <div className="text-help">
               New to Linkly?

@@ -9,13 +9,13 @@ export default ({ navigation, user, dropDown }) => {
       <div className="navbar">
         <div className="left">
           <div className="logo"></div>{" "}
-          <ul className="nav-links">
+          <div className="nav-links">
             {navigation.map((e) => (
-              <li key={e.label} className={e.active}>
-                <Link to={e.to}>{e.label}</Link>
-              </li>
+              <Link key={e.label} className={e.active} to={e.to}>
+                {e.label}
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
         <div className="right">
           {user ? (
@@ -34,26 +34,19 @@ export default ({ navigation, user, dropDown }) => {
           )}
         </div>
       </div>
-      {user && warningVisibility ? (
-        user.isVerified ? (
-          <div className="verification-warning">
-            {
-              <p>
-                `To publish your profile, please verify your email by clicking
-                the link we sent to ${<span>{user.email}</span>}. $
-                {<Link to="">Resend Verification Link</Link>}`
-              </p>
-            }
-            <button
-              className="close"
-              onClick={() => (warningVisibility = false)}
-            >
-              X
-            </button>
-          </div>
-        ) : (
-          ""
-        )
+      {user && warningVisibility && user.isVerified ? (
+        <div className="verification-warning">
+          {
+            <p>
+              `To publish your profile, please verify your email by clicking the
+              link we sent to ${<span>{user.email}</span>}. $
+              {<Link to="">Resend Verification Link</Link>}`
+            </p>
+          }
+          <button className="close" onClick={() => (warningVisibility = false)}>
+            X
+          </button>
+        </div>
       ) : (
         ""
       )}

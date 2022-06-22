@@ -5,8 +5,29 @@ form.container {
   padding: 20px 30px;
 
   &.sign-in,
-  &.register {
+  &.register,
+  &.profile {
     border-radius: 10px;
+  }
+
+  .profile-bottom {
+    display: flex;
+    justify-content: space-between;
+
+    div.buttons {
+      align-self: end;
+
+      button {
+        font-weight: 500;
+        color: $primary;
+      }
+
+      :nth-last-child(2) {
+        color: $text-primary;
+        background: none;
+        margin-right: 10px;
+      }
+    }
   }
 }
 
@@ -29,10 +50,17 @@ form.container {
   }
 }
 
-div.sign-in,
-div.register {
+div.middle-container {
   position: relative;
-  max-width: 400px;
   margin: auto;
   top: 100px;
+}
+
+div.sign-in,
+div.register {
+  max-width: 400px;
+}
+
+div.profile {
+  max-width: 600px;
 }

@@ -1,0 +1,67 @@
+@use "../abstracts" as *;
+
+div.navbar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $border-primary;
+
+  .logo {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    align-self: center;
+    margin: 0 30px;
+  }
+
+  .left,
+  .right {
+    display: flex;
+    flex-direction: row;
+  }
+
+  div.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    a {
+      padding: 20px;
+      color: $text-secondary;
+      font: $body;
+
+      &.active {
+        color: $text-primary;
+        border-bottom: 4px solid $accent;
+        margin-bottom: -2px;
+      }
+
+      &:hover {
+        background-color: $secondary;
+      }
+    }
+  }
+
+  div.signin-signup {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+
+    a {
+      font: $body;
+      color: $text-primary;
+      margin-right: 15px;
+
+      &:nth-last-child(1) {
+        padding: 5px 10px;
+        border: 2px solid;
+        border-radius: 10px;
+        color: $accent;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}

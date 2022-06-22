@@ -40,7 +40,7 @@ class RegisterForm extends Form {
 
   render() {
     return (
-      <div className="register">
+      <div className="middle-container register">
         <h1>
           Register to <span>Linkly</span>
         </h1>
@@ -62,7 +62,7 @@ class RegisterForm extends Form {
             },
             "password"
           )}
-          {this.renderButton("Create Account")}
+          {this.renderButton("Create Account", "full-width")}
           <div className="under-text-container">
             <div className="text-help">
               Already a member?

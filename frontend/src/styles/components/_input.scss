@@ -1,14 +1,15 @@
 @use "../abstracts" as *;
 
+label {
+  margin-left: 5px;
+  font: $label;
+  color: $text-primary;
+}
+
 .input-container {
   display: flex;
   flex-direction: column;
   padding: 7px 0;
-
-  label {
-    font: $label;
-    color: $text-primary;
-  }
 
   input {
     font: $body;
@@ -34,4 +35,15 @@
 
   //   input[type="file"] {
   //   }
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+
+  select {
+    font: $body;
+    padding: 0.5rem;
+    margin-top: 5px;
+  }
 }

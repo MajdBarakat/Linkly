@@ -7,7 +7,7 @@ export default () => {
     <React.Fragment>
       <Navbar
         navigation={[
-          { label: "Links", to: "/admin/links", active: undefined },
+          { label: "Links", to: "/admin/links", active: "active" },
           { label: "Appearance", to: "/admin/appearance", active: undefined },
           { label: "Settings", to: "/admin/settings", active: undefined },
         ]}
