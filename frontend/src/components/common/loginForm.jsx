@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import http from "../services/httpService";
 import config from "../../config.json";
 import Form from "./form";
+import { Link } from "react-router-dom";
 
 class LoginFrom extends Form {
   state = {
@@ -55,7 +56,7 @@ class LoginFrom extends Form {
           <div className="under-text-container">
             <div className="text-help">
               New to Linkly?
-              <a href=""> Register</a>
+              <Link to="/register"> Register</Link>
             </div>
           </div>
         </form>

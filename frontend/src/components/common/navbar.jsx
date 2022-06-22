@@ -1,5 +1,5 @@
 import React from "react";
-import link from "./link";
+import { Link } from "react-router-dom";
 
 export default ({ navigation, user, dropDown }) => {
   let menuVisibility = false;
@@ -11,8 +11,8 @@ export default ({ navigation, user, dropDown }) => {
           <div className="logo"></div>{" "}
           <ul className="nav-links">
             {navigation.map((e) => (
-              <li className={e.active}>
-                <a href={e.href}>{e.label}</a>
+              <li key={e.label} className={e.active}>
+                <Link to={e.to}>{e.label}</Link>
               </li>
             ))}
           </ul>
@@ -28,27 +28,34 @@ export default ({ navigation, user, dropDown }) => {
             </div>
           ) : (
             <div className="signin-signup">
-              <a href="">Sign in</a>
-              <a href="">Sign up</a>
+              <Link to="/login">Sign in</Link>
+              <Link to="/register">Sign up</Link>
             </div>
           )}
         </div>
       </div>
-      {user.isVerified && warningVisibility ? (
-        ""
+      {user && warningVisibility ? (
+        user.isVerified ? (
+          <div className="verification-warning">
+            {
+              <p>
+                `To publish your profile, please verify your email by clicking
+                the link we sent to ${<span>{user.email}</span>}. $
+                {<Link to="">Resend Verification Link</Link>}`
+              </p>
+            }
+            <button
+              className="close"
+              onClick={() => (warningVisibility = false)}
+            >
+              X
+            </button>
+          </div>
+        ) : (
+          ""
+        )
       ) : (
-        <div className="verification-warning">
-          {
-            <p>
-              `To publish your profile, please verify your email by clicking the
-              link we sent to ${<span>{user.email}</span>}. $
-              {<a href="">Resend Verification Link</a>}`
-            </p>
-          }
-          <button className="close" onClick={() => (warningVisibility = false)}>
-            X
-          </button>
-        </div>
+        ""
       )}
     </React.Fragment>
   );

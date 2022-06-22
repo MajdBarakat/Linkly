@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import http from "../services/httpService";
 import config from "../../config.json";
 import Form from "./form";
+import { Link } from "react-router-dom";
 
 class RegisterForm extends Form {
   state = {
@@ -65,7 +66,7 @@ class RegisterForm extends Form {
           <div className="under-text-container">
             <div className="text-help">
               Already a member?
-              <a href=""> Sign In</a>
+              <Link to="/login"> Sign In</Link>
             </div>
           </div>
         </form>

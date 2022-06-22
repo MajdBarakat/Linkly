@@ -1,18 +1,21 @@
 import "./styles/App.scss";
 import axios from "axios";
-import LoginFrom from "./components/common/loginForm";
-import config from "./config.json";
-import RegisterForm from "./components/common/registerForm";
-import Profile from "./components/common/profile";
 import React from "react";
-import Links from "./components/common/links";
+import config from "./config.json";
+import { Route, Router, Routes } from "react-router-dom";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Profile from "./pages/profile";
 
 function App() {
-  axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+  axios.defaults.headers.common["Access-Control-Allow-Origin"] = config.api;
   return (
-    <React.Fragment>
-      <RegisterForm />
-    </React.Fragment>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/" element={"insert home page here"} />
+    </Routes>
   );
 }
 
