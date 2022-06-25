@@ -224,7 +224,7 @@ class Links extends Component {
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
-        <React.Fragment>
+        <div className="middle-container links">
           <h1>Links</h1>
           {this.state.links.map((link) => (
             <Link
@@ -243,7 +243,7 @@ class Links extends Component {
               errors={this.state.errors}
             />
           ))}
-        </React.Fragment>
+        </div>
       );
     }
   }

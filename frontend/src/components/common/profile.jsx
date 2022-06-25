@@ -108,7 +108,7 @@ class Profile extends Form {
     else {
       return (
         <div className="middle-container profile">
-          <h1>Profile</h1>
+          <div className="profile-pic"></div>
           <form class="container profile" onSubmit={this.handleSubmit}>
             {this.renderInput("name", "Name")}
             {this.renderInput("title", "Title")}

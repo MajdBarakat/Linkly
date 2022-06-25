@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+div.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: $text-primary;
+  margin: auto;
+  margin-bottom: 20px;
+}

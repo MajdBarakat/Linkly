@@ -13,8 +13,8 @@ export default ({
   errors,
 }) => {
   return (
-    <div isediting={isEditing} order={link.order}>
-      <h1>{fetchedLink.linkName}</h1>
+    <div className="link-container" isediting={isEditing} order={link.order}>
+      <h2>{fetchedLink.linkName}</h2>
       <button
         onClick={() => onToggleVisiblity(link)}
       >{`${link.isVisible}`}</button>
