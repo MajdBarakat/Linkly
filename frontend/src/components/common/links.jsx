@@ -5,6 +5,7 @@ import getUser from "../services/getUser";
 import config from "../../config.json";
 import { Component } from "react";
 import Link from "./link";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 class Links extends Component {
   state = {
@@ -220,30 +221,55 @@ class Links extends Component {
     return error.replace(/[^\s]*/, "value");
   };
 
+  onDragEnd = () => {};
+
   render() {
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
-        <div className="middle-container links">
-          <h1>Links</h1>
-          {this.state.links.map((link) => (
-            <Link
-              key={link.id}
-              link={link}
-              fetchedLink={
-                this.state.fetchedLinks[this.state.links.indexOf(link)]
-              }
-              isEditing={this.isEditing}
-              onEdit={this.handleEdit}
-              onChange={this.handleChange}
-              onDelete={this.handleDelete}
-              onSubmit={this.handleSubmit}
-              onDiscard={this.handleDiscard}
-              onToggleVisiblity={this.handleVisibility}
-              errors={this.state.errors}
-            />
-          ))}
-        </div>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId="links">
+            {(provided) => (
+              <div
+                className="middle-container links"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                <h1>Links</h1>
+                {this.state.links.map((link, index) => (
+                  <Draggable key={link.id} draggableId={link.id} index={index}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <Link
+                          key={link.id}
+                          link={link}
+                          fetchedLink={
+                            this.state.fetchedLinks[
+                              this.state.links.indexOf(link)
+                            ]
+                          }
+                          isEditing={this.isEditing}
+                          onEdit={this.handleEdit}
+                          onChange={this.handleChange}
+                          onDelete={this.handleDelete}
+                          onSubmit={this.handleSubmit}
+                          onDiscard={this.handleDiscard}
+                          onToggleVisiblity={this.handleVisibility}
+                          errors={this.state.errors}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       );
     }
   }
