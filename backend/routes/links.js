@@ -145,6 +145,55 @@ router.put("/vis-toggle", authMiddleware, async (req, res) => {
   res.send(_.pick(user, ["_id", "name", "email", "links"]));
 });
 
+//CHANGING ORDER OF A LINK
+router.put("/change-order", authMiddleware, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+
+  // const dataError = validateLink(req.body).error;
+  // if (dataError)
+  //   return res
+  //     .status(400)
+  //     .send("Joi USER DATA ERROR:" + dataError.details[0].message);
+
+  if (!user)
+    return res.status(404).send("Something went wrong! User not found...");
+
+  const request = req.body;
+  const index = user.links.findIndex((x) => x.id === request.id);
+  if (!request) return res.status(400).send("Something went wrong!");
+
+  if (!user.links[index] || index === -1)
+    return res.status(404).send("Something went wrong! Link not found...");
+
+  let links = [...user.links];
+  links.forEach((link) => {
+    if (link.id !== request.id) {
+      if (request.up) {
+        if (link.order <= request.destination && link.order > request.source)
+          link.order -= 1;
+      } else {
+        if (link.order >= request.destination && link.order < request.source)
+          link.order += 1;
+      }
+    } else link.order = request.destination;
+  });
+
+  try {
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          links: links,
+        },
+      }
+    );
+  } catch (err) {
+    return res.status(400).send("Something went wrong!");
+  }
+
+  res.send("Order changed successfully!");
+});
+
 //DELETING SPECIFIC
 router.delete("/delete/:id", authMiddleware, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
@@ -186,7 +235,6 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
 
 updateOrder = (id, order, arr) => {
   if (arr.find((link) => link.id !== id && link.order === order)) {
-    console.log("hello");
     arr.forEach((link) => {
       if (link.order >= order && link.id !== id) link.order += 1;
     });

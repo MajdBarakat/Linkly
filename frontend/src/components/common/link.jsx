@@ -14,7 +14,7 @@ export default ({
 }) => {
   return (
     <div className="link-container" isediting={isEditing} order={link.order}>
-      <h2>{fetchedLink.linkName}</h2>
+      <h1>{fetchedLink.linkName}</h1>
       <button
         onClick={() => onToggleVisiblity(link)}
       >{`${link.isVisible}`}</button>

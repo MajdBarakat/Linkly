@@ -37,7 +37,7 @@ class Links extends Component {
       data.email = result.email;
       data.websiteTheme = result.settings.websiteTheme;
       result.links = await this.initStates(result.links);
-      this.state.links = result.links;
+      this.state.links = this.sortLinks(result.links);
       const deepClone = JSON.parse(JSON.stringify(this.state.links));
       this.setState({
         data,
@@ -50,12 +50,17 @@ class Links extends Component {
   async getLinks() {
     let { links } = await getUser(this.jwt);
     if (links) {
+      links = this.sortLinks(links);
       this.setState({ links });
       const deepClone = JSON.parse(JSON.stringify(this.state.links));
       this.setState({
         fetchedLinks: deepClone,
       });
     } else return "An error occured while fetching links.";
+  }
+
+  sortLinks(links) {
+    return links.sort((a, b) => parseFloat(a.order) - parseFloat(b.order));
   }
 
   initStates = (links) => {
@@ -221,13 +226,41 @@ class Links extends Component {
     return error.replace(/[^\s]*/, "value");
   };
 
-  onDragEnd = () => {};
+  handleOnDragEnd = async ({ draggableId, source, destination }) => {
+    if (!destination) return;
+    let isOrderUp;
+    let links = [...this.state.links];
+    if (source.index === destination.index) return;
+    let from = this.state.links[source.index].order;
+    let to = this.state.links[destination.index].order;
+    source.index < destination.index ? (isOrderUp = true) : (isOrderUp = false);
+
+    links.splice(destination.index, 0, links.splice(source.index, 1)[0]);
+    this.setState({ links });
+
+    const result = await http
+      .put(
+        config.api + `/links/change-order`,
+        {
+          id: draggableId,
+          up: isOrderUp,
+          source: from,
+          destination: to,
+        },
+        { headers: { "x-auth-token": this.jwt } }
+      )
+      .catch((err) => alert(err.response.data));
+
+    if (!result) return;
+    this.getLinks();
+    console.log("Link order changed successfully!");
+  };
 
   render() {
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
-        <DragDropContext onDragEnd={this.onDragEnd}>
+        <DragDropContext onDragEnd={this.handleOnDragEnd}>
           <Droppable droppableId="links">
             {(provided) => (
               <div
@@ -244,6 +277,7 @@ class Links extends Component {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
+                        <h1>{link.order}</h1>
                         <Link
                           key={link.id}
                           link={link}
