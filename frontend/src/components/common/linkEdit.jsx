@@ -9,7 +9,7 @@ export default ({
   //
   const renderInput = (name, label, value, onChange, errors, type = "text") => {
     return (
-      <div id={link.id}>
+      <div id={link.id} className="input-container link-edit">
         <label>{label}</label>
         <input
           name={name}
@@ -17,50 +17,41 @@ export default ({
           type={type}
           onChange={onChange}
         ></input>
-        {errors && <div>{errors[name]}</div>}
+        {errors[name] && (
+          <div className="under-text-container">
+            <div className="text-error">{errors[name]}</div>
+          </div>
+        )}
       </div>
     );
   };
 
   const valuesChanged = !(JSON.stringify(link) === JSON.stringify(fetchedLink));
   return (
-    <form>
-      {renderInput("order", "Order", link.order, onChange, errors, "number")}
-      {renderInput("linkName", "Name", link.linkName, onChange, errors)}
-      {renderInput("linkURL", "URL", link.linkURL, onChange, errors)}
-      {renderInput(
-        "linkDescription",
-        "Description",
-        link.linkDescription,
-        onChange,
-        errors
-      )}
-      {renderInput(
-        "linkPictureURL",
-        "Picture",
-        link.linkPictureURL,
-        onChange,
-        errors
-      )}
-      {renderInput(
-        "linkThumbnailURL",
-        "Thumbnail",
-        link.linkThumbnailURL,
-        onChange,
-        errors
-      )}
+    <div className="link-edit-container">
+      <form className="container link-edit">
+        {renderInput("linkName", "Name", link.linkName, onChange, errors)}
+        {renderInput("linkURL", "URL", link.linkURL, onChange, errors)}
+        {renderInput(
+          "linkDescription",
+          "Description",
+          link.linkDescription,
+          onChange,
+          errors
+        )}
 
-      <button
-        onClick={(e) => onSubmit(e, link)}
-        disabled={valuesChanged ? undefined : true}
-      >
-        Save
-      </button>
-      {valuesChanged ? (
-        <button onClick={() => onDiscard(link, fetchedLink)}>Cancel</button>
-      ) : (
-        ""
-      )}
-    </form>
+        <button
+          onClick={(e) => onSubmit(e, link)}
+          disabled={valuesChanged ? undefined : true}
+        >
+          Save
+        </button>
+        {valuesChanged ? (
+          <button onClick={() => onDiscard(link, fetchedLink)}>Cancel</button>
+        ) : (
+          ""
+        )}
+      </form>
+    </div>
   );
 };

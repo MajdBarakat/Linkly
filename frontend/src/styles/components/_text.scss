@@ -11,3 +11,9 @@ h1 {
     font-weight: 600;
   }
 }
+
+h2 {
+  font: $header;
+  color: $text-secondary;
+  margin: 0 0 10px 0;
+}
