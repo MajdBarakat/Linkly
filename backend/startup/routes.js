@@ -7,6 +7,7 @@ const email = require("../routes/email");
 const users = require("../routes/users");
 const update = require("../routes/update");
 const links = require("../routes/links");
+const image = require("../routes/image");
 
 module.exports = function (app) {
   //middleware
@@ -18,6 +19,7 @@ module.exports = function (app) {
   app.use("/api/users", users); //FIND OR DELETE USER
   app.use("/api/users", update); //UPDATING DETAILS
   app.use("/api/links", links); //UPDATING DETAILS
+  app.use("/api/image", image); //ULOADING and DELETING IMAGES
 
   app.use(error);
 };
