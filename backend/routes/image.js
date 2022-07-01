@@ -24,20 +24,12 @@ const upload = multer({
     s3: s3,
     acl: "public-read",
     key: (req, file, callback) => {
-      callback(null, file.originalname);
+      callback(null, req.body.filepath);
     },
   }),
 });
 
-//endpoints
-
-// test = () => {
-//   console.log(s3);
-// };
-// test();
-
 router.post("/upload", upload.single("file"), (req, res) => {
-  console.log(req.file);
   res.send("successfully uploaded!" + req.file.location);
 });
 
@@ -54,11 +46,11 @@ router.get("/download/:filename", async (req, res) => {
 });
 
 router.delete("/delete/:filename", async (req, res) => {
-  const fileName = req.params.filename;
+  const filepath = req.body.path + req.params.filename;
   let result = await s3
-    .deleteObject({ Bucket: bucket, Key: fileName })
+    .deleteObject({ Bucket: bucket, Key: filepath })
     .promise();
-  res.send("file successfully deleted!" + result.Body);
+  res.send("file successfully deleted!" + result);
 });
 
 module.exports = router;
