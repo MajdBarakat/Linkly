@@ -4,6 +4,7 @@ import http from "../services/httpService";
 import getUser from "../services/getUser";
 import config from "../../config.json";
 import Form from "./form";
+import Upload from "./upload";
 
 class Profile extends Form {
   state = {
@@ -22,6 +23,7 @@ class Profile extends Form {
     errors: {},
     loaded: false,
     fetchedData: {},
+    isUploading: false,
   };
 
   jwt =
@@ -99,6 +101,12 @@ class Profile extends Form {
     this.setState({ fetchedData: this.state.data });
   };
 
+  toggleUpload = () => {
+    let toggle = this.state.isUploading;
+    toggle = !toggle;
+    this.setState({ isUploading: toggle });
+  };
+
   render() {
     const valuesChanged = !(
       JSON.stringify(this.state.data) === JSON.stringify(this.state.fetchedData)
@@ -107,40 +115,43 @@ class Profile extends Form {
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
-        <div className="middle-container profile">
-          <div className="profile-pic"></div>
-          <form class="container profile" onSubmit={this.handleSubmit}>
-            {this.renderInput("name", "Name")}
-            {this.renderInput("title", "Title")}
-            {this.renderInput("username", "Username")}
-            {this.renderInput("email", "Email")}
-            {this.renderInput("bio", "Bio")}
-            <div className="profile-bottom">
-              {this.renderSelect(
-                "isAccountPrivate",
-                "Account Privacy",
-                isVerified ? "" : "verify email to publish account",
-                isAccountPrivate,
-                [
-                  { value: false, label: "Public" },
-                  { value: true, label: "Private" },
-                ]
-              )}
-              <div className="buttons">
-                {valuesChanged
-                  ? this.renderButton(
-                      "Cancel",
-                      "medium",
-                      false,
-                      "discard",
-                      "button"
-                    )
-                  : ""}
-                {this.renderButton("Save", !valuesChanged)}
+        <React.Fragment>
+          <div className="middle-container profile">
+            <div className="profile-pic" onClick={this.toggleUpload}></div>
+            <form class="container profile" onSubmit={this.handleSubmit}>
+              {this.renderInput("name", "Name")}
+              {this.renderInput("title", "Title")}
+              {this.renderInput("username", "Username")}
+              {this.renderInput("email", "Email")}
+              {this.renderInput("bio", "Bio")}
+              <div className="profile-bottom">
+                {this.renderSelect(
+                  "isAccountPrivate",
+                  "Account Privacy",
+                  isVerified ? "" : "verify email to publish account",
+                  isAccountPrivate,
+                  [
+                    { value: false, label: "Public" },
+                    { value: true, label: "Private" },
+                  ]
+                )}
+                <div className="buttons">
+                  {valuesChanged
+                    ? this.renderButton(
+                        "Cancel",
+                        "medium",
+                        false,
+                        "discard",
+                        "button"
+                      )
+                    : ""}
+                  {this.renderButton("Save", !valuesChanged)}
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+          {this.state.isUploading && <Upload />}
+        </React.Fragment>
       );
     }
   }
