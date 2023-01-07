@@ -30,9 +30,9 @@ export default ({ active }) => {
   const dropdown =
     <div className="dropdown-menu">
       <div><h4>@{user.username}</h4></div>
-      <Link to="/profile">Profile</Link>
-      <Link to="/admin/settings">Settings</Link>
-      <Link to="/login" onClick={() => doLogout()}>Logout</Link>
+      <Link to="/profile" className={active === "Profile" ? "active" : ""}>Profile</Link>
+      <Link to="/admin/settings" className={active === "Settings" ? "active" : ""}>Settings</Link>
+      <Link to="/login" className="logout" onClick={() => doLogout()}>Logout</Link>
     </div>
   
   return (

@@ -82,7 +82,6 @@ div.navbar {
     top: 58px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     border-radius: 10px;
 
     div {
@@ -93,9 +92,31 @@ div.navbar {
         margin: 7px;
         text-align: center;
         color: $accent;
+        font:$body;
       }
-
     }
+
+    a {
+      font: $body;
+      padding: 15px 0;
+      margin: 0 15px;
+      border-bottom: solid $border-secondary 1px;
+      color: $border-secondary;
+
+        &.active {
+          color: $text-primary;
+        }
+    
+        &.logout {
+          border-bottom: 0px;
+        }
+
+        &:hover {
+          opacity: .7;
+          color: $text-primary;
+        }
+    }
+
 
   }
 }

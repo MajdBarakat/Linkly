@@ -7,7 +7,7 @@ export default () => {
 
   return (
     <React.Fragment>
-      <Navbar/>
+      <Navbar active="Profile"/>
       <Profile/>
     </React.Fragment>
   );
