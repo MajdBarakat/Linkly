@@ -1,0 +1,503 @@
+@font-face {
+  font-family: "Rubik";
+  src: url(../../assets/fonts/Rubik-VariableFont_wght.ttf);
+}
+@font-face {
+  font-family: "Roboto";
+  src: url(../../assets/fonts/Roboto-Regular.ttf);
+}
+label {
+  margin-left: 5px;
+  font: 1.1rem "Rubik";
+  color: #ffffff;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 7px 0;
+}
+.input-container input {
+  font: 1rem "Rubik";
+  background-color: #3b3b3b;
+  color: #ffffff;
+  padding: 0.8rem;
+  border: 0 solid #ffffff;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.input-container input::-moz-placeholder {
+  color: #a9a9a9;
+}
+.input-container input:-ms-input-placeholder {
+  color: #a9a9a9;
+}
+.input-container input::placeholder {
+  color: #a9a9a9;
+}
+.input-container input.error {
+  outline: 1px solid crimson;
+}
+.input-container input:focus {
+  outline: 1px solid;
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+}
+.select-container select {
+  font: 1rem "Rubik";
+  padding: 0.5rem;
+  margin-top: 5px;
+}
+
+form.container {
+  background-color: #121314;
+  padding: 20px 30px;
+}
+form.container.sign-in, form.container.register, form.container.profile {
+  border-radius: 10px;
+}
+form.container.link-edit {
+  background: #0d0d0d;
+  border-radius: 0 0 15px 15px;
+}
+form.container .profile-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+form.container .profile-bottom div.buttons {
+  align-self: end;
+}
+form.container .profile-bottom div.buttons button {
+  font-weight: 500;
+  color: #060708;
+}
+form.container .profile-bottom div.buttons :nth-last-child(2) {
+  color: #ffffff;
+  background: none;
+  margin-right: 10px;
+}
+
+.under-text-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  font: 0.75rem "Roboto";
+}
+.under-text-container .text-error {
+  color: crimson;
+}
+.under-text-container .text-help {
+  color: #a9a9a9;
+}
+.under-text-container .text-help a {
+  text-decoration: none;
+  color: #0ab798;
+}
+
+div.middle-container {
+  position: relative;
+  margin: auto;
+  top: 100px;
+}
+
+div.sign-in,
+div.register {
+  max-width: 400px;
+}
+
+div.profile {
+  max-width: 600px;
+}
+
+button {
+  font: 1.1rem "Rubik";
+  padding: 0.8rem;
+  border: 0px;
+  border-radius: 5px;
+}
+button.full-width {
+  width: 100%;
+}
+button:hover {
+  cursor: pointer;
+}
+button.primary-btn {
+  font-weight: 700;
+  background-color: #0ab798;
+}
+button.secondary-btn {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: #ffffff;
+  border-width: 1px;
+  border-style: solid;
+}
+
+h1 {
+  font: 1.5rem "Rubik";
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 30px;
+}
+h1 span {
+  color: #0ab798;
+  font-weight: 600;
+}
+
+h2 {
+  font: 1.5rem "Rubik";
+  color: #a9a9a9;
+  margin: 0 0 10px 0;
+}
+
+h3 {
+  font: 1.25rem "Rubik";
+  color: #a9a9a9;
+  margin: 0 0 10px 0;
+}
+
+.warning {
+  color: #99091a;
+}
+
+div.navbar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff;
+}
+div.navbar .logo {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  align-self: center;
+  margin: 0 30px;
+}
+div.navbar .left,
+div.navbar .right {
+  display: flex;
+  flex-direction: row;
+}
+div.navbar div.nav-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+div.navbar div.nav-links a {
+  padding: 20px;
+  color: #a9a9a9;
+  font: 1rem "Rubik";
+}
+div.navbar div.nav-links a.active {
+  color: #ffffff;
+  border-bottom: 4px solid #0ab798;
+  margin-bottom: -2px;
+}
+div.navbar div.nav-links a:hover {
+  background-color: #121314;
+}
+div.navbar div.signin-signup {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+div.navbar div.signin-signup a {
+  font: 1rem "Rubik";
+  color: #ffffff;
+  margin-right: 15px;
+}
+div.navbar div.signin-signup a:nth-last-child(1) {
+  padding: 5px 10px;
+  border: 2px solid;
+  border-radius: 10px;
+  color: #0ab798;
+}
+div.navbar div.signin-signup a:hover {
+  opacity: 0.9;
+}
+
+div.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+div.link-drag-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+div.link-drag-container div.draggable {
+  width: 30px;
+  background-color: #121314;
+  display: flex;
+  align-items: center;
+  border-radius: 15px 0 0 15px;
+}
+div.link-drag-container div.draggable svg {
+  fill: #a9a9a9;
+}
+div.link-drag-container div.draggable .seperator {
+  height: 80%;
+  width: 1px;
+  border-right: 1px solid #a9a9a9;
+  opacity: 0.25;
+}
+div.link-drag-container div.link-container {
+  padding-left: 10px;
+  background-color: #121314;
+  width: 550px;
+  padding: 10px;
+  padding-left: 20px;
+  border-radius: 0 15px 15px 0;
+}
+div.link-drag-container div.link-container div.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+div.link-drag-container div.link-container div.top div.left {
+  display: flex;
+  align-items: center;
+}
+div.link-drag-container div.link-container div.top div.left svg {
+  margin-left: 10px;
+  width: 24px;
+  fill: #a9a9a9;
+  cursor: pointer;
+}
+div.link-drag-container div.link-container div.bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+div.link-drag-container div.link-container div.bottom div.left {
+  width: 85%;
+}
+div.link-drag-container div.link-container div.bottom div.left div.banner {
+  border-radius: 20px;
+  height: 125px;
+  background-color: #060708;
+}
+div.link-drag-container div.link-container div.bottom div.right {
+  display: flex;
+  align-items: flex-end;
+}
+div.link-drag-container div.link-container div.bottom div.right svg {
+  margin: 5px;
+  width: 32px;
+  stroke: #a9a9a9;
+  cursor: pointer;
+}
+div.link-drag-container div.link-container h1 {
+  font-weight: 600;
+  text-align: start;
+  margin: 0;
+}
+div.link-drag-container[isEditing=true] {
+  padding-bottom: 0;
+}
+div.link-drag-container[isEditing=true] div.draggable {
+  border-bottom-left-radius: 0;
+}
+div.link-drag-container[isEditing=true] div.link-container {
+  border-bottom-right-radius: 0;
+}
+div.link-drag-container[isEditing=true] div.link-container div.bottom {
+  display: none;
+}
+
+div.link-edit-container {
+  display: flex;
+  justify-content: center;
+}
+div.link-edit-container form {
+  width: 580px;
+}
+
+div.overlay-background {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+div.overlay-background div.overlay {
+  background-color: #121314;
+}
+
+div.upload-overlay {
+  width: 40vw;
+  max-width: 820px;
+  min-width: 400px;
+  border-radius: 15px;
+}
+div.upload-overlay div.top {
+  margin: 10px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+div.upload-overlay div.top button.exit {
+  position: absolute;
+  left: 0;
+  background-color: transparent;
+  padding: 0;
+}
+div.upload-overlay div.top button.exit svg {
+  width: 25px;
+  fill: #ffffff;
+}
+div.upload-overlay div.top button.exit svg:hover {
+  opacity: 0.8;
+}
+div.upload-overlay div.options {
+  display: flex;
+  border-width: 0px 0px 1px 0px;
+  border-color: #a9a9a9;
+  border-style: solid;
+}
+div.upload-overlay div.options button {
+  width: 50%;
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+div.upload-overlay div.options button:hover {
+  background-color: #3b3b3b;
+}
+div.upload-overlay div.options button::after {
+  content: "";
+  display: block;
+  background-color: transparent;
+  width: 30%;
+  min-width: 80px;
+  height: 4px;
+  margin-top: 5px;
+  border-radius: 15px 15px 0px 0px;
+}
+div.upload-overlay div.options button.active {
+  color: #0ab798;
+}
+div.upload-overlay div.options button.active::after {
+  background-color: #0ab798;
+}
+div.upload-overlay div.options button svg {
+  width: 35px;
+}
+div.upload-overlay div.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+div.upload-overlay div.bottom section.dropzone-container {
+  width: 100%;
+}
+div.upload-overlay div.bottom section.dropzone-container.hovered div.dropzone {
+  border-width: 2px;
+}
+div.upload-overlay div.bottom section.dropzone-container div.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  border-style: dashed;
+  border-color: white;
+  border-width: 0;
+}
+div.upload-overlay div.bottom section.dropzone-container div.dropzone img {
+  border-radius: 50%;
+  width: 25%;
+  margin: 1.5rem 0px;
+}
+div.upload-overlay div.bottom section.dropzone-container div.dropzone h1 {
+  margin: 0;
+  margin-bottom: 0.3rem;
+}
+div.upload-overlay div.bottom section.dropzone-container div.dropzone button {
+  margin: 1.5rem;
+  border-radius: 10px;
+  padding: 0.8rem 1.6rem;
+  display: flex;
+  align-items: center;
+}
+div.upload-overlay div.bottom section.dropzone-container div.dropzone button:hover {
+  opacity: 0.8;
+}
+div.upload-overlay div.bottom section.dropzone-container div.dropzone button svg {
+  width: 25px;
+  margin-right: 5px;
+}
+div.upload-overlay div.bottom section.dropped-container {
+  width: 100%;
+}
+div.upload-overlay div.bottom section.dropped-container div.dropped-file {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+}
+div.upload-overlay div.bottom section.dropped-container div.dropped-file div.preview {
+  display: flex;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0 0 0 25rem rgba(0, 0, 0, 0.6);
+  background-position: center;
+}
+div.upload-overlay div.bottom section.dropped-container div.dropped-file div.preview img {
+  width: 25rem;
+  max-width: 100%;
+  height: 25rem;
+  max-height: 70vh;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+div.upload-overlay div.bottom section.dropped-container button {
+  border-radius: 10px;
+  margin-top: 1rem;
+  float: right;
+}
+div.upload-overlay div.bottom div.err-container {
+  text-align: center;
+}
+div.upload-overlay div.bottom div.err-container h3 {
+  color: white;
+  margin: 1rem;
+  padding: 0 10%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #060708;
+}
+
+div.full-screen {
+  width: 100vw;
+  max-width: 100%;
+  height: 100vh;
+}/*# sourceMappingURL=App.css.map */

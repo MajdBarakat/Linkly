@@ -3,13 +3,14 @@
 div.navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid $border-primary;
 
   .logo {
     width: 20px;
     height: 20px;
-    background-color: red;
     align-self: center;
+    background-color: red;
     margin: 0 30px;
   }
 
@@ -63,5 +64,38 @@ div.navbar {
         opacity: 0.9;
       }
     }
+  }
+
+  div.profile-pic {
+    width: 40px;
+    height: 40px;
+    margin: 0 30px;
+    border: solid $text-primary 1px;
+    cursor: pointer;
+  }
+
+  div.dropdown-menu{
+    background-color: $secondary;
+    position: absolute;
+    width: 200px;
+    transform: translateX(-60%) ;
+    top: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+
+    div {
+      width: 100%;
+      border-bottom: solid $border-secondary 1px;
+
+      h4 {
+        margin: 7px;
+        text-align: center;
+        color: $accent;
+      }
+
+    }
+
   }
 }

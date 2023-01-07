@@ -1,12 +1,11 @@
 @use "../abstracts" as *;
 
 button {
+
   font: $label;
-  font-weight: 700;
   padding: 0.8rem;
   border: 0px;
   border-radius: 5px;
-  background-color: $accent;
 
   &.full-width {
     width: 100%;
@@ -14,5 +13,18 @@ button {
 
   &:hover {
     cursor: pointer;
+  }
+
+  &.primary-btn {
+    font-weight: 700;
+    background-color: $accent;
+  }
+
+  &.secondary-btn {
+    background-color: transparent;
+    color: $text-primary;
+    border-color: $text-primary;
+    border-width: 1px;
+    border-style: solid;
   }
 }
