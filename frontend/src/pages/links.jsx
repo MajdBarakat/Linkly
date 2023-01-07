@@ -5,13 +5,7 @@ import Links from "../components/common/links";
 export default () => {
   return (
     <React.Fragment>
-      <Navbar
-        navigation={[
-          { label: "Links", to: "/admin/links", active: "active" },
-          { label: "Appearance", to: "/admin/appearance", active: undefined },
-          { label: "Settings", to: "/admin/settings", active: undefined },
-        ]}
-      />
+      <Navbar active="Links" />
       <Links />
     </React.Fragment>
   );
