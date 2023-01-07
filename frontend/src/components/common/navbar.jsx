@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import getUser from "../services/getUser";
 
-export default ({ navigation, user, dropDown }) => {
-  let menuVisibility = false;
-  let warningVisibility = true;
+export default ({ active }) => {
+  const [menuVisibility, setMenuVisibility] = useState(false)
+  const [warningVisibility, setWarningVisibility] = useState(true)
+  const navigation = [
+    { label: "Links", to: "/admin/links"},
+    { label: "Appearance", to: "/admin/appearance"},
+    { label: "Settings", to: "/admin/settings"},
+  ]
+
+  const [user, setUser] = useState('')
+  const jwt = localStorage.getItem('jwt')
+  
+  useEffect(() => {
+    const assignUser = async () => {
+      const user = await getUser(jwt) || ""
+      setUser(user)
+    }
+    if (!user) assignUser();
+  })
+
+  const doLogout = () => {
+    localStorage.removeItem('jwt')
+    setUser('');
+  }
+
+  const dropdown =
+    <div className="dropdown-menu">
+      <div><h4>@{user.username}</h4></div>
+      <Link to="/profile">Profile</Link>
+      <Link to="/admin/settings">Settings</Link>
+      <Link to="/login" onClick={() => doLogout()}>Logout</Link>
+    </div>
+  
   return (
     <React.Fragment>
       <div className="navbar">
@@ -11,7 +42,7 @@ export default ({ navigation, user, dropDown }) => {
           <div className="logo"></div>{" "}
           <div className="nav-links">
             {navigation.map((e) => (
-              <Link key={e.label} className={e.active} to={e.to}>
+             <Link key={e.label} className={e.label === active ? "active" : ""} to={e.to}>
                 {e.label}
               </Link>
             ))}
@@ -19,14 +50,16 @@ export default ({ navigation, user, dropDown }) => {
         </div>
         <div className="right">
           {user ? (
-            <div
-              className="userIcon"
-              style={`background: url(${user.appearance.profile.profilePicURL})`}
-              onClick={() => (menuVisibility = !menuVisibility)}
-            >
-              {menuVisibility}
-            </div>
+            <React.Fragment>
+              {menuVisibility && dropdown}
+              <div
+                className="profile-pic"
+                style={{background: `url(${user.appearance.profile.profilePicURL})`}}
+                onClick={() => setMenuVisibility(!menuVisibility)}
+              ></div>
+            </React.Fragment>
           ) : (
+              jwt ||
             <div className="signin-signup">
               <Link to="/login">Sign in</Link>
               <Link to="/register">Sign up</Link>
@@ -43,7 +76,7 @@ export default ({ navigation, user, dropDown }) => {
               {<Link to="">Resend Verification Link</Link>}`
             </p>
           }
-          <button className="close" onClick={() => (warningVisibility = false)}>
+          <button className="close" onClick={() => setWarningVisibility(false)}>
             X
           </button>
         </div>

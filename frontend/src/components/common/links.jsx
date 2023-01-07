@@ -25,8 +25,7 @@ class Links extends Component {
     newLinkType: "",
   };
 
-  jwt =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmFiMjQ5ZGE5OGJlMmU0ZGY3MDdlZTgiLCJpYXQiOjE2NTU0NzYzODR9.brnE-tV5jiFcnw8RFbxT7h1fjFeg_UiwX9c0hLl3YcE";
+  jwt = localStorage.getItem('jwt')
 
   async componentDidMount() {
     const result = await getUser(this.jwt);
