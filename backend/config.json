@@ -3,7 +3,7 @@
 
   "defaultAppearance": {
     "profile": {
-      "profilePicURL": "https://putcdnlinkhere.com",
+      "profilePicURL": "https://linkly-content.s3.eu-west-2.amazonaws.com/profile/default.png",
       "profilePicShape": 0,
       "name": "",
       "title": "",
