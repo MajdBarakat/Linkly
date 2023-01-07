@@ -15,6 +15,14 @@ aws.config.update({
   region: process.env.region,
 });
 
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
+      cb(null, true)
+  } else {
+      cb(null, false)
+  }
+}
+
 const s3 = new aws.S3();
 const bucket = process.env.bucket;
 
@@ -23,14 +31,15 @@ const upload = multer({
     bucket: bucket,
     s3: s3,
     acl: "public-read",
+    fileFilter: fileFilter,
     key: (req, file, callback) => {
-      callback(null, req.body.filepath);
-    },
+      callback(null, `${req.params.dir}/` + file.originalname );
+    }, 
   }),
 });
 
-router.post("/upload", upload.single("file"), (req, res) => {
-  res.send("successfully uploaded!" + req.file.location);
+router.post("/upload/:dir", upload.single("file"), (req, res) => {
+  res.send(req.file.location);
 });
 
 router.get("/list", async (req, res) => {

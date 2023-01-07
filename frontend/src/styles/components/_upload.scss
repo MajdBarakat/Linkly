@@ -1,1 +1,177 @@
 @use "../abstracts" as *;
+
+div.upload-overlay {
+    width: 40vw;
+    max-width: 820px;
+    min-width: 400px;
+    border-radius: 15px;
+
+    div.top {
+        margin: 10px;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    
+        button.exit {
+            position: absolute;
+            left: 0;
+            background-color: transparent;
+            padding: 0;
+
+            svg {
+                width: 25px;
+                fill: $text-primary;
+
+                &:hover {
+                    opacity: .8;
+                }
+            }
+        }
+    }
+
+    div.options {
+        display: flex;
+        border-width: 0px 0px 1px 0px;
+        border-color: $text-secondary;
+        border-style: solid;
+
+        button {
+            width: 50%;
+            background-color: transparent;
+            color: $text-primary;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding-bottom: 0;
+
+            &:hover {
+                background-color: $text-input;
+            }
+
+            &::after {
+                content: "";
+                display: block;
+                background-color: transparent;
+                width: 30%;
+                min-width: 80px;
+                height: 4px;
+                margin-top: 5px;
+                border-radius: 15px 15px 0px 0px;
+            }
+
+            &.active {
+                color: $accent;
+
+                &::after {
+                    background-color: $accent;
+                }
+            }
+
+            svg {
+                width: 35px;
+            }
+        }
+    }
+
+    div.bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px;
+
+        section.dropzone-container{
+            width: 100%;
+
+            &.hovered div.dropzone{
+                border-width: 2px;
+            }
+            
+            div.dropzone {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border-radius: 15px;
+                border-style: dashed;
+                border-color: white;
+                border-width: 0;
+    
+                img {
+                    border-radius: 50%;
+                    width: 25%;
+                    margin: 1.5rem 0px;
+                }
+
+                h1 {
+                    margin: 0;
+                    margin-bottom: .3rem;
+                }
+
+                button {
+                    margin: 1.5rem; 
+                    border-radius: 10px;
+                    padding: .8rem 1.6rem;
+                    display: flex;
+                    align-items: center;
+
+                    &:hover {
+                        opacity: .8;
+                    }
+
+                    svg { 
+                        width: 25px;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+
+
+        section.dropped-container {
+            width: 100%;
+
+            div.dropped-file {
+                background-color: rgba(0,0,0,.6);
+                display: flex;
+                justify-content: center;
+                
+                div.preview {
+                    display: flex;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    box-shadow: inset 0 0 0 25rem rgba(0,0,0,.6);
+                    background-position: center; 
+    
+                    img {
+                        width: 25rem;
+                        max-width: 100%;
+                        height: 25rem;
+                        max-height: 70vh;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+            }
+
+            button {
+                border-radius: 10px;
+                margin-top: 1rem;
+                float: right;
+            }
+        }
+
+        div.err-container {
+            text-align: center;
+
+            h3 {
+                color: white;
+                margin: 1rem;
+                padding: 0 10%;
+            }
+        }
+    }
+}

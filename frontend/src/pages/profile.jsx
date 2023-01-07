@@ -1,18 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/common/navbar";
 import Profile from "../components/common/profile";
+import getUser from "../components/services/getUser";
 
 export default () => {
+
   return (
     <React.Fragment>
-      <Navbar
-        navigation={[
-          { label: "Links", to: "/admin/links", active: "active" },
-          { label: "Appearance", to: "/admin/appearance", active: undefined },
-          { label: "Settings", to: "/admin/settings", active: undefined },
-        ]}
-      />
-      <Profile />
+      <Navbar/>
+      <Profile/>
     </React.Fragment>
   );
 };

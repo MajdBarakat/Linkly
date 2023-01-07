@@ -25,12 +25,11 @@ class Profile extends Form {
     fetchedData: {},
     isUploading: false,
   };
-
-  jwt =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmFiMjQ5ZGE5OGJlMmU0ZGY3MDdlZTgiLCJpYXQiOjE2NTUzODYyMzR9.QZIjnTUbdx5wnaP4rUmXKxEnmfW2DVfkB2nyKuU8Gfo";
+  
+  jwt = localStorage.getItem('jwt')
 
   async componentDidMount() {
-    const result = await getUser(this.jwt);
+    const result = await getUser(this.jwt) 
     if (result) {
       const data = { ...this.state.data };
       const { profile } = result.appearance;
@@ -101,12 +100,6 @@ class Profile extends Form {
     this.setState({ fetchedData: this.state.data });
   };
 
-  toggleUpload = () => {
-    let toggle = this.state.isUploading;
-    toggle = !toggle;
-    this.setState({ isUploading: toggle });
-  };
-
   render() {
     const valuesChanged = !(
       JSON.stringify(this.state.data) === JSON.stringify(this.state.fetchedData)
@@ -117,8 +110,12 @@ class Profile extends Form {
       return (
         <React.Fragment>
           <div className="middle-container profile">
-            <div className="profile-pic" onClick={this.toggleUpload}></div>
-            <form class="container profile" onSubmit={this.handleSubmit}>
+            <div
+              className="profile-pic"
+              onClick={() => this.setState({ isUploading: true })}
+              style={{background: `url(${this.state.data.profilePicURL})`}}
+            ></div>
+            <form className="container profile" onSubmit={this.handleSubmit}>
               {this.renderInput("name", "Name")}
               {this.renderInput("title", "Title")}
               {this.renderInput("username", "Username")}
@@ -145,12 +142,14 @@ class Profile extends Form {
                         "button"
                       )
                     : ""}
-                  {this.renderButton("Save", !valuesChanged)}
+                  {this.renderButton("Save", "save", !valuesChanged)}
                 </div>
               </div>
             </form>
           </div>
-          {this.state.isUploading && <Upload />}
+          {this.state.isUploading && (
+            <Upload onExit={() => this.setState({ isUploading: false })} dir="profile"/>
+          )}
         </React.Fragment>
       );
     }
