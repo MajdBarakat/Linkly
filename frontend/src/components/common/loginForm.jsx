@@ -29,12 +29,14 @@ class LoginFrom extends Form {
       .post(config.api + "/auth", this.state.data)
       .catch((err) => alert(err.response.data));
 
-    if (!result) return;
+    if (!result) {
+      this.setState({errors: { password: "Login failed. Please ensure the email and password are valid" }})
+      return
+    };
 
-    console.log(
-      "authenticated successfully! here is your token: ",
-      result.data
-    );
+    console.log("authenticated successfully!");
+
+    localStorage.setItem('jwt', result.data)
   };
 
   render() {
@@ -52,7 +54,7 @@ class LoginFrom extends Form {
             { text: "", label: "Forgot password?", href: "" },
             "password"
           )}
-          {this.renderButton("Sign In", "full-width")}
+          {this.renderButton("Sign In", "full-width primary-btn")}
           <div className="under-text-container">
             <div className="text-help">
               New to Linkly?

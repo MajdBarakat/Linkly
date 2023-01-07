@@ -62,7 +62,7 @@ class RegisterForm extends Form {
             },
             "password"
           )}
-          {this.renderButton("Create Account", "full-width")}
+          {this.renderButton("Create Account", "full-width primary-btn")}
           <div className="under-text-container">
             <div className="text-help">
               Already a member?
