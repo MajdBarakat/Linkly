@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import getUser from "../services/getUser";
+import { XIcon } from "@heroicons/react/solid";
 
 export default ({ active }) => {
   const [menuVisibility, setMenuVisibility] = useState(false)
@@ -11,6 +12,7 @@ export default ({ active }) => {
     { label: "Settings", to: "/admin/settings"},
   ]
 
+  
   const [user, setUser] = useState('')
   const jwt = localStorage.getItem('jwt')
   
@@ -21,7 +23,7 @@ export default ({ active }) => {
     }
     if (!user) assignUser();
   })
-
+  
   const doLogout = () => {
     localStorage.removeItem('jwt')
     setUser('');
@@ -67,18 +69,17 @@ export default ({ active }) => {
           )}
         </div>
       </div>
-      {user && warningVisibility && user.isVerified ? (
+      {user && warningVisibility && !user.isVerified ? (
         <div className="verification-warning">
           {
-            <p>
-              `To publish your profile, please verify your email by clicking the
-              link we sent to ${<span>{user.email}</span>}. $
-              {<Link to="">Resend Verification Link</Link>}`
-            </p>
+              <h4>
+                To publish your profile, please verify your email by clicking the
+                link we sent to {<span>{user.email}</span>}. {<span className="resend" onClick={() => console.log("resend-email here")}> Resend Verification Link</span>}
+              </h4>
           }
-          <button className="close" onClick={() => setWarningVisibility(false)}>
+          <XIcon className="close" onClick={() => setWarningVisibility(false)}>
             X
-          </button>
+          </XIcon>
         </div>
       ) : (
         ""

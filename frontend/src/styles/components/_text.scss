@@ -24,6 +24,11 @@ h3 {
   margin: 0 0 10px 0;
 }
 
+h4 {
+  font:$body;
+  color: $accent;
+}
+
 .warning {
   color: $warning
 }

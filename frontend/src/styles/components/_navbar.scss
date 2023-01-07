@@ -83,6 +83,7 @@ div.navbar {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
+    z-index: 100;
 
     div {
       width: 100%;
@@ -91,8 +92,6 @@ div.navbar {
       h4 {
         margin: 7px;
         text-align: center;
-        color: $accent;
-        font:$body;
       }
     }
 
@@ -116,7 +115,49 @@ div.navbar {
           color: $text-primary;
         }
     }
-
-
   }
+}
+
+div.verification-warning {
+  width: 100vw;
+  background-color: $warning;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h4 {
+    color: $text-primary;
+    margin: 0;
+
+    span{
+      font-weight: bold;
+    }
+
+    span.resend {
+      text-decoration: underline;
+      cursor: pointer;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  
+
+
+  .close {
+    width: 25px;
+    fill: $text-primary;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    margin: 0 20px;
+    z-index: 1;
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+
 }
