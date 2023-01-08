@@ -58,7 +58,7 @@ form.container {
 div.middle-container {
   position: relative;
   margin: auto;
-  top: 100px;
+  top: 50px;
 }
 
 div.sign-in,
@@ -68,4 +68,10 @@ div.register {
 
 div.profile {
   max-width: 600px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: $text-primary;
+  }
 }

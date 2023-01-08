@@ -7,7 +7,7 @@ import { Component } from "react";
 import Link from "./link";
 import LinkEdit from "./linkEdit";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/solid";
 
 class Links extends Component {
   state = {
@@ -299,7 +299,7 @@ class Links extends Component {
                             onToggleVisiblity={this.handleVisibility}
                           />
                         </div>
-                        {link.isEditing ? (
+                        {link.isEditing &&
                           <LinkEdit
                             link={link}
                             fetchedLink={
@@ -312,14 +312,13 @@ class Links extends Component {
                             onDiscard={this.handleDiscard}
                             errors={this.state.errors}
                           />
-                        ) : (
-                          ""
-                        )}
+                        }
                       </div>
                     )}
                   </Draggable>
                 ))}
                 {provided.placeholder}
+                <div className="new-link" onClick={() => console.log("")}><PlusCircleIcon></PlusCircleIcon></div>
               </div>
             )}
           </Droppable>

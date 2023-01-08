@@ -7,7 +7,7 @@ export default ({ link, fetchedLink, onEdit, onDelete, onToggleVisiblity }) => {
       <div className="top">
         <div className="left">
           <h1>{fetchedLink.linkName}</h1>
-          <PencilAltIcon onClick={() => onEdit(link)}>Edit</PencilAltIcon>
+            <PencilAltIcon onClick={() => onEdit(link)}>Edit</PencilAltIcon>
         </div>
         <div className="right">
           <button

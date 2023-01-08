@@ -61,7 +61,6 @@ export default ({ active }) => {
               ></div>
             </React.Fragment>
           ) : (
-              jwt ||
             <div className="signin-signup">
               <Link to="/login">Sign in</Link>
               <Link to="/register">Sign up</Link>
@@ -74,7 +73,7 @@ export default ({ active }) => {
           {
               <h4>
                 To publish your profile, please verify your email by clicking the
-                link we sent to {<span>{user.email}</span>}. {<span className="resend" onClick={() => console.log("resend-email here")}> Resend Verification Link</span>}
+                link we've sent to your email: {<span>{user.email}</span>}. {<span className="resend" onClick={() => console.log("resend-email here")}> Resend Verification Link</span>}
               </h4>
           }
           <XIcon className="close" onClick={() => setWarningVisibility(false)}>

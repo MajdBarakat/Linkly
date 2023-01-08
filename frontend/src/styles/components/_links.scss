@@ -102,3 +102,22 @@ div.link-edit-container {
     width: 580px;
   }
 }
+
+div.new-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 580px;
+  height: 150px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+  border: 2px dashed $text-secondary ;
+  cursor: pointer;
+
+  svg {
+    fill: $text-secondary;
+    width: 50px;
+  }
+}

@@ -115,6 +115,7 @@ class Profile extends Form {
               onClick={() => this.setState({ isUploading: true })}
               style={{background: `url(${this.state.data.profilePicURL})`}}
             ></div>
+            <h2>@{this.state.data.username}</h2>
             <form className="container profile" onSubmit={this.handleSubmit}>
               {this.renderInput("name", "Name")}
               {this.renderInput("title", "Title")}
