@@ -1,163 +1,170 @@
 @use "../abstracts" as *;
 
-div.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid $border-primary;
+div.navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 100000;
 
-  .logo {
-    width: 20px;
-    height: 20px;
-    align-self: center;
-    background-color: red;
-    margin: 0 30px;
-  }
-
-  .left,
-  .right {
+  div.navbar {
     display: flex;
-    flex-direction: row;
-  }
-
-  div.nav-links {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-
-    a {
-      padding: 20px;
-      color: $text-secondary;
-      font: $body;
-
-      &.active {
-        color: $text-primary;
-        border-bottom: 4px solid $accent;
-        margin-bottom: -2px;
-      }
-
-      &:hover {
-        background-color: $secondary;
-      }
-    }
-  }
-
-  div.signin-signup {
-    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-right: 10px;
-
-    a {
-      font: $body;
-      color: $text-primary;
-      margin-right: 15px;
-
-      &:nth-last-child(1) {
-        padding: 5px 10px;
-        border: 2px solid;
-        border-radius: 10px;
-        color: $accent;
-      }
-
-      &:hover {
-        opacity: 0.9;
-      }
+    border-bottom: 1px solid $border-primary;
+    background-color: $primary;
+  
+    .logo {
+      width: 20px;
+      height: 20px;
+      align-self: center;
+      background-color: red;
+      margin: 0 30px;
     }
-  }
-
-  div.profile-pic {
-    width: 40px;
-    height: 40px;
-    margin: 0 30px;
-    border: solid $text-primary 1px;
-    cursor: pointer;
-  }
-
-  div.dropdown-menu{
-    background-color: $secondary;
-    position: absolute;
-    width: 200px;
-    transform: translateX(-60%) ;
-    top: 58px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    z-index: 100;
-
-    div {
-      width: 100%;
-      border-bottom: solid $border-secondary 1px;
-
-      h4 {
-        margin: 7px;
-        text-align: center;
-      }
+  
+    .left,
+    .right {
+      display: flex;
+      flex-direction: row;
     }
-
-    a {
-      font: $body;
-      padding: 15px 0;
-      margin: 0 15px;
-      border-bottom: solid $border-secondary 1px;
-      color: $border-secondary;
-
+  
+    div.nav-links {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+  
+      a {
+        padding: 20px;
+        color: $text-secondary;
+        font: $body;
+  
         &.active {
           color: $text-primary;
+          border-bottom: 4px solid $accent;
+          margin-bottom: -2px;
         }
-    
-        &.logout {
-          border-bottom: 0px;
-        }
-
+  
         &:hover {
-          opacity: .7;
-          color: $text-primary;
+          background-color: $secondary;
         }
+      }
     }
-  }
-}
-
-div.verification-warning {
-  width: 100vw;
-  background-color: $warning;
-  padding: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  h4 {
-    color: $text-primary;
-    margin: 0;
-
-    span{
-      font-weight: bold;
+  
+    div.signin-signup {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+  
+      a {
+        font: $body;
+        color: $text-primary;
+        margin-right: 15px;
+  
+        &:nth-last-child(1) {
+          padding: 5px 10px;
+          border: 2px solid;
+          border-radius: 10px;
+          color: $accent;
+        }
+  
+        &:hover {
+          opacity: 0.9;
+        }
+      }
     }
-
-    span.resend {
-      text-decoration: underline;
+  
+    div.profile-pic {
+      width: 40px;
+      height: 40px;
+      margin: 0 30px;
+      border: solid $text-primary 1px;
       cursor: pointer;
+    }
+  
+    div.dropdown-menu{
+      background-color: $secondary;
+      position: absolute;
+      width: 200px;
+      transform: translateX(-60%) ;
+      top: 58px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      z-index: 100;
+  
+      div {
+        width: 100%;
+        border-bottom: solid $border-secondary 1px;
+  
+        h4 {
+          margin: 7px;
+          text-align: center;
+        }
+      }
+  
+      a {
+        font: $body;
+        padding: 15px 0;
+        margin: 0 15px;
+        border-bottom: solid $border-secondary 1px;
+        color: $border-secondary;
+  
+          &.active {
+            color: $text-primary;
+          }
       
-      &:hover {
-        opacity: 0.8;
+          &.logout {
+            border-bottom: 0px;
+          }
+  
+          &:hover {
+            opacity: .7;
+            color: $text-primary;
+          }
       }
     }
   }
   
-
-
-  .close {
-    width: 25px;
-    fill: $text-primary;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    margin: 0 20px;
-    z-index: 1;
-
-    &:hover {
-      opacity: .7;
+  div.verification-warning {
+    width: 100vw;
+    background-color: $warning;
+    padding: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    h4 {
+      color: $text-primary;
+      margin: 0;
+  
+      span{
+        font-weight: bold;
+      }
+  
+      span.resend {
+        text-decoration: underline;
+        cursor: pointer;
+        
+        &:hover {
+          opacity: 0.8;
+        }
+      }
     }
+    
+  
+  
+    .close {
+      width: 25px;
+      fill: $text-primary;
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      margin: 0 20px;
+      z-index: 1;
+  
+      &:hover {
+        opacity: .7;
+      }
+    }
+  
   }
-
 }

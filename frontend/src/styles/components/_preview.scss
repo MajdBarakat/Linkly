@@ -1,0 +1,62 @@
+@use "../abstracts" as *;
+
+div.desktop-preview {
+    background-color: green;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+div.mobile-preview {
+    background-color: green;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+
+    .mobile {
+        
+    }
+}
+
+.handle-vertical {
+    width: 100%;
+    height: 10px;
+    background-color: blue;
+    display: block;
+    position: absolute;
+    top:0;
+    cursor: n-resize;
+}
+
+.handle-horizontal {
+    width: 10px;
+    height: 100%;
+    background-color: blue;
+    display: block;
+    position: absolute;
+    left: 0;
+    cursor: w-resize;
+}
+
+.resizable {
+    width: 100vw !important;
+    background-color: red;
+    position: sticky;
+    display: flex;
+    bottom: 0;
+    z-index: 10000;
+}
+
+.resizable-horizontal {
+    background-color: red;
+    position: relative;
+    z-index: 10000;
+    display: flex;
+}
+
+.split {
+    display: flex;
+    align-items: stretch;
+}

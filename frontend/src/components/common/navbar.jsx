@@ -38,7 +38,7 @@ export default ({ active }) => {
     </div>
   
   return (
-    <React.Fragment>
+    <div className="navbar-container">
       <div className="navbar">
         <div className="left">
           <div className="logo"></div>{" "}
@@ -83,6 +83,6 @@ export default ({ active }) => {
       ) : (
         ""
       )}
-    </React.Fragment>
+    </div>
   );
 };

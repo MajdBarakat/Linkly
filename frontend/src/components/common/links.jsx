@@ -6,6 +6,7 @@ import config from "../../config.json";
 import { Component } from "react";
 import Link from "./link";
 import LinkEdit from "./linkEdit";
+import Preview from "./preview";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/solid";
 
@@ -23,6 +24,7 @@ class Links extends Component {
     links: [],
     fetchedLinks: [],
     newLinkType: "",
+    preview: "Mobile",
   };
 
   jwt = localStorage.getItem('jwt')
@@ -259,70 +261,79 @@ class Links extends Component {
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
-        <DragDropContext onDragEnd={this.handleOnDragEnd}>
-          <Droppable droppableId="links">
-            {(provided) => (
-              <div
-                className="middle-container links"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {this.state.links.map((link, index) => (
-                  <Draggable key={link.id} draggableId={link.id} index={index}>
-                    {(provided) => (
-                      <div
-                        className="link-container"
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                      >
-                        <div
-                          className="link-drag-container"
-                          isediting={link.isEditing ? "true" : "false"}
-                        >
-                          <div
-                            className="draggable"
-                            {...provided.dragHandleProps}
-                          >
-                            <DotsVerticalIcon />
-                            <div className="seperator" />
-                          </div>
-                          <Link
-                            key={link.id}
-                            link={link}
-                            fetchedLink={
-                              this.state.fetchedLinks[
-                                this.state.links.indexOf(link)
-                              ]
-                            }
-                            onEdit={this.handleEdit}
-                            onDelete={this.handleDelete}
-                            onToggleVisiblity={this.handleVisibility}
-                          />
-                        </div>
-                        {link.isEditing &&
-                          <LinkEdit
-                            link={link}
-                            fetchedLink={
-                              this.state.fetchedLinks[
-                                this.state.links.indexOf(link)
-                              ]
-                            }
-                            onChange={this.handleChange}
-                            onSubmit={this.handleSubmit}
-                            onDiscard={this.handleDiscard}
-                            errors={this.state.errors}
-                          />
-                        }
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-                <div className="new-link" onClick={() => console.log("")}><PlusCircleIcon></PlusCircleIcon></div>
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <React.Fragment>
+
+          <div className="split">
+            <div className="link-page">
+              <DragDropContext onDragEnd={this.handleOnDragEnd}>
+                <Droppable droppableId="links">
+                  {(provided) => (
+                    <div
+                      className="middle-container links"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {this.state.links.map((link, index) => (
+                        <Draggable key={link.id} draggableId={link.id} index={index}>
+                          {(provided) => (
+                            <div
+                              className="link-container"
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                            >
+                              <div
+                                className="link-drag-container"
+                                isediting={link.isEditing ? "true" : "false"}
+                              >
+                                <div
+                                  className="draggable"
+                                  {...provided.dragHandleProps}
+                                >
+                                  <DotsVerticalIcon />
+                                  <div className="seperator" />
+                                </div>
+                                <Link
+                                  key={link.id}
+                                  link={link}
+                                  fetchedLink={
+                                    this.state.fetchedLinks[
+                                      this.state.links.indexOf(link)
+                                    ]
+                                  }
+                                  onEdit={this.handleEdit}
+                                  onDelete={this.handleDelete}
+                                  onToggleVisiblity={this.handleVisibility}
+                                />
+                              </div>
+                              {link.isEditing &&
+                                <LinkEdit
+                                  link={link}
+                                  fetchedLink={
+                                    this.state.fetchedLinks[
+                                      this.state.links.indexOf(link)
+                                    ]
+                                  }
+                                  onChange={this.handleChange}
+                                  onSubmit={this.handleSubmit}
+                                  onDiscard={this.handleDiscard}
+                                  errors={this.state.errors}
+                                />
+                              }
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                      <div className="new-link" onClick={() => console.log("")}><PlusCircleIcon></PlusCircleIcon></div>
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+            {this.state.preview === "Mobile" && <Preview viewType="Mobile"/>}
+          </div>
+          {this.state.preview === "Desktop" && <Preview viewType="Desktop"/>}
+        </React.Fragment>
       );
     }
   }
