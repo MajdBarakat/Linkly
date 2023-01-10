@@ -262,7 +262,6 @@ class Links extends Component {
     else {
       return (
         <React.Fragment>
-
           <div className="split">
             <div className="link-page">
               <DragDropContext onDragEnd={this.handleOnDragEnd}>

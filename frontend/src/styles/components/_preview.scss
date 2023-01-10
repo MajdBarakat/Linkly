@@ -1,7 +1,48 @@
 @use "../abstracts" as *;
 
+
+.resizable-vertical {
+    width: 100vw !important;
+    position: sticky;
+    display: flex;
+    bottom: 0;
+    z-index: 10000;
+    
+    .handle-vertical {
+        width: 100%;
+        height: 10px;
+        background-color: blue;
+        display: block;
+        position: absolute;
+        top:0;
+        cursor: n-resize;
+    }
+}
+
+.resizable-horizontal {
+    position: relative;
+    z-index: 10000;
+    display: flex;
+    
+    .handle-horizontal {
+        width: 3px;
+        height: 100%;
+        background-color: $border-secondary;
+        display: block;
+        position: absolute;
+        left: 0;
+        cursor: w-resize;
+        transition: width .5s;
+        
+        &:hover,
+        &.dragging {
+            background-color: $border-primary;
+            width: 6px;
+        }
+    }
+}
+
 div.desktop-preview {
-    background-color: green;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -9,51 +50,26 @@ div.desktop-preview {
 }
 
 div.mobile-preview {
-    background-color: green;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    display: flex;
-
-    .mobile {
-        
-    }
-}
-
-.handle-vertical {
-    width: 100%;
-    height: 10px;
-    background-color: blue;
-    display: block;
-    position: absolute;
-    top:0;
-    cursor: n-resize;
-}
-
-.handle-horizontal {
-    width: 10px;
     height: 100%;
-    background-color: blue;
-    display: block;
-    position: absolute;
-    left: 0;
-    cursor: w-resize;
-}
 
-.resizable {
-    width: 100vw !important;
-    background-color: red;
-    position: sticky;
-    display: flex;
-    bottom: 0;
-    z-index: 10000;
-}
+    .mobile-wrapper {
+        position: sticky;
+        margin: auto;
+        width: 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;   
 
-.resizable-horizontal {
-    background-color: red;
-    position: relative;
-    z-index: 10000;
-    display: flex;
+        .mobile {
+            background-color: white;
+            width: 100%;
+            padding-bottom: min( 80vh,190%);
+            outline: solid 1px white;
+        }
+
+
+    }
 }
 
 .split {

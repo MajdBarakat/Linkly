@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import getUser from "../services/getUser";
 import { XIcon } from "@heroicons/react/solid";
