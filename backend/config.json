@@ -9,7 +9,10 @@
       "title": "",
       "bio": ""
     },
-    "layoutId": 0,
+    "layout" : {
+      "layoutId": 0,
+      "linkLayout": null
+    },
     "theme": {
       "isUsingTheme": true,
       "themeId": 0
@@ -23,16 +26,13 @@
       },
       "background": {
         "isUsingBackgroundImage": false,
-        "backgroundImageURL": "https://putcdnlinkhere.com",
-        "backgroundId": null,
-        "linkLayout": null,
-        "fontId": 0
-      }
+        "backgroundImageURL": "https://putcdnlinkhere.com"
+      },
+      "fontId" : 0
     }
   },
 
   "defaultSettings": {
-    "isAccountPrivate": true,
-    "websiteTheme": "dark"
+    "isAccountPrivate": true
   }
 }
