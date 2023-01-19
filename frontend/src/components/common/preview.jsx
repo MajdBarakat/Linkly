@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ResizableBox } from 'react-resizable';
+import { PhonePreview, DesktopPreview } from '../../assets/svgs';
 
 export default ({ viewType }) => {
 
@@ -20,7 +21,7 @@ export default ({ viewType }) => {
             <ResizableBox className="resizable-vertical"
                 width={"none"}
                 height={vh* 40}
-                minConstraints={[null, vh * 30 ]}
+                minConstraints={[null, vh * 40 ]}
                 maxConstraints={[null, vh * 60]}
                 resizeHandles={["n"]}
                 axis="y"
@@ -29,14 +30,9 @@ export default ({ viewType }) => {
                 onResizeStop={() => setDragging(false)}
             >
                 <div className="desktop-preview">
-                    <div className="desktop">
-                        <div className="toolbar">
-                            <div className="left"></div>
-                            <div className="searchbar"></div>
-                            <div className="right"></div>
-                        </div>
-                        <div className="content">
-                            //html here
+                    <div className="desktop-wrapper">
+                        <div className="desktop">
+                            <DesktopPreview/>
                         </div>
                     </div>
                 </div>
@@ -60,18 +56,10 @@ export default ({ viewType }) => {
                             "height":`calc(100vh - ${navbar.clientHeight}px)`
                         }}>
                         <div className="mobile">
-                            <div className="border1">
-                                <div className="border2">
-                                    <div className="screen">
-                                        <div className="bezel">
-                                            <div className="speaker"></div>
-                                            <div className="camera"></div>
-                                        </div>
-                                        <div className="content">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>    
+                            <div className="screen">
+                                
+                            </div>
+                            <PhonePreview />
                         </div>
                     </div>
                 </div>

@@ -7,15 +7,25 @@
     display: flex;
     bottom: 0;
     z-index: 10000;
+    // background-color: rgba(0, 0, 0, .9);
+    background-color: $primary;
     
     .handle-vertical {
         width: 100%;
-        height: 10px;
-        background-color: blue;
+        height: 3px;
+        background-color: $border-secondary;
         display: block;
         position: absolute;
         top:0;
-        cursor: n-resize;
+        cursor: ns-resize;
+        transition: height .5s;
+
+        &:hover,
+        &.dragging {
+            background-color: $border-primary;
+            height: 6px;
+        }
+
     }
 }
 
@@ -31,7 +41,7 @@
         display: block;
         position: absolute;
         left: 0;
-        cursor: w-resize;
+        cursor: ew-resize;
         transition: width .5s;
         
         &:hover,
@@ -47,6 +57,27 @@ div.desktop-preview {
     justify-content: center;
     width: 100%;
     margin-top: 10px;
+    display: flex;
+
+    .desktop-wrapper {
+        width: 100%;
+        height: 80%;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        
+        .desktop {
+            aspect-ratio: 16/9;
+            height: 100%;
+
+            svg {
+                width: 100%;
+                height: 100%;
+                // position: absolute;
+            }
+        }
+    }
+
 }
 
 div.mobile-preview {
@@ -62,12 +93,26 @@ div.mobile-preview {
         justify-content: center;   
 
         .mobile {
-            background-color: white;
+            aspect-ratio: 1/2;
             width: 100%;
-            padding-bottom: min( 80vh,190%);
-            outline: solid 1px white;
-        }
+            max-height: 80vh;
+            position: relative;
 
+            svg {
+                width: 100%;
+                position: absolute;
+            }
+
+            .screen {
+                position: absolute;
+                // background-color: white;
+                width: 90%;
+                height: 95%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+        }
 
     }
 }
