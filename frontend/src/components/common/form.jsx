@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import passwordJoi from "joi-password-complexity";
 import Input from "./input";
 import Select from "./select";
+import Textarea from "./textarea";
 
 class Form extends Component {
   state = { data: {}, errors: {}, loaded: {}, fetchedData: {} };
@@ -131,6 +132,23 @@ class Form extends Component {
     const { data, errors } = this.state;
     return (
       <Input
+        label={label}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        help={help}
+        value={data[name]}
+        onChange={this.handleChange}
+        onBlur={this.handleBlur}
+        error={errors[name]}
+      />
+    );
+  }
+
+  renderTextarea(name, label, placeholder, help, type = "text") {
+    const { data, errors } = this.state;
+    return (
+      <Textarea
         label={label}
         name={name}
         type={type}
