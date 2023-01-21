@@ -11,7 +11,8 @@ label {
   flex-direction: column;
   padding: 7px 0;
 
-  input {
+  input,
+  textarea {
     font: $body;
     background-color: $text-input;
     color: $text-primary;
@@ -31,6 +32,11 @@ label {
     &:focus {
       outline: 1px solid;
     }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
   }
 
   //   input[type="file"] {
