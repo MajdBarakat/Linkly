@@ -11,7 +11,7 @@
     },
     "layout" : {
       "layoutId": 0,
-      "linkLayout": null
+      "linkLayout": 0
     },
     "theme": {
       "isUsingTheme": true,
@@ -26,9 +26,10 @@
       },
       "background": {
         "isUsingBackgroundImage": false,
-        "backgroundImageURL": "https://putcdnlinkhere.com"
+        "backgroundImageURL": "https://putcdnlinkhere.com",
+        "backgroundId": 0
       },
-      "fontId" : 0
+      "fontId": 0
     }
   },
 

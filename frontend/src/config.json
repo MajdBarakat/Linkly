@@ -1,3 +1,15 @@
 {
-  "api": "http://localhost:3001/api"
+  "api": "http://localhost:3001/api",
+
+  "layouts": ["Default", "Blockie"],
+
+  "themes": ["None", "Dark", "Light", "Crimson"],
+
+  "colors": ["Background Primary", "Background Secondary", "Font Primary", "Font Secondary", "Links"],
+
+  "backgrounds": ["None", "Plain", "Wavy", "ZigZag"],
+
+  "fonts": ["Times New Roman"]
+
+
 }
