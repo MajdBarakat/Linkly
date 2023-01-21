@@ -6,6 +6,7 @@ import config from "../../config.json";
 import Form from "./form";
 import Upload from "./upload";
 import Preview from "./preview";
+import ColorPicker from "./colorPicker";
 
 class Appearance extends Form {
   state = {
@@ -33,6 +34,8 @@ class Appearance extends Form {
     loaded: false,
     fetchedData: {},
     isUploading: false,
+    pickingColor: false,
+    colorName: "",
     preview: "Mobile",
   };
   
@@ -118,7 +121,8 @@ class Appearance extends Form {
               },
               background: {
                 isUsingBackgroundImage: data.isUsingBackgroundImage,
-                backgroundImageURL: data.backgroundImageURL
+                backgroundImageURL: data.backgroundImageURL,
+                backgroundId: data.backgroundId
               },
               fontId: data.fontId,
             },
@@ -134,7 +138,7 @@ class Appearance extends Form {
     this.setState({ fetchedData: this.state.data });
   };
 
-  handleSelect = (fields) => {
+  handleSelect = async (fields) => {
     const data = { ...this.state.data }
     for (let i = 0; i < fields.length; i++) {
       if (fields[i].name !== "themeId" && fields[i].name !== "isUsingTheme") {
@@ -143,8 +147,7 @@ class Appearance extends Form {
       }
       data[fields[i].name] = fields[i].value
     }
-    this.setState({ data })
-    this.doSubmit()
+    this.setState({ data }, () => this.doSubmit())
   }
 
   renderSelectItem = (name, index, selected, fields) => {
@@ -153,12 +156,26 @@ class Appearance extends Form {
     )
   }
 
+  renderColorItems = () => {
+    const colors = ["bgdPrimaryColor", "bgdSecondaryColor", "fontColor", "linksColor"]
+    const { data } = this.state
+    return (
+      config.colors.map((name, index) => (
+        <div onClick={() => this.setState({ pickingColor: colors[index], colorName: name }) }>
+        <div style={{color: this.state.data[colors[index]]}}>CLICK HERE TO SELECT COLOR</div>
+        <div>
+          <h2>{name}</h2>
+          <h3>{this.state.data[colors[index]]}</h3>
+        </div>
+      </div>
+    ))) 
+  }
+
   render() {
     const valuesChanged = !(
       JSON.stringify(this.state.data) === JSON.stringify(this.state.fetchedData)
     );
-    const { data } = this.state;
-    const { isVerified } = data;
+    const { data, pickingColor, isUploading } = this.state;
     if (!this.state.loaded) return <h1>Loading...</h1>;
     else {
       return (
@@ -214,10 +231,35 @@ class Appearance extends Form {
                   this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "backgroundId", value: index }])
                 ))}
               </form>
+
+              {/* COLORS */}
+              <div className="section-title">
+                <h2>Colors</h2>
+              </div>
+              <form className="container appearance-grid colors">
+                {this.renderColorItems()}
+              </form>
+
+              {/* FONT */}
+              <div className="section-title">
+                <h2>Font</h2>
+              </div>
+              <form className="container appearance-grid fonts">
+                {config.fonts.map((name, index) => (
+                  this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "fontId", value: index }])
+                ))}
+              </form>
             </div>
-            {this.state.isUploading && (
+            {isUploading && (
               <Upload onExit={() => this.setState({ isUploading: false })} dir="profile"/>
-              )}
+            )}
+            {pickingColor && (
+              <ColorPicker
+                color={data[pickingColor]}
+                name={this.state.colorName}
+                onChangeComplete={(color) => this.handleSelect([{ name: pickingColor, value: color.hex }])}
+                onExit={() => this.setState({ pickingColor: false })} />
+            )}
             {this.state.preview === "Mobile" && <Preview viewType="Mobile"/>}
           </div>
           {this.state.preview === "Desktop" && <Preview viewType="Desktop"/>}

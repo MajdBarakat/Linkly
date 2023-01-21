@@ -12,6 +12,7 @@
     "joi-password-complexity": "^5.1.0",
     "react": "^18.1.0",
     "react-beautiful-dnd": "^13.1.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.1.0",
     "react-dropzone": "^14.2.3",
     "react-resizable": "^3.0.4",

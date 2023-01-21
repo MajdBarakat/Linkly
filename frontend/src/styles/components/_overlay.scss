@@ -11,5 +11,9 @@ div.overlay-background {
 
   div.overlay {
     background-color: $secondary;
+
+    &.color-overlay {
+      padding: 20px;
+    }
   }
 }

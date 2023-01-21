@@ -5,7 +5,7 @@
 
   "themes": ["None", "Dark", "Light", "Crimson"],
 
-  "colors": ["Background Primary", "Background Secondary", "Font Primary", "Font Secondary", "Links"],
+  "colors": ["Background Primary", "Background Secondary", "Font", "Links"],
 
   "backgrounds": ["None", "Plain", "Wavy", "ZigZag"],
 
