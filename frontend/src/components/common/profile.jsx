@@ -18,7 +18,6 @@ class Profile extends Form {
       email: "",
       bio: "",
       isAccountPrivate: true,
-      websiteTheme: "dark",
     },
     errors: {},
     loaded: false,
@@ -42,14 +41,12 @@ class Profile extends Form {
       data.email = result.email;
       data.bio = profile.bio;
       data.isAccountPrivate = result.settings.isAccountPrivate;
-      data.websiteTheme = result.settings.websiteTheme;
       this.setState({ data, loaded: true, fetchedData: data });
     }
   }
 
   schema = {
     isVerified: Joi.boolean(),
-    // profilePicURL: Joi.string().min(5).max(255).uri().label("Profile Pic"),
     profilePicURL: Joi.string().min(5).max(255).label("Profile Pic"),
     profilePicShape: Joi.number().label("Profile Shape"),
     name: Joi.string().allow("").max(30).label("Name"),
@@ -58,7 +55,6 @@ class Profile extends Form {
     email: Joi.string().min(5).max(255).required().email().label("Email"),
     bio: Joi.string().allow("").max(80).label("Bio"),
     isAccountPrivate: Joi.boolean().label("Privacy"),
-    websiteTheme: Joi.string().min(1).max(30).required().label("Website Theme"),
   };
 
   formatInput = () => {
@@ -85,7 +81,6 @@ class Profile extends Form {
             },
           },
           email: data.email,
-          bio: data.bio,
           settings: {
             isAccountPrivate: data.isAccountPrivate,
           },
@@ -121,7 +116,7 @@ class Profile extends Form {
               {this.renderInput("title", "Title")}
               {this.renderInput("username", "Username")}
               {this.renderInput("email", "Email")}
-              {this.renderInput("bio", "Bio")}
+              {this.renderTextarea("bio", "Bio", "Tell us more about you..")}
               <div className="profile-bottom">
                 {this.renderSelect(
                   "isAccountPrivate",
