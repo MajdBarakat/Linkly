@@ -7,6 +7,7 @@ import Form from "./form";
 import Upload from "./upload";
 import Preview from "./preview";
 import ColorPicker from "./colorPicker";
+import OptionsRender from "./optionsRender";
 
 class Appearance extends Form {
   state = {
@@ -38,9 +39,10 @@ class Appearance extends Form {
     colorName: "",
     preview: "Mobile",
   };
+
   
   jwt = localStorage.getItem('jwt')
-
+  
   async componentDidMount() {
     const result = await getUser(this.jwt) 
     if (result) {
@@ -150,9 +152,12 @@ class Appearance extends Form {
     this.setState({ data }, () => this.doSubmit())
   }
 
-  renderSelectItem = (name, index, selected, fields) => {
+  renderSelectItem = (name, index, selected, fields, type) => {
     return (
-      <div key={index} className={selected ? "selected" : undefined} onClick={() => this.handleSelect(fields)}>{name}</div>
+      <div key={index} className={selected ? "selected" : undefined} onClick={() => this.handleSelect(fields)}>
+        <OptionsRender index={index} type={type} />
+        {name}
+      </div>
     )
   }
 
@@ -161,11 +166,11 @@ class Appearance extends Form {
     const { data } = this.state
     return (
       config.colors.map((name, index) => (
-        <div onClick={() => this.setState({ pickingColor: colors[index], colorName: name }) }>
-        <div style={{color: this.state.data[colors[index]]}}>CLICK HERE TO SELECT COLOR</div>
+        <div key={index} onClick={() => this.setState({ pickingColor: colors[index], colorName: name }) }>
+        <div style={{color: data[colors[index]]}}>CLICK HERE TO SELECT COLOR</div>
         <div>
           <h2>{name}</h2>
-          <h3>{this.state.data[colors[index]]}</h3>
+          <h3>{data[colors[index]]}</h3>
         </div>
       </div>
     ))) 
@@ -208,7 +213,7 @@ class Appearance extends Form {
               </div>
               <form className="container appearance-grid layout">
                 {config.layouts.map((name, index) => (
-                  this.renderSelectItem(name, index, data.layoutId === index, [{ name: "layoutId", value: index }])
+                  this.renderSelectItem(name, index, data.layoutId === index, [{ name: "layoutId", value: index }],"layout")
                 ))}
               </form>
 
@@ -218,7 +223,7 @@ class Appearance extends Form {
               </div>
               <form className="container appearance-grid themes">
                 {config.themes.map((name, index) => (
-                  this.renderSelectItem(name, index, data.themeId === index, [{ name: "themeId", value: index }, { name: "isUsingTheme", value: index > 0 ? true : false }])
+                  this.renderSelectItem(name, index, data.themeId === index, [{ name: "themeId", value: index }, { name: "isUsingTheme", value: index > 0 ? true : false }],"theme")
                 ))}
               </form>
 
