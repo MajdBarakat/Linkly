@@ -16,6 +16,14 @@ router.get("/me", authMiddleware, async (req, res) => {
   res.send(user);
 });
 
+//VIEW USER WITH USERNAME
+router.get("/:username", async (req, res) => {
+  const user = await User.findOne({ username: req.params.username }).select("-password -verificationToken -email");
+  if (!user)
+    return res.status(404).send("Something went wrong! User not found...")
+  res.send(user);
+})
+
 //DELETE CURRENT USER
 router.delete("/me", authMiddleware, async (req, res) => {
   const result = await User.deleteOne({ _id: req.user._id });
