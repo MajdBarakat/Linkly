@@ -1,3 +1,6 @@
+import Input from "./input";
+import Textarea from "./textarea";
+
 export default ({
   link,
   fetchedLink,
@@ -5,26 +8,36 @@ export default ({
   onSubmit,
   onDiscard,
   errors,
+  onClose,
 }) => {
-  //
+
   const renderInput = (name, label, value, onChange, errors, type = "text") => {
     return (
-      <div id={link.id} className="input-container link-edit">
-        <label>{label}</label>
-        <input
-          name={name}
-          value={value}
-          type={type}
-          onChange={onChange}
-        ></input>
-        {errors[name] && (
-          <div className="under-text-container">
-            <div className="text-error">{errors[name]}</div>
-          </div>
-        )}
-      </div>
+      <Input
+        label={label}
+        name={name}
+        type={type}
+        value={value}
+        onChange={onChange}
+        error={errors[name]}
+        id={link.id}
+      />
     );
-  };
+  }
+
+  const renderTextarea = (name, label, value, onChange, errors, type = "text") => {
+    return (
+      <Textarea
+        label={label}
+        name={name}
+        type={type}
+        value={value}
+        onChange={onChange}
+        error={errors[name]}
+        id={link.id}
+      />
+    );
+  }
 
   const valuesChanged = !(JSON.stringify(link) === JSON.stringify(fetchedLink));
   return (
@@ -32,7 +45,7 @@ export default ({
       <form className="container link-edit">
         {renderInput("linkName", "Name", link.linkName, onChange, errors)}
         {renderInput("linkURL", "URL", link.linkURL, onChange, errors)}
-        {renderInput(
+        {renderTextarea(
           "linkDescription",
           "Description",
           link.linkDescription,
@@ -40,17 +53,14 @@ export default ({
           errors
         )}
 
+        {/* <button onClick={() => valuesChanged ? onDiscard(link, fetchedLink) : onClose()}>Cancel</button> */}
         <button
           onClick={(e) => onSubmit(e, link)}
           disabled={valuesChanged ? undefined : true}
         >
           Save
         </button>
-        {valuesChanged ? (
-          <button onClick={() => onDiscard(link, fetchedLink)}>Cancel</button>
-        ) : (
-          ""
-        )}
+        
       </form>
     </div>
   );

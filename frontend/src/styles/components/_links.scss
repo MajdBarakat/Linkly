@@ -26,11 +26,9 @@ div.link-page {
     }
   
     div.link-container {
-      padding-left: 10px;
       background-color: $secondary;
       width: 550px;
-      padding: 10px;
-      padding-left: 20px;
+      padding: 20px;
       border-radius: 0 15px 15px 0;
   
       div.top {
@@ -48,6 +46,41 @@ div.link-page {
             cursor: pointer;
           }
         }
+
+        div.right {
+          display: flex;
+
+          button.visibility-btn {
+            width: 60px;
+            height: 38px;
+            border-radius: 25px;
+            padding: 0;
+            box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.4s;
+
+            div.switch {
+              width: 42px;
+              height: 42px;
+              margin-top: -2px;
+              border-radius: 50%;
+              background-color: $text-primary;
+              transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+              
+            }
+
+            &.ON {
+              background-color: $accent;
+              .switch {
+                transform: translateX(50%);
+              }
+            }
+            
+            &.OFF {
+              background-color: $text-secondary;
+            }
+          }
+        }
+        
       }
   
       div.bottom {

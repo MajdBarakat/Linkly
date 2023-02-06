@@ -30,6 +30,7 @@ export default () => {
     };
 
     const renderUserContent = () => { 
+        console.log(user)
         return user.links.map((link) => (<h1>{link.linkName}</h1>))
      };
 
@@ -40,7 +41,8 @@ export default () => {
             {loaded && user && 
                 <div>
                     <h1>USER PAGE</h1>
-                    <h2>{user.username}</h2>
+                    <h2>@{user.username}</h2>
+                    <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
                     {/* page content here */}
                     {renderUserContent()}
                 </div>
