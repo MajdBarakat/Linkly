@@ -178,6 +178,8 @@ router.put("/change-order", authMiddleware, async (req, res) => {
     } else link.order = request.destination;
   });
 
+  links = checkOrder(links)
+
   try {
     await User.updateOne(
       { _id: user._id },
@@ -239,14 +241,28 @@ updateOrder = (id, order, arr) => {
       if (link.order >= order && link.id !== id) link.order += 1;
     });
   }
-  return arr;
+  return checkOrder(arr);
 };
 
 updateOrderAfterDelete = (order, arr) => {
   arr.forEach((link) => {
     if (link.order > order) link.order -= 1;
   });
-  return arr;
+  return checkOrder(arr);
 };
+
+checkOrder = (arr) => {
+  const orders = []
+  for (const link of arr) {
+    if( orders.includes(link.order) ) return resetOrder(arr)
+    orders.push(link.order)
+  }
+  return arr
+}
+
+resetOrder = (arr) => {
+  arr.forEach((link, index) => link.order = index)
+  return arr
+}
 
 module.exports = router;
