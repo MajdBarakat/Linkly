@@ -6,9 +6,11 @@ export default ({
   error,
   defaultValue,
   options,
+  id,
+  className,
 }) => {
   return (
-    <div className={"select-container"}>
+    <div id={id} className={"select-container" + (className ? className : "")}>
       <label>{label}</label>
       <select
         name={name}

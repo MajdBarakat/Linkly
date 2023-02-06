@@ -8,9 +8,11 @@ export default ({
   placeholder,
   help,
   error,
+  id,
+  className
 }) => {
   return (
-    <div className={"input-container"}>
+    <div id={id} className={"input-container" + (className ? className : "")}>
       <label>{label}</label>
       <input
         className={error ? "error" : undefined}
