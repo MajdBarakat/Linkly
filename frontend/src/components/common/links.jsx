@@ -1,16 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import Joi from "joi-browser";
 import http from "../services/httpService";
 import getUser from "../services/getUser";
 import config from "../../config.json";
-import { Component } from "react";
 import Link from "./link";
 import LinkEdit from "./linkEdit";
 import Preview from "./preview";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/solid";
 
-class Links extends Component {
+class Links extends Component{
   state = {
     data: {
       isVerified: false,
@@ -39,7 +38,7 @@ class Links extends Component {
       data.username = result.username;
       data.email = result.email;
       data.websiteTheme = result.settings.websiteTheme;
-      result.links = await this.initStates(result.links);
+      // result.links = await this.initStates(result.links);
       this.state.links = this.sortLinks(result.links);
       const deepClone = JSON.parse(JSON.stringify(this.state.links));
       this.setState({
@@ -50,12 +49,14 @@ class Links extends Component {
     }
   }
 
-  async getLinks() {
+  async getLinks(isEditingIndex) {
     let { links } = await getUser(this.jwt);
     if (links) {
       links = this.sortLinks(links);
+      if(isEditingIndex > -1) links[isEditingIndex].isEditing = true
       this.setState({ links });
-      this.setState({ fetchedLinks: links });
+      const deepClone = JSON.parse(JSON.stringify(links));
+      this.setState({ fetchedLinks: deepClone });
     } else return "An error occured while fetching links.";
   }
 
@@ -63,10 +64,10 @@ class Links extends Component {
     return links.sort((a, b) => parseFloat(a.order) - parseFloat(b.order));
   }
 
-  initStates = (links) => {
-    links.forEach((link) => (link.isEditing = false));
-    return links;
-  };
+  // initStates = (links) => {
+  //   links.forEach((link) => (link.isEditing = false));
+  //   return links;
+  // };
 
   schema = {
     id: Joi.string().required(),
@@ -136,17 +137,17 @@ class Links extends Component {
     this.getLinks();
   };
 
-  handleEdit = async (link) => {
+  handleEdit = async (link, value) => {
     const links = [...this.state.links];
     const index = links.indexOf(link);
-    links[index].isEditing = !links[index].isEditing;
+    links[index].isEditing = value ? value :!links[index].isEditing;
     for (let i = 0; i < links.length; i++) {
       if (i !== index) links[i].isEditing = false;
     }
     this.setState({ links });
 
     const fetchedLinks = [...this.state.fetchedLinks];
-    fetchedLinks[index].isEditing = links[index].isEditing;
+    fetchedLinks[index].isEditing =value ? value : links[index].isEditing;
     for (let i = 0; i < fetchedLinks.length; i++) {
       if (i !== index) fetchedLinks[i].isEditing = false;
     }
@@ -229,15 +230,16 @@ class Links extends Component {
 
   handleOnDragEnd = async ({ draggableId, source, destination }) => {
     if (!destination) return;
-    let isOrderUp;
-    let links = [...this.state.links];
     if (source.index === destination.index) return;
-    let from = this.state.links[source.index].order;
-    let to = this.state.links[destination.index].order;
+    let isOrderUp;
+    const links = [...this.state.links];
+    const from = this.state.links[source.index].order;
+    const to = this.state.links[destination.index].order;
     source.index < destination.index ? (isOrderUp = true) : (isOrderUp = false);
-
+    
     links.splice(destination.index, 0, links.splice(source.index, 1)[0]);
-    this.setState({ links });
+    const indexOfIsEditing = links.findIndex(link => link.isEditing === true)
+    this.setState({ links, fetchedLinks: links });
 
     const result = await http
       .put(
@@ -253,7 +255,7 @@ class Links extends Component {
       .catch((err) => alert(err.response.data));
 
     if (!result) return;
-    await this.getLinks();
+    await this.getLinks(indexOfIsEditing);
     console.log("Link order changed successfully!");
   };
 

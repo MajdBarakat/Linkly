@@ -11,8 +11,11 @@ export default ({ link, fetchedLink, onEdit, onDelete, onToggleVisiblity }) => {
         </div>
         <div className="right">
           <button
+            className={"visibility-btn " + (link.isVisible ? "ON" : "OFF")}
             onClick={() => onToggleVisiblity(link)}
-          >{`${link.isVisible}`}</button>
+          >
+            <div className="switch"></div>
+          </button>
         </div>
       </div>
       <div className="bottom">
