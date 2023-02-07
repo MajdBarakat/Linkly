@@ -9,6 +9,7 @@ export default ({
   onDiscard,
   errors,
   onClose,
+  onDelete
 }) => {
 
   const renderInput = (name, label, value, onChange, errors, type = "text") => {
@@ -52,15 +53,39 @@ export default ({
           onChange,
           errors
         )}
+        <div className="thumbnails-container">
+          <div className="thumbnail"
+            style={{ background: `url(${link.linkThumbnailURL})` }} />
+          <div className="banner"
+            style={{ background: `url(${link.linkPictureURL})` }} />
+        </div>
 
-        {/* <button onClick={() => valuesChanged ? onDiscard(link, fetchedLink) : onClose()}>Cancel</button> */}
-        <button
-          onClick={(e) => onSubmit(e, link)}
-          disabled={valuesChanged ? undefined : true}
-        >
-          Save
-        </button>
-        
+        <div className="bottom">
+          <div className="left">
+            <button
+              type="button"
+              onClick={() => onDelete(link)}
+            >
+              Delete</button>
+          </div>
+          <div className="right">
+            <button
+              className="save"
+              onClick={(e) => onSubmit(e, link)}
+              disabled={valuesChanged ? undefined : true}
+            >
+              Save
+            </button>
+            <button
+              className="discard"
+              type="button"
+              onClick={() => valuesChanged ? onDiscard(link, fetchedLink) : onClose()}
+            >
+              {valuesChanged ? "Cancel" : "Close"}
+            </button>
+          </div>
+        </div>
+
       </form>
     </div>
   );

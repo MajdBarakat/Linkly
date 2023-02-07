@@ -76,8 +76,8 @@ class Links extends Component{
     linkName: Joi.string().min(1).max(50).required(),
     isVisible: Joi.boolean().required(),
     linkURL: Joi.string().min(3).max(255).required(),
-    linkPictureURL: Joi.string().min(3).max(50).required(),
-    linkThumbnailURL: Joi.string().min(3).max(50).required(),
+    linkPictureURL: Joi.string(),
+    linkThumbnailURL: Joi.string(),
     linkDescription: Joi.string().allow("").max(255),
   };
 
@@ -318,6 +318,8 @@ class Links extends Component{
                                   onSubmit={this.handleSubmit}
                                   onDiscard={this.handleDiscard}
                                   errors={this.state.errors}
+                                  onClose={() => this.handleEdit(link, false)}
+                                  onDelete={this.handleDelete}
                                 />
                               }
                             </div>

@@ -21,7 +21,8 @@ export default ({ link, fetchedLink, onEdit, onDelete, onToggleVisiblity }) => {
       <div className="bottom">
         <div className="left">
           <h2>{fetchedLink.linkURL}</h2>
-          <div className="banner" />
+          <div className="banner"
+            style={{ background: `url(${link.linkPictureURL})` }} />
         </div>
         <div className="right">
           <TrashIcon onClick={() => onDelete(link)}>Delete</TrashIcon>

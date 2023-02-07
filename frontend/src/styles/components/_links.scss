@@ -87,17 +87,23 @@ div.link-page {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
         div.left {
           width: 85%;
+
           div.banner {
             border-radius: 20px;
-            height: 125px;
+            height: 100px;
             background-color: $primary;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
           }
         }
         div.right {
           display: flex;
           align-items: flex-end;
+
           svg {
             margin: 5px;
             width: 32px;
@@ -136,6 +142,81 @@ div.link-page {
   
     form {
       width: 580px;
+
+      textarea {
+        min-height: 95px;
+      }
+
+      div.thumbnails-container {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+
+        div.thumbnail {
+          width: 87px;
+        }
+
+        div.banner {
+          width: 415px;
+        }
+
+        .thumbnail, .banner {
+          height: 87px;
+          border-radius: 10px;
+          background-color: $primary;
+          background-size: cover !important;
+          background-repeat: no-repeat !important;
+          background-position: center center !important;
+        }
+      }
+
+      div.bottom {
+        display: flex;
+        margin-top: 15px;
+
+        button {
+          color: $text-primary;
+          font: $button;
+          font-weight: bold;
+        }
+        
+        div.left {
+          width: 35%;
+          
+          button {
+            background-color: $warning;
+            padding: 7px 15px;
+          }
+        }
+
+        div.right {
+          width: 65%;
+          
+          button{
+            float: right;
+          }
+
+          button.save {
+            background-color: $accent;
+            padding: 7px 40px;
+            margin-left: 8px;
+
+            &:disabled {
+              background-color: $text-input;
+              color: $secondary;
+              cursor: not-allowed;
+            }
+          }
+
+          button.discard {
+            box-sizing: border-box;
+            padding: 7px 20px;
+            background-color: transparent;
+            outline: solid 1px $border-primary;
+            outline-offset: -1px;
+          }
+        }
+      }
     }
   }
   
