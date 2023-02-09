@@ -6,7 +6,7 @@ import config from '../../config.json'
 import getUser from "../services/getUser";
 
 
-function UploadDropZone({ dir, id }) {
+function UploadDropZone({ dir, link }) {
   const [files, setFiles] = useState([]);
   const [dropped, setDropped] = useState(false);
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
@@ -27,7 +27,7 @@ function UploadDropZone({ dir, id }) {
   const assignName = async (file, userId) => {
     let name = userId
     if (dir !== "profile") {
-      name += "_"+id
+      name += "_"+link.id
     }
     const newFile = new File([file], name+".png", {type: 'image/png'});
     return newFile
@@ -62,6 +62,17 @@ function UploadDropZone({ dir, id }) {
         )
         .catch((err) => alert(err.response.data));
       if (!result2) return;
+    }
+    else if (dir === "thumbnail" || dir === "banner") {
+      delete link.isEditing;
+      link[dir + "URL"] = result.data + "?" + new Date().toISOString();
+
+      const result3 = await http
+        .put(config.api + "/links/edit", link,
+          { headers: { "x-auth-token": jwt } }
+        )
+        .catch((err) => alert(err.response.data));
+      if (!result3) return;
     }
 
     console.log("Profile updated!")

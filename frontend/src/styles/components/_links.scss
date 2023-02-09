@@ -161,12 +161,18 @@ div.link-page {
         }
 
         .thumbnail, .banner {
+          cursor: pointer;
           height: 87px;
           border-radius: 10px;
           background-color: $primary;
           background-size: cover !important;
           background-repeat: no-repeat !important;
           background-position: center center !important;
+          transition: opacity .3s;
+
+          &:hover {
+            opacity: .7;
+          }
         }
       }
 

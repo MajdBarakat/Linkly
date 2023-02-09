@@ -1,6 +1,8 @@
 {
   "api": "http://localhost:3001/api",
 
+  "cdn": "https://linkly-content.s3.eu-west-2.amazonaws.com/",
+
   "layouts": ["Default", "Blockie"],
 
   "themes": ["None", "Dark", "Light", "Crimson"],

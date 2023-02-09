@@ -82,11 +82,56 @@ div.upload-overlay {
         align-items: center;
         justify-content: center;
         margin: 20px;
+        
+        section.collection-container {
+            width: 100%;
+            max-height: 40vh;
+            display: flex;
+            overflow: scroll;
+            flex-wrap: wrap;
 
-        section.dropzone-container{
+            &.no-scroll {
+                overflow: auto;
+                max-height: none;
+                min-height: 40vh;
+                justify-content: flex-end;
+            }
+
+            div.choice-container {
+                width: 100%;
+                height: 100%;
+                display: block;
+                justify-content: center;
+                background-color: $primary;
+                margin-bottom: 10px;
+
+                div.choice {
+                    width: 100%;
+                    height: 30vh;
+                    background-size: contain !important;
+                    background-repeat: no-repeat !important;
+                    background-position: center center !important;
+                }
+            }
+            button {
+                float: right;
+            }
+            
+            div.collection-item {
+                margin: 5px;
+                width: 80px;
+                height: 80px;
+                background-color: $primary;
+                background-size: cover !important;
+                background-repeat: no-repeat !important;
+                background-position: center center !important;
+            }
+        }
+
+        section.dropzone-container {
             width: 100%;
 
-            &.hovered div.dropzone{
+            &.hovered div.dropzone {
                 border-width: 2px;
             }
             

@@ -9,7 +9,8 @@ export default ({
   onDiscard,
   errors,
   onClose,
-  onDelete
+  onDelete,
+  onUpload
 }) => {
 
   const renderInput = (name, label, value, onChange, errors, type = "text") => {
@@ -55,9 +56,11 @@ export default ({
         )}
         <div className="thumbnails-container">
           <div className="thumbnail"
-            style={{ background: `url(${link.linkThumbnailURL})` }} />
+            style={{ background: `url(${link.thumbnailURL})` }}
+            onClick={() => onUpload( "thumbnail", link )} />
           <div className="banner"
-            style={{ background: `url(${link.linkPictureURL})` }} />
+            style={{ background: `url(${link.bannerURL})` }}
+            onClick={() => onUpload( "banner", link )} />
         </div>
 
         <div className="bottom">

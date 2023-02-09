@@ -1,22 +1,51 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import UploadDropZone from "./uploadDropZone";
 import { ArrowLeftIcon } from "@heroicons/react/solid"
 import { PhotographIcon, DesktopComputerIcon} from "@heroicons/react/outline";
+import http from "../services/httpService";
+import config from "../../config.json"
 
 
-export default ({ onExit, dir }) => {
+export default ({ onExit, dir, link }) => {
 	const [active, setActive] = useState("collection");
+	const [collection, setCollection] = useState([]);
+	const [choice, setChoice] = useState("");
 
 	useEffect(() => {
 		document.addEventListener("keydown", detectKeyDown, true);
-	});
+		getCollection(dir);
+	},[choice]);
 
 	const detectKeyDown = (e) => {
 		if (e.key === "Escape") onExit();
 	};
 	
+	const getCollection = async (dir) => {
+		const result = await http
+			.get(
+				config.api + `/image/list?dir=${dir}/default`
+		).catch(err => alert(err.response.data))
+		if (!result) return;
+		result.data.shift()
+		setCollection(result.data)
+	}
+
+	const doSubmit = async () => {
+		delete link.isEditing;
+		const jwt = localStorage.getItem('jwt')
+		link[dir + "URL"] = choice + "?" + new Date().toISOString();
+      
+		const result = await http
+			.put(config.api + "/links/edit", link,
+			{ headers: { "x-auth-token": jwt } }
+			)
+			.catch((err) => alert(err.response.data));
+		if (!result) return;
+		setChoice("");
+		onExit();
+	}
+	
 	return (
-		
 		<div
 			className="full-screen overlay-background"
 			onClick={(e) => e.target === e.currentTarget && onExit()}
@@ -24,7 +53,7 @@ export default ({ onExit, dir }) => {
 			<div className="overlay upload-overlay">
 				<div className="top">
 					<button className="exit" onClick={() => onExit()}><ArrowLeftIcon/></button>
-					<h3>Choose Profile Picture</h3>
+					<h3>{`Choose ${dir.charAt(0).toUpperCase() + dir.slice(1)} Picture`}</h3>
 				</div>
 				<div className="options">
 					<button
@@ -47,8 +76,31 @@ export default ({ onExit, dir }) => {
 					</button>
 				</div>
 				<div className="bottom">
-					{active === "collection" && "render collection here"}
-					{active === "computer" && <UploadDropZone dir={dir} />}
+					{active === "collection" && collection ?
+						<section className={"collection-container" + (choice ? " no-scroll" : "")}>
+							{choice ? 
+								<React.Fragment>
+									<div className="choice-container">
+										<div className="choice" style={{ "background": `url(${choice})` }} />
+									</div>
+									<button onClick={() => doSubmit()}
+									>Save and Upload Image</button>
+								</React.Fragment>
+								: 
+								collection.map((img, index) =>
+								<div
+									key={index}
+									className="collection-item"
+									onClick={() => setChoice(config.cdn + img)}
+									style={{"background": `url(${config.cdn + img})`}}
+								/>
+								)
+							}
+						</section>
+						:
+						active === "collection" && "Loading..."
+					}
+					{active === "computer" && <UploadDropZone dir={dir} link={link} />}
 				</div>
 			</div>
 		</div>

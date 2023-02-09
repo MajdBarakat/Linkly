@@ -8,6 +8,7 @@ import LinkEdit from "./linkEdit";
 import Preview from "./preview";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/solid";
+import Upload from "./upload";
 
 class Links extends Component{
   state = {
@@ -24,6 +25,8 @@ class Links extends Component{
     fetchedLinks: [],
     newLinkType: "",
     preview: "Mobile",
+    isUploading: false,
+    upload: {},
   };
 
   jwt = localStorage.getItem('jwt')
@@ -76,8 +79,8 @@ class Links extends Component{
     linkName: Joi.string().min(1).max(50).required(),
     isVisible: Joi.boolean().required(),
     linkURL: Joi.string().min(3).max(255).required(),
-    linkPictureURL: Joi.string(),
-    linkThumbnailURL: Joi.string(),
+    bannerURL: Joi.string(),
+    thumbnailURL: Joi.string(),
     linkDescription: Joi.string().allow("").max(255),
   };
 
@@ -198,6 +201,10 @@ class Links extends Component{
 
     console.log("Link visibility edited successfully!", result);
   };
+
+  handleUpload = (dir, link) => {
+    this.setState({ upload: { dir: dir, link: link } , isUploading: true })
+  }
 
   validate = (link) => {
     const options = { abortEarly: false };
@@ -320,6 +327,7 @@ class Links extends Component{
                                   errors={this.state.errors}
                                   onClose={() => this.handleEdit(link, false)}
                                   onDelete={this.handleDelete}
+                                  onUpload={this.handleUpload}
                                 />
                               }
                             </div>
@@ -335,7 +343,14 @@ class Links extends Component{
             </div>
             {this.state.preview === "Mobile" && <Preview viewType="Mobile"/>}
           </div>
-          {this.state.preview === "Desktop" && <Preview viewType="Desktop"/>}
+          {this.state.preview === "Desktop" && <Preview viewType="Desktop" />}
+          {this.state.isUploading && (
+            <Upload
+              onExit={() => this.setState({ upload: {}, isUploading: false })}
+              dir={this.state.upload.dir}
+              link={this.state.upload.link}
+            />
+          )}
         </React.Fragment>
       );
     }

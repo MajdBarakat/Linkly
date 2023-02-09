@@ -43,7 +43,7 @@ router.post("/upload/:dir", upload.single("file"), (req, res) => {
 });
 
 router.get("/list", async (req, res) => {
-  let result = await s3.listObjectsV2({ Bucket: bucket }).promise();
+  let result = await s3.listObjectsV2({ Bucket: bucket, Prefix: req.query ? req.query.dir : undefined }).promise();
   let fileNames = result.Contents.map((i) => i.Key);
   res.send(fileNames);
 });
