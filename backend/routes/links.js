@@ -31,8 +31,8 @@ router.post("/new", authMiddleware, assignDefaults, async (req, res) => {
       linkName: link.linkName,
       isVisible: link.isVisible,
       linkURL: link.linkURL,
-      linkPictureURL: link.linkPictureURL,
-      linkThumbnailURL: link.linkThumbnailURL,
+      bannerURL: link.bannerURL,
+      thumbnailURL: link.thumbnailURL,
       linkDescription: link.linkDescription,
     });
     await user.save();

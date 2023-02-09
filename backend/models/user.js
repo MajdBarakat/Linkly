@@ -63,8 +63,8 @@ function validateLink(link) {
     linkName: Joi.string().min(1).max(50).required(),
     isVisible: Joi.boolean().required(),
     linkURL: Joi.string().min(3).max(255).required(),
-    linkPictureURL: Joi.string(),
-    linkThumbnailURL: Joi.string(),
+    bannerURL: Joi.string(),
+    thumbnailURL: Joi.string(),
     linkDescription: Joi.string().allow("").max(255),
   });
   return schema.validate(link);

@@ -13,8 +13,8 @@ module.exports = function (req, res, next) {
     linkName: `${type.charAt(0).toUpperCase() + type.slice(1)}`,
     isVisible: false,
     linkURL: `https://`,
-    linkPictureURL: `https://CDNLINK.com/`,
-    linkThumbnailURL: `https://CDNLINK.com/`,
+    bannerURL: `https://CDNLINK.com/`,
+    thumbnailURL: `https://CDNLINK.com/`,
     linkDescription: "",
   };
   next();
