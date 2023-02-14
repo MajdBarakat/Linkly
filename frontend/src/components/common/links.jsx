@@ -9,6 +9,7 @@ import Preview from "./preview";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/solid";
 import Upload from "./upload";
+import NewLink from "./newLink";
 
 class Links extends Component{
   state = {
@@ -24,6 +25,7 @@ class Links extends Component{
     links: [],
     fetchedLinks: [],
     newLinkType: "",
+    isAddingLink: false,
     preview: "Mobile",
     isUploading: false,
     upload: {},
@@ -274,6 +276,7 @@ class Links extends Component{
           <div className="split">
             <div className="link-page">
               <DragDropContext onDragEnd={this.handleOnDragEnd}>
+                {/* <button onClick={() => this.setState({ isAddingLink: true })}>Add new link</button> */}
                 <Droppable droppableId="links">
                   {(provided) => (
                     <div
@@ -335,7 +338,7 @@ class Links extends Component{
                         </Draggable>
                       ))}
                       {provided.placeholder}
-                      <div className="new-link" onClick={() => console.log("")}><PlusCircleIcon></PlusCircleIcon></div>
+                      <div className="new-link" onClick={() => this.setState({ isAddingLink: true })}><PlusCircleIcon></PlusCircleIcon></div>
                     </div>
                   )}
                 </Droppable>
@@ -349,6 +352,11 @@ class Links extends Component{
               onExit={() => this.setState({ upload: {}, isUploading: false })}
               dir={this.state.upload.dir}
               link={this.state.upload.link}
+            />
+          )}
+          {this.state.isAddingLink && (
+            <NewLink
+              onExit={() => this.setState({ isAddingLink: false }, () => this.getLinks())}
             />
           )}
         </React.Fragment>

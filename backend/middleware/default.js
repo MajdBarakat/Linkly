@@ -1,16 +1,12 @@
 const { nanoid } = require("nanoid");
 
 module.exports = function (req, res, next) {
-  const { type, order } = req.body;
-  if (!type)
-    return res
-      .status(401)
-      .send("Failed to create new link, no link type was chosen.");
+  const { name, order } = req.body;
 
   req.body = {
     id: nanoid(10),
-    order: order,
-    linkName: `${type.charAt(0).toUpperCase() + type.slice(1)}`,
+    order: order ? order : 0,
+    linkName: name ? name : "New Link",
     isVisible: false,
     linkURL: `https://`,
     bannerURL: `https://CDNLINK.com/`,
