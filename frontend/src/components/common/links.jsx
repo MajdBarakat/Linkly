@@ -7,7 +7,7 @@ import Link from "./link";
 import LinkEdit from "./linkEdit";
 import Preview from "./preview";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/solid";
+import { DotsVerticalIcon, PlusCircleIcon, PlusIcon } from "@heroicons/react/solid";
 import Upload from "./upload";
 import NewLink from "./newLink";
 
@@ -276,14 +276,16 @@ class Links extends Component{
           <div className="split">
             <div className="link-page">
               <DragDropContext onDragEnd={this.handleOnDragEnd}>
-                {/* <button onClick={() => this.setState({ isAddingLink: true })}>Add new link</button> */}
                 <Droppable droppableId="links">
                   {(provided) => (
                     <div
-                      className="middle-container links"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
+                    className="middle-container links"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
                     >
+                      <button className="new-link" onClick={() => this.setState({ isAddingLink: true })}>
+                        <PlusIcon/> Add new link
+                      </button>
                       {this.state.links.map((link, index) => (
                         <Draggable key={link.id} draggableId={link.id} index={index}>
                           {(provided) => (
@@ -338,7 +340,8 @@ class Links extends Component{
                         </Draggable>
                       ))}
                       {provided.placeholder}
-                      <div className="new-link" onClick={() => this.setState({ isAddingLink: true })}><PlusCircleIcon></PlusCircleIcon></div>
+                      
+                      { this.state.links.length > 0 && <div className="new-link" onClick={() => this.setState({ isAddingLink: true })}><PlusCircleIcon></PlusCircleIcon></div>}
                     </div>
                   )}
                 </Droppable>

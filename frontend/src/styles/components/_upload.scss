@@ -77,6 +77,23 @@ div.upload-overlay {
         }
     }
 
+    form.bottom {
+        margin: 20px;
+
+        button {
+            background-color: transparent;
+            border: 1px solid $text-primary;
+            font: $button;
+            color: $text-primary;
+            margin-top: 10px;
+            transition: opacity .3s;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+
     div.bottom {
         display: flex;
         align-items: center;
