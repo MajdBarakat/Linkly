@@ -154,8 +154,10 @@ class Appearance extends Form {
 
   renderSelectItem = (name, index, selected, fields, type) => {
     return (
-      <div key={index} className={selected ? "selected" : undefined} onClick={() => this.handleSelect(fields)}>
-        <OptionsRender index={index} type={type} />
+      <div key={index} className={"option " + (selected ? "selected" : undefined)} onClick={() => this.handleSelect(fields)}>
+        <div className="thumbnail">
+          <OptionsRender index={index} type={type} />
+        </div>
         {name}
       </div>
     )
@@ -233,7 +235,7 @@ class Appearance extends Form {
               </div>
               <form className="container appearance-grid backgrounds">
                 {config.backgrounds.map((name, index) => (
-                  this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "backgroundId", value: index }])
+                  this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "backgroundId", value: index }], "background")
                 ))}
               </form>
 

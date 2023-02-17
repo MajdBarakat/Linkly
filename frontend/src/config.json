@@ -9,7 +9,7 @@
 
   "colors": ["Background Primary", "Background Secondary", "Font", "Links"],
 
-  "backgrounds": ["None", "Plain", "Wavy", "ZigZag"],
+  "backgrounds": ["Solid", "Gradient", "Wavy", "ZigZag"],
 
   "fonts": ["Times New Roman"]
 

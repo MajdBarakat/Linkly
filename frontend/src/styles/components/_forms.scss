@@ -19,6 +19,30 @@ form.container {
   &.appearance-grid {
     width: 90%;
     display: flex;
+    gap: 15px;
+
+    .thumbnail {
+      width: 128px;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .selected {
+
+      .thumbnail {
+        outline: 3px solid white;
+        outline-offset: -3px;
+        border-radius: 15px;
+
+      }
+
+      svg {
+        transition: transform ease-in-out .3s;
+        transform: scale(.75, .75);
+      }
+    }
 
     .profile-pic {
       margin: 15px;
