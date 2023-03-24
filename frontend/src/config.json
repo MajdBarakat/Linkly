@@ -5,11 +5,9 @@
 
   "layouts": ["Default", "Blockie"],
 
-  "themes": ["None", "Dark", "Light", "Crimson"],
+  "themes": ["None", "Dark", "Light", "Lemon", "Leaf", "Space"],
 
-  "colors": ["Background Primary", "Background Secondary", "Font", "Links"],
-
-  "backgrounds": ["Solid", "Gradient", "Wavy", "ZigZag"],
+  "backgrounds": ["Solid", "Gradient"],
 
   "fonts": ["Times New Roman"]
 
