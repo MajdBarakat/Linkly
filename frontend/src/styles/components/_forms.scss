@@ -15,34 +15,11 @@ form.container {
     border-radius: 0 0 15px 15px;
   }
 
-  &.appearance-profile,
-  &.appearance-grid {
+  
+
+  &.appearance-profile {
     width: 90%;
     display: flex;
-    gap: 15px;
-
-    .thumbnail {
-      width: 128px;
-      height: 200px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .selected {
-
-      .thumbnail {
-        outline: 3px solid white;
-        outline-offset: -3px;
-        border-radius: 15px;
-
-      }
-
-      svg {
-        transition: transform ease-in-out .3s;
-        transform: scale(.75, .75);
-      }
-    }
 
     .profile-pic {
       margin: 15px;
@@ -61,9 +38,64 @@ form.container {
       width: 60%;
     }
 
-    .top {
+  }
+
+  &.appearance-grid {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+
+    &.end {
+      border-radius: 0 0 15px 15px;
+      border-bottom: 1px solid $border-secondary;
+      margin-bottom: 20px;
+    }
+
+    &.start {
+      border-radius: 15px 15px 0 0;
+      border-top: 1px solid $border-secondary;
+    }
+    
+    .options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .thumbnail {
+      width: 128px;
+      height: 200px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .option {
+      font: $button;
+      color: $text-secondary;
+      text-align: center;
+      width: min-content;
+
+
+      svg {
+        transition: transform ease-in-out .3s;
+      }
+    }
+
+    .selected {
+      color: $text-primary;
+
+      .thumbnail {
+        outline: 3px solid white;
+        outline-offset: -3px;
+        border-radius: 15px;
+
+      }
+
+      svg {
+        // transform: scale(.90);
+      }
     }
   }
 
@@ -129,7 +161,7 @@ div.middle-container {
     width: 90%;
     border: solid 1px $border-secondary;
     
-    &:first-of-type {
+    &.start {
       border-radius: 15px 15px 0 0;
     }
 
@@ -159,4 +191,8 @@ div.appearance {
   width: 100%;
   max-width: 800px;
   margin: auto;
+}
+
+div.color-picker{
+  position: absolute;
 }

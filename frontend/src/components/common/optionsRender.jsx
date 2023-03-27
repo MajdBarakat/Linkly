@@ -8,7 +8,6 @@ export default ({ index, type }) => {
             case "layout": return layouts[index]
             case "theme": return themes[index]
             case "background": return backgrounds[index]
-
         }
     }
     

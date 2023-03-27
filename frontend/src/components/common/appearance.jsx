@@ -7,6 +7,7 @@ import Form from "./form";
 import Upload from "./upload";
 import Preview from "./preview";
 import ColorPicker from "./colorPicker";
+import { ChromePicker } from 'react-color';
 import OptionsRender from "./optionsRender";
 
 class Appearance extends Form {
@@ -154,7 +155,7 @@ class Appearance extends Form {
 
   renderSelectItem = (name, index, selected, fields, type) => {
     return (
-      <div key={index} className={"option " + (selected ? "selected" : undefined)} onClick={() => this.handleSelect(fields)}>
+      <div key={index} className={"option" + (selected ? " selected" : "")} onClick={() => this.handleSelect(fields)}>
         <div className="thumbnail">
           <OptionsRender index={index} type={type} />
         </div>
@@ -163,19 +164,21 @@ class Appearance extends Form {
     )
   }
 
-  renderColorItems = () => {
-    const colors = ["bgdPrimaryColor", "bgdSecondaryColor", "fontColor", "linksColor"]
-    const { data } = this.state
+  renderColorSelect = (colorName, label, editing) => {
+    const { data } = this.state;
     return (
-      config.colors.map((name, index) => (
-        <div key={index} onClick={() => this.setState({ pickingColor: colors[index], colorName: name }) }>
-        <div style={{color: data[colors[index]]}}>CLICK HERE TO SELECT COLOR</div>
-        <div>
-          <h2>{name}</h2>
-          <h3>{data[colors[index]]}</h3>
-        </div>
+      <div onClick={() => this.setState({ pickingColor: colorName, colorName: label })}>
+        <div style={{color: data[colorName]}}>CLICK HERE</div>
+        <h3>{data[colorName]}</h3>
+        {editing && (
+          <ColorPicker
+            color={data[colorName]}
+            onChangeComplete={(color) => this.handleSelect([{ name: colorName, value: color.hex }])}
+            onExit={() => this.setState({ pickingColor: false })}
+          />
+        )}
       </div>
-    ))) 
+    )
   }
 
   render() {
@@ -191,7 +194,7 @@ class Appearance extends Form {
             <div className="middle-container appearance">
 
               {/* PROFILE */}
-              <div className="section-title">
+              <div className="section-title start">
                 <h2>Profile</h2>
               </div>
               <form className="container appearance-profile" onSubmit={this.handleSubmit}>
@@ -209,49 +212,50 @@ class Appearance extends Form {
                 </div>
               </form>
 
-              {/* LAYOUT */}
-              <div className="section-title">
-                <h2>Layout</h2>
-              </div>
-              <form className="container appearance-grid layout">
-                {config.layouts.map((name, index) => (
-                  this.renderSelectItem(name, index, data.layoutId === index, [{ name: "layoutId", value: index }],"layout")
-                ))}
-              </form>
-
               {/* THEMES */}
               <div className="section-title">
                 <h2>Themes</h2>
               </div>
-              <form className="container appearance-grid themes">
-                {config.themes.map((name, index) => (
-                  this.renderSelectItem(name, index, data.themeId === index, [{ name: "themeId", value: index }, { name: "isUsingTheme", value: index > 0 ? true : false }],"theme")
-                ))}
+              <form className="container appearance-grid themes end">
+                <div className="options">
+                  {config.themes.map((name, index) => (
+                    this.renderSelectItem(name, index, data.themeId === index, [{ name: "themeId", value: index }, { name: "isUsingTheme", value: index > 0 ? true : false }],"theme")
+                  ))}
+                </div>
               </form>
 
-              {/* BACKGROUND */}
+              <h1>Customize your own page!</h1>
+
+              {/* LAYOUT
               <div className="section-title">
+                <h2>Layout</h2>
+              </div>
+              <form className="container appearance-grid layout">
+                <div className="options">
+                  {config.layouts.map((name, index) => (
+                    this.renderSelectItem(name, index, data.layoutId === index, [{ name: "layoutId", value: index }],"layout")
+                  ))}
+                </div>
+              </form> */}
+
+              {/* BACKGROUND */}
+              <div className="section-title start">
                 <h2>Background</h2>
               </div>
               <form className="container appearance-grid backgrounds">
-                {config.backgrounds.map((name, index) => (
-                  this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "backgroundId", value: index }], "background")
-                ))}
-              </form>
-
-              {/* COLORS */}
-              <div className="section-title">
-                <h2>Colors</h2>
-              </div>
-              <form className="container appearance-grid colors">
-                {this.renderColorItems()}
+                <div className="options">
+                  {config.backgrounds.map((name, index) => (
+                    this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "backgroundId", value: index }], "background")
+                  ))}
+                </div>
+                { this.renderColorSelect("bgdPrimaryColor", "Primary Color", pickingColor ? true : false) }
               </form>
 
               {/* FONT */}
               <div className="section-title">
                 <h2>Font</h2>
               </div>
-              <form className="container appearance-grid fonts">
+              <form className="container appearance-grid fonts end">
                 {config.fonts.map((name, index) => (
                   this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "fontId", value: index }])
                 ))}
@@ -260,13 +264,14 @@ class Appearance extends Form {
             {isUploading && (
               <Upload onExit={() => this.setState({ isUploading: false })} dir="profile"/>
             )}
-            {pickingColor && (
-              <ColorPicker
-                color={data[pickingColor]}
-                name={this.state.colorName}
-                onChangeComplete={(color) => this.handleSelect([{ name: pickingColor, value: color.hex }])}
-                onExit={() => this.setState({ pickingColor: false })} />
-            )}
+            {/* {pickingColor && (
+              // <ColorPicker
+              //   color={data[pickingColor]}
+              //   name={this.state.colorName}
+              //   onChangeComplete={(color) => this.handleSelect([{ name: pickingColor, value: color.hex }])}
+              //   onExit={() => this.setState({ pickingColor: false })} />
+              
+            )} */}
             {this.state.preview === "Mobile" && <Preview viewType="Mobile"/>}
           </div>
           {this.state.preview === "Desktop" && <Preview viewType="Desktop"/>}
