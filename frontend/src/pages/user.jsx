@@ -7,6 +7,7 @@ import config from "../config.json";
 export default () => {
     const [loaded, setLoaded] = useState(false);
     const [user, setUser] = useState("")
+    const [theme, setTheme] = useState("")
     const params = useParams()
 
     useEffect(() => {
@@ -16,7 +17,10 @@ export default () => {
                 .catch((err) => alert(err.response.data)) 
             
             if (!result) setUser(null)
-            else setUser(sortLinks(result.data))
+            else {
+                setUser(sortLinks(result.data));
+                setTheme(result.data.appearance.theme.isUsingTheme ? result.data.appearance.theme.themeId : null);
+            }
         }
 
         user || user === null ? setLoaded(true) : getUser()
@@ -30,23 +34,34 @@ export default () => {
     };
 
     const renderUserContent = () => { 
-        console.log(user)
-        return user.links.map((link) => (<h1>{link.linkName}</h1>))
-     };
+        return user.links.map((link) => (
+            <a key={link.id} href={link.linkURL}>
+                <h1>{link.linkName}</h1>
+            </a>
+        ))
+    };
+    
+    const renderTheme = () => {
+        
+    }
 
 
     return (
         <React.Fragment>
             {!loaded ? <h1>LOADING..</h1> : user === null && <h1>User Not Found</h1>}
-            {loaded && user && 
-                <div>
-                    <h1>USER PAGE</h1>
-                    <h2>@{user.username}</h2>
-                    <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
-                    {/* page content here */}
-                    {renderUserContent()}
-                </div>
-            }
+            {loaded && user && !theme &&
+                <div className="background">
+                    <div className="user-container">
+                        <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
+                        <h2>@{user.username}</h2>
+                        {/* <h3>{user.appearance.profile.name}</h3>
+                        <h3>{user.appearance.profile.title}</h3>
+                        <h3>{user.appearance.profile.bio}</h3> */}
+                        {/* page content here */}
+                        {renderUserContent()}
+                    </div>
+                </div>}
+            {loaded && user && !user.appearance.theme.isUsingTheme }
     </React.Fragment>
   );
 };
