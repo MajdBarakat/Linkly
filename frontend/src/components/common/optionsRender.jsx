@@ -1,13 +1,12 @@
-import React from "react";
-import { layouts, themes, backgrounds } from "../../assets/svgs";
+import { layoutOptions, themeOptions, backgroundOptions } from "../../assets/svgs";
 
 export default ({ index, type }) => {
 
     const getElement = () => {
         switch (type) {
-            case "layout": return layouts[index]
-            case "theme": return themes[index]
-            case "background": return backgrounds[index]
+            case "layout": return layoutOptions[index]
+            case "theme": return themeOptions[index]
+            case "background": return backgroundOptions[index]
         }
     }
     

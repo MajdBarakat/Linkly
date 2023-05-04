@@ -1,8 +1,21 @@
 @use "../abstracts" as *;
 
-div.user-container {
-    padding-top: 50px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+div.background {
+    min-height: 100vh;
+    background-repeat: no-repeat !important;
+    background-position: center, center !important;
+    background-size: cover !important;
+
+    div.user-container {
+        padding-top: 50px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+    }
+    
+    //THEMES HERE
+    &.theme {
+        //put theme styles here
+    }
 }

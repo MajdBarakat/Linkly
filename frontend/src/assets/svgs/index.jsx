@@ -1,5 +1,5 @@
 export { default as PhonePreview } from "./phonePreview"
 export { default as DesktopPreview } from "./desktopPreview"
-export { default as layouts } from "./layoutOptions"
-export { default as themes } from "./themeOptions"
-export { default as backgrounds } from "./backgroundOptions"
+export { default as layoutOptions } from "./layoutOptions"
+export { default as themeOptions } from "./themeOptions"
+export { default as backgroundOptions } from "./backgroundOptions"

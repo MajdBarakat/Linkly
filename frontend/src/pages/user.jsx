@@ -3,11 +3,10 @@ import { useParams } from 'react-router-dom';
 import http from "../components/services/httpService";
 import config from "../config.json";
 
-
 export default () => {
     const [loaded, setLoaded] = useState(false);
     const [user, setUser] = useState("")
-    const [theme, setTheme] = useState("")
+    const [theme, setTheme] = useState(null)
     const params = useParams()
 
     useEffect(() => {
@@ -34,34 +33,31 @@ export default () => {
     };
 
     const renderUserContent = () => { 
-        return user.links.map((link) => (
-            <a key={link.id} href={link.linkURL}>
-                <h1>{link.linkName}</h1>
-            </a>
-        ))
+        return (
+            <div
+                className={`background${theme ? " theme-" + theme : ""}`}
+                style={{background: `url(${config.cdn}backgrounds/themes/${theme}.svg)`}}
+            >
+                <div className="user-container">
+                    <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
+                    <h2>@{user.username}</h2>
+                    <h3>{user.appearance.profile.name}</h3>
+                    <h3>{user.appearance.profile.title}</h3>
+                    <h3>{user.appearance.profile.bio}</h3>
+                    {user.links.map((link) => (
+                        <a key={link.id} href={link.linkURL}>
+                            <h1>{link.linkName}</h1>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        )
     };
-    
-    const renderTheme = () => {
-        
-    }
-
 
     return (
         <React.Fragment>
             {!loaded ? <h1>LOADING..</h1> : user === null && <h1>User Not Found</h1>}
-            {loaded && user && !theme &&
-                <div className="background">
-                    <div className="user-container">
-                        <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
-                        <h2>@{user.username}</h2>
-                        {/* <h3>{user.appearance.profile.name}</h3>
-                        <h3>{user.appearance.profile.title}</h3>
-                        <h3>{user.appearance.profile.bio}</h3> */}
-                        {/* page content here */}
-                        {renderUserContent()}
-                    </div>
-                </div>}
-            {loaded && user && !user.appearance.theme.isUsingTheme }
+            {loaded && user && renderUserContent()}
     </React.Fragment>
   );
 };
