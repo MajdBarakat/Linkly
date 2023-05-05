@@ -17,7 +17,8 @@ label {
   flex-direction: column;
   padding: 7px 0;
 }
-.input-container input {
+.input-container input,
+.input-container textarea {
   font: 1rem "Rubik";
   background-color: #3b3b3b;
   color: #ffffff;
@@ -26,20 +27,24 @@ label {
   border-radius: 5px;
   margin-top: 5px;
 }
-.input-container input::-moz-placeholder {
+.input-container input::-moz-placeholder, .input-container textarea::-moz-placeholder {
   color: #a9a9a9;
 }
-.input-container input:-ms-input-placeholder {
+.input-container input::placeholder,
+.input-container textarea::placeholder {
   color: #a9a9a9;
 }
-.input-container input::placeholder {
-  color: #a9a9a9;
-}
-.input-container input.error {
+.input-container input.error,
+.input-container textarea.error {
   outline: 1px solid crimson;
 }
-.input-container input:focus {
+.input-container input:focus,
+.input-container textarea:focus {
   outline: 1px solid;
+}
+.input-container textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 .select-container {
@@ -62,6 +67,69 @@ form.container.sign-in, form.container.register, form.container.profile {
 form.container.link-edit {
   background: #0d0d0d;
   border-radius: 0 0 15px 15px;
+}
+form.container.appearance-profile {
+  width: 90%;
+  display: flex;
+}
+form.container.appearance-profile .profile-pic {
+  margin: 15px;
+  width: 180px;
+  height: 180px;
+}
+form.container.appearance-profile .left {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+form.container.appearance-profile .right {
+  width: 60%;
+}
+form.container.appearance-grid {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+form.container.appearance-grid.end {
+  border-radius: 0 0 15px 15px;
+  border-bottom: 1px solid #6b7280;
+  margin-bottom: 20px;
+}
+form.container.appearance-grid.start {
+  border-radius: 15px 15px 0 0;
+  border-top: 1px solid #6b7280;
+}
+form.container.appearance-grid .options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+form.container.appearance-grid .thumbnail {
+  width: 128px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+form.container.appearance-grid .option {
+  font: 1.15rem "Roboto";
+  color: #a9a9a9;
+  text-align: center;
+  width: -moz-min-content;
+  width: min-content;
+}
+form.container.appearance-grid .option svg {
+  transition: transform ease-in-out 0.3s;
+}
+form.container.appearance-grid .selected {
+  color: #ffffff;
+}
+form.container.appearance-grid .selected .thumbnail {
+  outline: 3px solid white;
+  outline-offset: -3px;
+  border-radius: 15px;
 }
 form.container .profile-bottom {
   display: flex;
@@ -100,7 +168,29 @@ form.container .profile-bottom div.buttons :nth-last-child(2) {
 div.middle-container {
   position: relative;
   margin: auto;
-  top: 100px;
+  top: 75px;
+}
+div.middle-container.appearance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+div.middle-container.appearance form {
+  border: solid #6b7280;
+  border-width: 0 1px 0 1px;
+}
+div.middle-container .section-title {
+  background-color: #121314;
+  width: 90%;
+  border: solid 1px #6b7280;
+}
+div.middle-container .section-title.start {
+  border-radius: 15px 15px 0 0;
+}
+div.middle-container .section-title h2 {
+  margin: 10px;
+  margin-left: 15px;
 }
 
 div.sign-in,
@@ -110,6 +200,21 @@ div.register {
 
 div.profile {
   max-width: 600px;
+}
+div.profile h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+div.appearance {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+div.color-picker {
+  position: absolute;
 }
 
 button {
@@ -159,64 +264,152 @@ h3 {
   margin: 0 0 10px 0;
 }
 
+h4 {
+  font: 1rem "Rubik";
+  color: #0ab798;
+}
+
 .warning {
   color: #99091a;
 }
 
-div.navbar {
+div.navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 100000;
+}
+div.navbar-container div.navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid #ffffff;
+  background-color: #060708;
 }
-div.navbar .logo {
+div.navbar-container div.navbar .logo {
   width: 20px;
   height: 20px;
-  background-color: red;
   align-self: center;
+  background-color: red;
   margin: 0 30px;
 }
-div.navbar .left,
-div.navbar .right {
+div.navbar-container div.navbar .left,
+div.navbar-container div.navbar .right {
   display: flex;
   flex-direction: row;
 }
-div.navbar div.nav-links {
+div.navbar-container div.navbar div.nav-links {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
 }
-div.navbar div.nav-links a {
+div.navbar-container div.navbar div.nav-links a {
   padding: 20px;
   color: #a9a9a9;
   font: 1rem "Rubik";
 }
-div.navbar div.nav-links a.active {
+div.navbar-container div.navbar div.nav-links a.active {
   color: #ffffff;
   border-bottom: 4px solid #0ab798;
   margin-bottom: -2px;
 }
-div.navbar div.nav-links a:hover {
+div.navbar-container div.navbar div.nav-links a:hover {
   background-color: #121314;
 }
-div.navbar div.signin-signup {
+div.navbar-container div.navbar div.signin-signup {
   display: flex;
   align-items: center;
   margin-right: 10px;
 }
-div.navbar div.signin-signup a {
+div.navbar-container div.navbar div.signin-signup a {
   font: 1rem "Rubik";
   color: #ffffff;
   margin-right: 15px;
 }
-div.navbar div.signin-signup a:nth-last-child(1) {
+div.navbar-container div.navbar div.signin-signup a:nth-last-child(1) {
   padding: 5px 10px;
   border: 2px solid;
   border-radius: 10px;
   color: #0ab798;
 }
-div.navbar div.signin-signup a:hover {
+div.navbar-container div.navbar div.signin-signup a:hover {
   opacity: 0.9;
+}
+div.navbar-container div.navbar div.profile-pic {
+  width: 40px;
+  height: 40px;
+  margin: 0 30px;
+  border: solid #ffffff 1px;
+  cursor: pointer;
+}
+div.navbar-container div.navbar div.dropdown-menu {
+  background-color: #121314;
+  position: absolute;
+  width: 200px;
+  transform: translateX(-60%);
+  top: 58px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  z-index: 100;
+}
+div.navbar-container div.navbar div.dropdown-menu div {
+  width: 100%;
+  border-bottom: solid #6b7280 1px;
+}
+div.navbar-container div.navbar div.dropdown-menu div h4 {
+  margin: 7px;
+  text-align: center;
+}
+div.navbar-container div.navbar div.dropdown-menu a {
+  font: 1rem "Rubik";
+  padding: 15px 0;
+  margin: 0 15px;
+  border-bottom: solid #6b7280 1px;
+  color: #6b7280;
+}
+div.navbar-container div.navbar div.dropdown-menu a.active {
+  color: #ffffff;
+}
+div.navbar-container div.navbar div.dropdown-menu a.logout {
+  border-bottom: 0px;
+}
+div.navbar-container div.navbar div.dropdown-menu a:hover {
+  opacity: 0.7;
+  color: #ffffff;
+}
+div.navbar-container div.verification-warning {
+  background-color: #99091a;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+div.navbar-container div.verification-warning h4 {
+  color: #ffffff;
+  margin: 0;
+}
+div.navbar-container div.verification-warning h4 span {
+  font-weight: bold;
+}
+div.navbar-container div.verification-warning h4 span.resend {
+  text-decoration: underline;
+  cursor: pointer;
+}
+div.navbar-container div.verification-warning h4 span.resend:hover {
+  opacity: 0.8;
+}
+div.navbar-container div.verification-warning .close {
+  width: 25px;
+  fill: #ffffff;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  margin: 0 20px;
+  z-index: 1;
+}
+div.navbar-container div.verification-warning .close:hover {
+  opacity: 0.7;
 }
 
 div.profile-pic {
@@ -225,100 +418,240 @@ div.profile-pic {
   border-radius: 50%;
   background-color: #ffffff;
   margin: auto;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
 }
 
-div.link-drag-container {
+div.link-page {
+  margin: auto;
+  margin-top: 0;
+  width: 580px;
+}
+div.link-page div.link-drag-container {
   display: flex;
   justify-content: center;
   padding: 10px 0;
 }
-div.link-drag-container div.draggable {
+div.link-page div.link-drag-container div.draggable {
   width: 30px;
   background-color: #121314;
   display: flex;
   align-items: center;
   border-radius: 15px 0 0 15px;
 }
-div.link-drag-container div.draggable svg {
+div.link-page div.link-drag-container div.draggable svg {
   fill: #a9a9a9;
 }
-div.link-drag-container div.draggable .seperator {
+div.link-page div.link-drag-container div.draggable .seperator {
   height: 80%;
   width: 1px;
   border-right: 1px solid #a9a9a9;
   opacity: 0.25;
 }
-div.link-drag-container div.link-container {
-  padding-left: 10px;
+div.link-page div.link-drag-container div.link-container {
   background-color: #121314;
   width: 550px;
-  padding: 10px;
-  padding-left: 20px;
+  padding: 20px;
   border-radius: 0 15px 15px 0;
 }
-div.link-drag-container div.link-container div.top {
+div.link-page div.link-drag-container div.link-container div.top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-div.link-drag-container div.link-container div.top div.left {
+div.link-page div.link-drag-container div.link-container div.top div.left {
   display: flex;
   align-items: center;
 }
-div.link-drag-container div.link-container div.top div.left svg {
+div.link-page div.link-drag-container div.link-container div.top div.left svg {
   margin-left: 10px;
   width: 24px;
   fill: #a9a9a9;
   cursor: pointer;
 }
-div.link-drag-container div.link-container div.bottom {
+div.link-page div.link-drag-container div.link-container div.top div.right {
+  display: flex;
+}
+div.link-page div.link-drag-container div.link-container div.top div.right button.visibility-btn {
+  width: 60px;
+  height: 38px;
+  border-radius: 25px;
+  padding: 0;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.4s;
+}
+div.link-page div.link-drag-container div.link-container div.top div.right button.visibility-btn div.switch {
+  width: 42px;
+  height: 42px;
+  margin-top: -2px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+}
+div.link-page div.link-drag-container div.link-container div.top div.right button.visibility-btn.ON {
+  background-color: #0ab798;
+}
+div.link-page div.link-drag-container div.link-container div.top div.right button.visibility-btn.ON .switch {
+  transform: translateX(50%);
+}
+div.link-page div.link-drag-container div.link-container div.top div.right button.visibility-btn.OFF {
+  background-color: #a9a9a9;
+}
+div.link-page div.link-drag-container div.link-container div.bottom {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-div.link-drag-container div.link-container div.bottom div.left {
+div.link-page div.link-drag-container div.link-container div.bottom div.left {
   width: 85%;
 }
-div.link-drag-container div.link-container div.bottom div.left div.banner {
+div.link-page div.link-drag-container div.link-container div.bottom div.left div.banner {
   border-radius: 20px;
-  height: 125px;
+  height: 100px;
   background-color: #060708;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
 }
-div.link-drag-container div.link-container div.bottom div.right {
+div.link-page div.link-drag-container div.link-container div.bottom div.right {
   display: flex;
   align-items: flex-end;
 }
-div.link-drag-container div.link-container div.bottom div.right svg {
+div.link-page div.link-drag-container div.link-container div.bottom div.right svg {
   margin: 5px;
   width: 32px;
   stroke: #a9a9a9;
   cursor: pointer;
 }
-div.link-drag-container div.link-container h1 {
+div.link-page div.link-drag-container div.link-container h1 {
   font-weight: 600;
   text-align: start;
   margin: 0;
 }
-div.link-drag-container[isEditing=true] {
+div.link-page div.link-drag-container[isEditing=true] {
   padding-bottom: 0;
 }
-div.link-drag-container[isEditing=true] div.draggable {
+div.link-page div.link-drag-container[isEditing=true] div.draggable {
   border-bottom-left-radius: 0;
 }
-div.link-drag-container[isEditing=true] div.link-container {
+div.link-page div.link-drag-container[isEditing=true] div.link-container {
   border-bottom-right-radius: 0;
 }
-div.link-drag-container[isEditing=true] div.link-container div.bottom {
+div.link-page div.link-drag-container[isEditing=true] div.link-container div.bottom {
   display: none;
 }
-
-div.link-edit-container {
+div.link-page button.new-link {
+  background-color: transparent;
+  color: #ffffff;
+  border: solid 1px #ffffff;
+  border-radius: 15px;
+  font: 1.15rem "Roboto";
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+}
+div.link-page button.new-link:hover {
+  opacity: 0.7;
+}
+div.link-page button.new-link svg {
+  width: 20px;
+  margin-right: 5px;
+}
+div.link-page div.link-edit-container {
   display: flex;
   justify-content: center;
 }
-div.link-edit-container form {
+div.link-page div.link-edit-container form {
   width: 580px;
+}
+div.link-page div.link-edit-container form textarea {
+  min-height: 95px;
+}
+div.link-page div.link-edit-container form div.thumbnails-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+div.link-page div.link-edit-container form div.thumbnails-container div.thumbnail {
+  width: 87px;
+}
+div.link-page div.link-edit-container form div.thumbnails-container div.banner {
+  width: 415px;
+}
+div.link-page div.link-edit-container form div.thumbnails-container .thumbnail, div.link-page div.link-edit-container form div.thumbnails-container .banner {
+  cursor: pointer;
+  height: 87px;
+  border-radius: 10px;
+  background-color: #060708;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  transition: opacity 0.3s;
+}
+div.link-page div.link-edit-container form div.thumbnails-container .thumbnail:hover, div.link-page div.link-edit-container form div.thumbnails-container .banner:hover {
+  opacity: 0.7;
+}
+div.link-page div.link-edit-container form div.bottom {
+  display: flex;
+  margin-top: 15px;
+}
+div.link-page div.link-edit-container form div.bottom button {
+  color: #ffffff;
+  font: 1.15rem "Roboto";
+  font-weight: bold;
+}
+div.link-page div.link-edit-container form div.bottom div.left {
+  width: 35%;
+}
+div.link-page div.link-edit-container form div.bottom div.left button {
+  background-color: #99091a;
+  padding: 7px 15px;
+}
+div.link-page div.link-edit-container form div.bottom div.right {
+  width: 65%;
+}
+div.link-page div.link-edit-container form div.bottom div.right button {
+  float: right;
+}
+div.link-page div.link-edit-container form div.bottom div.right button.save {
+  background-color: #0ab798;
+  padding: 7px 40px;
+  margin-left: 8px;
+}
+div.link-page div.link-edit-container form div.bottom div.right button.save:disabled {
+  background-color: #3b3b3b;
+  color: #121314;
+  cursor: not-allowed;
+}
+div.link-page div.link-edit-container form div.bottom div.right button.discard {
+  box-sizing: border-box;
+  padding: 7px 20px;
+  background-color: transparent;
+  outline: solid 1px #ffffff;
+  outline-offset: -1px;
+}
+div.link-page div.new-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 150px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+  border: 2px dashed #a9a9a9;
+  cursor: pointer;
+}
+div.link-page div.new-link svg {
+  fill: #a9a9a9;
+  width: 50px;
 }
 
 div.overlay-background {
@@ -328,9 +661,13 @@ div.overlay-background {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100000;
 }
 div.overlay-background div.overlay {
   background-color: #121314;
+}
+div.overlay-background div.overlay.color-overlay {
+  padding: 20px;
 }
 
 div.upload-overlay {
@@ -399,11 +736,65 @@ div.upload-overlay div.options button.active::after {
 div.upload-overlay div.options button svg {
   width: 35px;
 }
+div.upload-overlay form.bottom {
+  margin: 20px;
+}
+div.upload-overlay form.bottom button {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  font: 1.15rem "Roboto";
+  color: #ffffff;
+  margin-top: 10px;
+  transition: opacity 0.3s;
+}
+div.upload-overlay form.bottom button:hover {
+  opacity: 0.7;
+}
 div.upload-overlay div.bottom {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 20px;
+}
+div.upload-overlay div.bottom section.collection-container {
+  width: 100%;
+  max-height: 40vh;
+  display: flex;
+  overflow: scroll;
+  flex-wrap: wrap;
+}
+div.upload-overlay div.bottom section.collection-container.no-scroll {
+  overflow: auto;
+  max-height: none;
+  min-height: 40vh;
+  justify-content: flex-end;
+}
+div.upload-overlay div.bottom section.collection-container div.choice-container {
+  width: 100%;
+  height: 100%;
+  display: block;
+  justify-content: center;
+  background-color: #060708;
+  margin-bottom: 10px;
+}
+div.upload-overlay div.bottom section.collection-container div.choice-container div.choice {
+  width: 100%;
+  height: 30vh;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+div.upload-overlay div.bottom section.collection-container button {
+  float: right;
+}
+div.upload-overlay div.bottom section.collection-container div.collection-item {
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  background-color: #060708;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
 }
 div.upload-overlay div.bottom section.dropzone-container {
   width: 100%;
@@ -482,6 +873,121 @@ div.upload-overlay div.bottom div.err-container h3 {
   padding: 0 10%;
 }
 
+.resizable-vertical {
+  width: 100vw !important;
+  position: sticky;
+  display: flex;
+  bottom: 0;
+  z-index: 10000;
+  background-color: #060708;
+}
+.resizable-vertical .handle-vertical {
+  width: 100%;
+  height: 3px;
+  background-color: #6b7280;
+  display: block;
+  position: absolute;
+  top: 0;
+  cursor: ns-resize;
+  transition: height 0.5s;
+}
+.resizable-vertical .handle-vertical:hover, .resizable-vertical .handle-vertical.dragging {
+  background-color: #ffffff;
+  height: 6px;
+}
+
+.resizable-horizontal {
+  position: relative;
+  z-index: 10000;
+  display: flex;
+}
+.resizable-horizontal .handle-horizontal {
+  width: 3px;
+  height: 100%;
+  background-color: #6b7280;
+  display: block;
+  position: absolute;
+  left: 0;
+  cursor: ew-resize;
+  transition: width 0.5s;
+}
+.resizable-horizontal .handle-horizontal:hover, .resizable-horizontal .handle-horizontal.dragging {
+  background-color: #ffffff;
+  width: 6px;
+}
+
+div.desktop-preview {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+}
+div.desktop-preview .desktop-wrapper {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+div.desktop-preview .desktop-wrapper .desktop {
+  aspect-ratio: 16/9;
+  height: 100%;
+}
+div.desktop-preview .desktop-wrapper .desktop svg {
+  width: 100%;
+  height: 100%;
+}
+
+div.mobile-preview {
+  width: 100%;
+  height: 100%;
+}
+div.mobile-preview .mobile-wrapper {
+  position: sticky;
+  margin: auto;
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+div.mobile-preview .mobile-wrapper .mobile {
+  aspect-ratio: 1/2;
+  width: 100%;
+  max-height: 80vh;
+  position: relative;
+}
+div.mobile-preview .mobile-wrapper .mobile svg {
+  width: 100%;
+  position: absolute;
+}
+div.mobile-preview .mobile-wrapper .mobile .screen {
+  position: absolute;
+  width: 90%;
+  height: 95%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.split {
+  display: flex;
+  align-items: stretch;
+}
+
+div.background {
+  min-height: 100vh;
+  background-repeat: no-repeat !important;
+  background-position: center, center !important;
+  background-size: cover !important;
+}
+div.background div.user-container {
+  padding-top: 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
 * {
   box-sizing: border-box;
 }

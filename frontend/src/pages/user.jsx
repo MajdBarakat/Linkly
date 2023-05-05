@@ -32,6 +32,21 @@ export default () => {
         return data
     };
 
+    const renderUserLinks = () => {
+        const { linkLayout, layoutId } = user.appearance.layout;
+        // const background = linkLayout
+        //come back to this when you integrate link layouts in appearance. :)
+        return (
+            <div className={`links-container${layoutId ? " layout-" + layoutId : ""}${linkLayout ? " link-layout-" + linkLayout : ""}`}>
+                {user.links.map((link) => (
+                    <a className="link" key={link.id} href={link.linkURL}>
+                        <h2 className="link-name">{link.linkName}</h2>
+                    </a>
+                ))}
+            </div>
+        )
+    }
+
     const renderUserContent = () => { 
         return (
             <div
@@ -40,15 +55,11 @@ export default () => {
             >
                 <div className="user-container">
                     <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
-                    <h2>@{user.username}</h2>
-                    <h3>{user.appearance.profile.name}</h3>
-                    <h3>{user.appearance.profile.title}</h3>
-                    <h3>{user.appearance.profile.bio}</h3>
-                    {user.links.map((link) => (
-                        <a key={link.id} href={link.linkURL}>
-                            <h1>{link.linkName}</h1>
-                        </a>
-                    ))}
+                    <h2 className="username">@{user.username}</h2>
+                    {/* <h3 className="name">{user.appearance.profile.name}</h3>
+                    <h3 className="title">{user.appearance.profile.title}</h3>
+                    <h3 className="bio">{user.appearance.profile.bio}</h3> */}
+                    {renderUserLinks()}
                 </div>
             </div>
         )
