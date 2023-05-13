@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import UploadDropZone from "./uploadDropZone";
 import { ArrowLeftIcon } from "@heroicons/react/solid"
 import { PhotographIcon, DesktopComputerIcon} from "@heroicons/react/outline";
 import http from "../services/httpService";
 import config from "../../config.json"
+import outsideClick from "./outsideClick";
 
 
 export default ({ onExit, dir, link }) => {
@@ -44,13 +45,19 @@ export default ({ onExit, dir, link }) => {
 		setChoice("");
 		onExit();
 	}
+
+	const wrapperRef = useRef(null);
+	outsideClick(wrapperRef, onExit)
+
+	if (typeof window != 'undefined' && window.document) {
+		document.body.style.overflow = 'hidden';
+	}
 	
 	return (
 		<div
 			className="full-screen overlay-background"
-			onClick={(e) => e.target === e.currentTarget && onExit()}
 		>
-			<div className="overlay upload-overlay">
+			<div className="overlay upload-overlay" ref={wrapperRef}>
 				<div className="top">
 					<button className="exit" onClick={() => onExit()}><ArrowLeftIcon/></button>
 					<h3>{`Choose ${dir.charAt(0).toUpperCase() + dir.slice(1)} Picture`}</h3>

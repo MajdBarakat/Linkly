@@ -1,12 +1,8 @@
 @use "../abstracts" as *;
 
 div.profile-pic {
-  width: 150px;
-  height: 150px;
   border-radius: 50%;
   background-color: $text-primary;
-  margin: auto;
-  margin-bottom: 10px;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center !important;

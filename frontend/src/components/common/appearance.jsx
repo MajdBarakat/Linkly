@@ -7,7 +7,6 @@ import Form from "./form";
 import Upload from "./upload";
 import Preview from "./preview";
 import ColorPicker from "./colorPicker";
-import { ChromePicker } from 'react-color';
 import OptionsRender from "./optionsRender";
 
 class Appearance extends Form {
@@ -167,9 +166,12 @@ class Appearance extends Form {
   renderColorSelect = (colorName, label, editing) => {
     const { data } = this.state;
     return (
-      <div onClick={() => this.setState({ pickingColor: colorName, colorName: label })}>
-        <div style={{color: data[colorName]}}>CLICK HERE</div>
-        <h3>{data[colorName]}</h3>
+      <div className="picker-container" onClick={ () => this.setState({ pickingColor: colorName, colorName: label }) }>
+        <div className="color-preview" style={{ backgroundColor: data[colorName] }}></div>
+        <div className="color-text">
+          <h2 className="color-name">{ label }</h2>
+          <h3 className="hex-code">{ data[colorName] }</h3>
+        </div>
         {editing && (
           <ColorPicker
             color={data[colorName]}
@@ -262,7 +264,10 @@ class Appearance extends Form {
               </form>
             </div>
             {isUploading && (
-              <Upload onExit={() => this.setState({ isUploading: false })} dir="profile"/>
+              <Upload onExit={() => {
+                this.setState({ isUploading: false })
+                document.body.style.overflow = 'unset';
+              }} dir="profile" />
             )}
             {/* {pickingColor && (
               // <ColorPicker
