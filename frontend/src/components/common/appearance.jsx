@@ -244,25 +244,30 @@ class Appearance extends Form {
               <div className="section-title start">
                 <h2>Background</h2>
               </div>
-              <form className="container appearance-grid backgrounds">
+              <form className="container appearance-grid backgrounds end">
                 <div className="options">
                   {config.backgrounds.map((name, index) => (
                     this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "backgroundId", value: index }], "background")
                   ))}
                 </div>
-                { this.renderColorSelect("bgdPrimaryColor", "Primary Color", pickingColor ? true : false) }
+                <div className="flex w100">
+                  {this.renderColorSelect("bgdPrimaryColor", "Primary Color", pickingColor === "bgdPrimaryColor" ? true : false)}
+                  {this.renderColorSelect("bgdSecondaryColor", "Secondary Color", pickingColor === "bgdSecondaryColor" ? true : false)}
+                </div>
               </form>
 
               {/* FONT */}
-              <div className="section-title">
+              {/* <div className="section-title">
                 <h2>Font</h2>
               </div>
               <form className="container appearance-grid fonts end">
                 {config.fonts.map((name, index) => (
                   this.renderSelectItem(name, index, data.backgroundId === index, [{ name: "fontId", value: index }])
                 ))}
-              </form>
+              </form> */}
+
             </div>
+            
             {isUploading && (
               <Upload onExit={() => {
                 this.setState({ isUploading: false })

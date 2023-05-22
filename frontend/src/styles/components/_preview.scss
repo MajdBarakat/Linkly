@@ -106,12 +106,15 @@ div.mobile-preview {
 
             .screen {
                 position: absolute;
-                // background-color: white;
                 width: 90%;
                 height: 95%;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%,-50%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
             }
         }
 

@@ -57,7 +57,7 @@ export default ({ viewType }) => {
                         }}>
                         <div className="mobile">
                             <div className="screen">
-                                
+                                <h1>PREVIEW <br/> COMING SOON</h1>
                             </div>
                             <PhonePreview />
                         </div>
