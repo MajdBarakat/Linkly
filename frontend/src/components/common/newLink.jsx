@@ -42,7 +42,7 @@ export default ({ onExit }) => {
 			className="full-screen overlay-background"
 			onClick={(e) => e.target === e.currentTarget && onExit()}
 		>
-			<div className="overlay upload-overlay">
+			<div className="modal upload-modal">
                 <div className="top">
 					<button className="exit" onClick={() => onExit()}><ArrowLeftIcon/></button>
 					<h3>Add a new Link</h3>

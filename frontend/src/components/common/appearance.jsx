@@ -8,6 +8,7 @@ import Upload from "./upload";
 import Preview from "./preview";
 import ColorPicker from "./colorPicker";
 import OptionsRender from "./optionsRender";
+import { CameraIcon } from "@heroicons/react/outline";
 
 class Appearance extends Form {
   state = {
@@ -205,7 +206,9 @@ class Appearance extends Form {
                     className="profile-pic"
                     onClick={() => this.setState({ isUploading: true })}
                     style={{background: `url(${this.state.data.profilePicURL})`}}
-                  ></div>
+                  >
+                    <div className="upload-hover"><CameraIcon /></div>
+                  </div>
                 </div>
                 <div className="right">
                   {this.renderInput("name", "Name")}

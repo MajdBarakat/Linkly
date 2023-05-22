@@ -57,7 +57,7 @@ export default ({ onExit, dir, link }) => {
 		<div
 			className="full-screen overlay-background"
 		>
-			<div className="overlay upload-overlay" ref={wrapperRef}>
+			<div className="modal upload-modal" ref={wrapperRef}>
 				<div className="top">
 					<button className="exit" onClick={() => onExit()}><ArrowLeftIcon/></button>
 					<h3>{`Choose ${dir.charAt(0).toUpperCase() + dir.slice(1)} Picture`}</h3>

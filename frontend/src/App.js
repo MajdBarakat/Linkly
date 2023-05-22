@@ -2,15 +2,17 @@ import "./styles/App.scss";
 import axios from "axios";
 import React from "react";
 import config from "./config.json";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { Login, Register, Profile, Links, Appearance, User } from "./pages"
 
 function App() {
   axios.defaults.headers.common["Access-Control-Allow-Origin"] = config.api;
+  const jwt = localStorage.getItem('jwt')
+
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={jwt ? <Navigate to="/admin/appearance" /> :<Login />} />
+      <Route path="/register" element={jwt ? <Navigate to="/admin/appearance" /> :<Register />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/admin/links" element={<Links />} />
       <Route path="/admin/appearance" element={<Appearance />} />
