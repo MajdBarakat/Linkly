@@ -9,7 +9,8 @@ div.overlay-background {
   justify-content: center;
   z-index: 100000;
 
-  div.overlay {
+  div.overlay,
+  div.modal {
     background-color: $secondary;
 
     &.color-overlay {

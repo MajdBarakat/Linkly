@@ -25,8 +25,19 @@ form.container {
       width: 80%;
       padding-bottom: 80%;
       aspect-ratio: 1/1 !important;
+      
+      .upload-hover {
+        display: none;
+      }
+      
+      &:hover {
+        .upload-hover {
+          display: block;
+        }
     }
-
+    
+    }
+    
     .left {
       width: 40%;
       padding-right: 15px;
@@ -185,6 +196,7 @@ div.register {
 
 div.profile {
   max-width: 600px;
+  margin-bottom: 20px;
 
   h2 {
     text-align: center;
@@ -230,4 +242,12 @@ div.picker-container {
     background-color: $text-input;
     border-radius: 10px;
   }
+}
+
+div.profile-pic {
+  width: 160px;
+  height: 160px;
+  margin: auto;
+  margin-bottom: 10px;
+  cursor: pointer;
 }

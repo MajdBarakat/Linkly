@@ -94,9 +94,14 @@ div.navbar-container {
       div {
         width: 100%;
         border-bottom: solid $border-secondary 1px;
+
+        a {
+          padding: 0 !important;
+          margin: 0 !important;
+        }
   
         h4 {
-          margin: 7px;
+          margin: 7px !important;
           text-align: center;
         }
       }
