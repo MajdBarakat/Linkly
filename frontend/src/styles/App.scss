@@ -31,6 +31,15 @@ div.overlay {
 
 div.flex {
   display: flex;
+
+  &.content-center{
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
 }
 
 div.w100 {

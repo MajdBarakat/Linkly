@@ -30,8 +30,8 @@ router.post("/", formatter, parser, async (req, res) => {
     username: req.body.username,
   });
 
-  if (email) return res.status(400).send("User already registered.");
   if (username) return res.status(400).send("Username is already taken.");
+  if (email) return res.status(400).send("User already registered.");
 
   user = new User(
     _.pick(req.body, [
@@ -61,7 +61,8 @@ router.post("/", formatter, parser, async (req, res) => {
 
   //header auth token - after registry
   const token = user.generateAuthToken();
-  res.header("x-auth-token", token).send(_.pick(user, ["_id", "username"]));
+  // res.header("x-auth-token", token).send(_.pick(user, ["_id", "username"]));
+  res.header("x-auth-token", token).send(token);
 
   //CHANGE POST PRODUCTION
   await sendConfirmationEmail(

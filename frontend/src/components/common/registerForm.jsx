@@ -35,7 +35,10 @@ class RegisterForm extends Form {
       .catch((err) => alert(err.response.data));
     if (!result) return;
 
-    console.log("Registered successfully!", result.data);
+    console.log("Registered successfully!");
+    //login user after registration
+    localStorage.setItem('jwt', result.data)
+    window.location.href= '/register-success'
   };
 
   render() {
@@ -51,16 +54,13 @@ class RegisterForm extends Form {
             "http://linkly.com/username"
           )}
           {this.renderInput("email", "Email address", "example@email.com")}
-          {this.renderInput(
-            "password",
-            "Password",
-            "",
+          {this.renderInput("password", "Password","",
             {
               text: "",
               label: "Need Help?",
               href: "",
             },
-            "password"
+            "password",
           )}
           {this.renderButton("Create Account", "full-width primary-btn")}
           <div className="under-text-container">
