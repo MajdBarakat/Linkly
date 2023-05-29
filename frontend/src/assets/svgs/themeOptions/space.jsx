@@ -1,9 +1,9 @@
 export default () => {
     return (
         <svg width="128" height="200" viewBox="0 0 128 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_998_2232)">
+        <g clipPath="url(#clip0_998_2232)">
         <rect width="128" height="200" rx="15" fill="black"/>
-        <g clip-path="url(#clip1_998_2232)">
+        <g clipPath="url(#clip1_998_2232)">
         <rect width="563" height="338" transform="translate(-187 -45)" fill="#0A0B16"/>
         <ellipse cx="24.4051" cy="14.7165" rx="0.185886" ry="0.197225" fill="white"/>
         <ellipse cx="52.2889" cy="14.7165" rx="0.185897" ry="0.197225" fill="white"/>

@@ -1,7 +1,7 @@
 export default () => {
     return ( 
         <svg width="128" height="200" viewBox="0 0 128 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_997_1185)">
+        <g clipPath="url(#clip0_997_1185)">
         <rect width="128" height="200" rx="15" fill="#FFAF65"/>
         <mask id="mask0_997_1185" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse" x="1" y="0" width="128" height="200">
         <rect x="1" width="128" height="200" rx="15" fill="#4D5059"/>

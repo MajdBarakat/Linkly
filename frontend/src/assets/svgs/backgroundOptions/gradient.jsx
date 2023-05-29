@@ -4,8 +4,8 @@ export default () => {
         <rect width="128" height="200" rx="15" fill="url(#paint0_linear_997_1700)"/>
         <defs>
         <linearGradient id="paint0_linear_997_1700" x1="64" y1="0" x2="64" y2="200" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#77797E"/>
-        <stop offset="1" stop-color="#4D5059"/>
+        <stop stopColor="#77797E"/>
+        <stop offset="1" stopColor="#4D5059"/>
         </linearGradient>
         </defs>
         </svg>
