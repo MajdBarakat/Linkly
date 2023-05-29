@@ -9,6 +9,7 @@ export default (ref, callback) => {
       }
       document.addEventListener("mousedown", handleClickOutside);
       return () => {
+        document.body.style.overflow = 'unset';
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [ref]);

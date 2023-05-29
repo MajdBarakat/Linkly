@@ -272,10 +272,7 @@ class Appearance extends Form {
             </div>
             
             {isUploading && (
-              <Upload onExit={() => {
-                this.setState({ isUploading: false })
-                document.body.style.overflow = 'unset';
-              }} dir="profile" />
+              <Upload onExit={() => this.setState({ isUploading: false })} dir="profile" />
             )}
             {/* {pickingColor && (
               // <ColorPicker

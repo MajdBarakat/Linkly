@@ -144,7 +144,10 @@ class Profile extends Form {
             </form>
           </div>
           {this.state.isUploading && (
-            <Upload onExit={() => this.setState({ isUploading: false })} dir="profile"/>
+            <Upload onExit={() => {
+              ;
+              this.setState({ isUploading: false })
+            }} dir="profile" />
           )}
         </React.Fragment>
       );

@@ -18,7 +18,10 @@ export default ({ onExit, dir, link }) => {
 	},[choice]);
 
 	const detectKeyDown = (e) => {
-		if (e.key === "Escape") onExit();
+		if (e.key === "Escape") {
+			document.body.style.overflow = 'unset';
+			onExit()
+		};
 	};
 	
 	const getCollection = async (dir) => {
@@ -43,6 +46,7 @@ export default ({ onExit, dir, link }) => {
 			.catch((err) => alert(err.response.data));
 		if (!result) return;
 		setChoice("");
+		document.body.style.overflow = 'unset';
 		onExit();
 	}
 
