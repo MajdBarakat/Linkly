@@ -5,4 +5,4 @@ import { default as Lemon } from "./lemon"
 import { default as Leaf } from "./leaf"
 import { default as Space } from "./space"
 
-export default [  <None/>, <Dark/>, <Light/>, <Lemon/>, <Leaf/>, <Space/> ];
+export default [  <None/>, <Lemon/>, <Leaf/>, <Space/> ];

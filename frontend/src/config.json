@@ -5,7 +5,7 @@
 
   "layouts": ["Default", "Blockie"],
 
-  "themes": ["None", "Dark", "Light", "Lemon", "Leaf", "Space"],
+  "themes": ["None", "Lemon", "Leaf", "Space"],
 
   "backgrounds": ["Solid", "Gradient"],
 

@@ -6,6 +6,7 @@ export default async (jwt) => {
     .get(config.api + "/users/me", { headers: { "x-auth-token": jwt } })
     .catch((err) => {
       alert(err.response.data)
+      localStorage.removeItem('jwt')
       window.location.href= '/login'
     });
 
