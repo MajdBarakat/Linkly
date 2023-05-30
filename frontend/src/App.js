@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import config from "./config.json";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { Login, Register, RegisterSuccess, Profile, Links, Appearance, User } from "./pages"
+import { Home, Login, Register, RegisterSuccess, Profile, Links, Appearance, User } from "./pages"
 
 function App() {
   axios.defaults.headers.common["Access-Control-Allow-Origin"] = config.api;
@@ -11,6 +11,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={jwt ? <Navigate to="/" /> :<Login />} />
       <Route path="/register" element={jwt ? <Navigate to="/" /> : <Register />} />
       <Route path="/register-success" element={<RegisterSuccess />} />
@@ -18,7 +19,6 @@ function App() {
       <Route path="/admin/links" element={<Links />} />
       <Route path="/admin/appearance" element={<Appearance />} />
       <Route path="/:username" element={<User />} />
-      <Route path="/" element={"insert home page here"} />
     </Routes>
   );
 }

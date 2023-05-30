@@ -16,11 +16,13 @@ export default () => {
         if(user && user.isVerified) window.location.href= '/profile'
       },[])
 
-    return (
-        <div className="full-screen flex column content-center">
-            <h1>Thank you for registering!</h1>
-            <h2>Please find the validation email sent to you at: <span>{user ? user.email : ""}</span></h2>
-            <Link to={"/admin/links"}>Go to Admin</Link>
-        </div>
+  return (
+      <div className="full-screen flex column content-center gradient">
+              <h1 className="hero-subtitle">Thank you for <br/> registering!</h1>
+              <h1 className="sub-hero medium">We have sent a verification email to:<br /> <span>{user ? user.email : ""}</span></h1>
+              <div className="button-container flex content-center">
+                <Link to={"/admin/links"} className="admin w100"><button className="w100">Go To Admin</button></Link>
+              </div>
+          </div>
     )
 }

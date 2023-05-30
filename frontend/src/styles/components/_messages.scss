@@ -1,0 +1,79 @@
+@use "../abstracts" as *;
+
+div.gradient {
+    background-image: url("../../assets/images/Gradient.png") ;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .button-container {
+        width: 500px;
+        margin-top: 50px;
+        gap: 10px;
+        
+        .admin {
+            padding: 0 50px;
+
+            button {
+                background: $accent;
+                color: $text-primary;
+            }
+        }
+
+        .sign-in {
+            background-color: $accent;
+            color: $text-primary;
+        }
+
+        .register {
+            background-color: $text-primary;
+            color: $accent;
+        }
+
+    }
+
+    button{
+        font: $label;
+        font-size: 1.5rem;
+        font-weight: 600;
+        transition: opacity ease-in-out .2s;
+    
+        &:hover {
+            opacity: .8;
+        }
+    }
+}
+
+h1.hero-title {
+    font: $title;
+    font-weight: 800;
+    font-size: 6rem;
+    margin-top: 0;
+}
+
+h1.hero-subtitle {
+    font: $title;
+    font-weight: 700;
+    font-size: 5rem;
+    margin-top: 0;
+    line-height: 100%;
+}
+
+h1.sub-hero {
+    font: $title;
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-top: 0;
+
+    &.medium{
+        margin-top: 20px;
+        font-weight: 500;
+        
+        span {
+            color: white;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+    }
+}
