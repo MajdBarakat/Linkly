@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { useDropzone } from 'react-dropzone';
 import { DesktopComputerIcon } from "@heroicons/react/outline";
 import http from '../services/httpService';
-import config from '../../config.json'
 import getUser from "../services/getUser";
 
 function UploadDropZone({ dir, link }) {

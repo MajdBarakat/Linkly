@@ -1,5 +1,4 @@
 import http from "./httpService";
-import config from "../../config.json";
 
 export default async (jwt) => {
   const result = await http

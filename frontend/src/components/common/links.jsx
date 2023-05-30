@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import http from "../services/httpService";
 import getUser from "../services/getUser";
-import config from "../../config.json";
 import Link from "./link";
 import LinkEdit from "./linkEdit";
 import Preview from "./preview";
