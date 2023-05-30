@@ -51,21 +51,21 @@ class Profile extends Form {
     profilePicShape: Joi.number().label("Profile Shape"),
     name: Joi.string().allow("").max(30).label("Name"),
     title: Joi.string().allow("").max(30).label("Title"),
-    // username: Joi.string().min(3).max(255).required().label("Username"),
-    // email: Joi.string().min(5).max(255).required().email().label("Email"),
+    username: Joi.string().min(3).max(255).required().label("Username"),
+    email: Joi.string().min(5).max(255).required().email().label("Email"),
     bio: Joi.string().allow("").max(80).label("Bio"),
     isAccountPrivate: Joi.boolean().label("Privacy"),
   };
 
   formatInput = () => {
     const data = { ...this.state.data };
-    // data.username = data.username.toLowerCase().trim();
-    // data.email = data.email.toLowerCase().trim();
+    data.username = data.username.toLowerCase().trim();
+    data.email = data.email.toLowerCase().trim();
     this.setState({ data: data });
   };
 
   doSubmit = async () => {
-    await this.formatInput();
+    // await this.formatInput();
     const { data } = this.state;
     const result = await http
       .put(
