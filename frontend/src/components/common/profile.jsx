@@ -69,7 +69,7 @@ class Profile extends Form {
     const { data } = this.state;
     const result = await http
       .put(
-        config.api + "/users/update",
+        process.env.REACT_APP_API + "/users/update",
         {
           appearance: {
             profile: {

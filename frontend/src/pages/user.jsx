@@ -13,7 +13,7 @@ export default () => {
     useEffect(() => {
 
         const getUser = async () => {
-            const result = await http.get(config.api + `/users/${params.username}`)
+            const result = await http.get(process.env.REACT_APP_API + `/users/${params.username}`)
                 .catch((err) => alert(err.response.data)) 
             
             if (!result) setUser(null)

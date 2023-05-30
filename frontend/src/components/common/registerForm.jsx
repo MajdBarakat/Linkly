@@ -31,7 +31,7 @@ class RegisterForm extends Form {
   doSubmit = async () => {
     await this.formatInput();
     const result = await http
-      .post(config.api + "/register", this.state.data)
+      .post(process.env.REACT_APP_API + "/register", this.state.data)
       .catch((err) => alert(err.response.data));
     if (!result) return;
 
