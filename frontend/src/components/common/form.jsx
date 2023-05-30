@@ -128,7 +128,7 @@ class Form extends Component {
     );
   }
 
-  renderInput(name, label, placeholder, help, type = "text") {
+  renderInput(name, label, placeholder, help, type = "text", disabled) {
     const { data, errors } = this.state;
     return (
       <Input
@@ -141,6 +141,7 @@ class Form extends Component {
         onChange={this.handleChange}
         onBlur={this.handleBlur}
         error={errors[name]}
+        disabled={disabled}
       />
     );
   }

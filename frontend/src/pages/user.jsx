@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import http from "../components/services/httpService";
 import config from "../config.json";
+import ErrorPage from "../components/common/404";
 
 export default () => {
     const [loaded, setLoaded] = useState(false);
@@ -67,7 +68,7 @@ export default () => {
 
     return (
         <React.Fragment>
-            {!loaded ? <h1>LOADING..</h1> : user === null && <h1>User Not Found</h1>}
+            {!loaded ? <h1>LOADING..</h1> : user === null && <ErrorPage />}
             {loaded && user && renderUserContent()}
     </React.Fragment>
   );

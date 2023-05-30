@@ -9,11 +9,12 @@ export default ({
   help,
   error,
   id,
-  className
+  className,
+  disabled
 }) => {
   return (
     <div id={id} className={"input-container" + (className ? className : "")}>
-      <label>{label}</label>
+      <label className={disabled ? "disabled" : ""}>{label}</label>
       <input
         className={error ? "error" : undefined}
         name={name}
@@ -22,6 +23,7 @@ export default ({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
+        disabled={disabled}
       ></input>
       {error || help ? (
         <div className="under-text-container">

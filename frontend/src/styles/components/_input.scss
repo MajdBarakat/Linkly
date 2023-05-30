@@ -4,6 +4,10 @@ label {
   margin-left: 5px;
   font: $label;
   color: $text-primary;
+
+  &.disabled {
+    color: $text-secondary;
+  }
 }
 
 .input-container {
@@ -31,6 +35,12 @@ label {
 
     &:focus {
       outline: 1px solid;
+    }
+
+    &:disabled {
+      background-color: $secondary;
+      border: 2px solid $text-input;
+      color: $text-input;
     }
   }
 
