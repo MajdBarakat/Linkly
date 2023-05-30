@@ -15,6 +15,5 @@
     "multer-s3": "^2.10.0",
     "nanoid": "^3.3.4",
     "nodemailer": "^6.7.5",
-    "vercel-build": "echo hello"
   }
 }
