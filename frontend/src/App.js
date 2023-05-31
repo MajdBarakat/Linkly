@@ -5,6 +5,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Home, Login, Register, RegisterSuccess, Profile, Links, Appearance, User } from "./pages"
 
 function App() {
+  console.log("env", process.env.REACT_APP_API)
   axios.defaults.headers.common["Access-Control-Allow-Origin"] = process.env.REACT_APP_API;
   const jwt = localStorage.getItem('jwt')
 
