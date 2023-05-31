@@ -3,6 +3,7 @@ import UploadDropZone from "./uploadDropZone";
 import { ArrowLeftIcon } from "@heroicons/react/solid"
 import { PhotographIcon, DesktopComputerIcon} from "@heroicons/react/outline";
 import http from "../services/httpService";
+import config from "../../config.json"
 import outsideClick from "./outsideClick";
 
 export default ({ onExit, dir, link }) => {
@@ -100,8 +101,8 @@ export default ({ onExit, dir, link }) => {
 								<div
 									key={index}
 									className="collection-item"
-									onClick={() => setChoice(process.env.REACT_APP_CDN + img)}
-									style={{"background": `url(${process.env.REACT_APP_CDN + img})`}}
+									onClick={() => setChoice(config.cdn + img)}
+									style={{"background": `url(${config.cdn + img})`}}
 								/>
 								)
 							}

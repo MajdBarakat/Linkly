@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/solid"
 import http from "../services/httpService";
+import config from "../../config.json"
 import Input from "./input";
 
 export default ({ onExit }) => {
@@ -89,8 +90,8 @@ export default ({ onExit }) => {
                             <div
                                 key={index}
                                 className="collection-item"
-                                onClick={() => setChoice(process.env.REACT_APP_CDN + img)}
-                                style={{"background": `url(${process.env.REACT_APP_CDN + img})`}}
+                                onClick={() => setChoice(config.cdn + img)}
+                                style={{"background": `url(${config.cdn + img})`}}
                             />
                             )
                         }

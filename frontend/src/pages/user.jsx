@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import http from "../components/services/httpService";
+import config from "../config.json";
 import ErrorPage from "../components/common/404";
 
 export default () => {
@@ -51,7 +52,7 @@ export default () => {
         return (
             <div
                 className={`background${theme ? " theme-" + theme : ""}`}
-                style={{background: `url(${process.env.REACT_APP_CDN}backgrounds/themes/${theme}.svg)`}}
+                style={{background: `url(${config.cdn}backgrounds/themes/${theme}.svg)`}}
             >
                 <div className="user-container">
                     <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>

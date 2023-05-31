@@ -2,6 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import http from "../services/httpService";
 import getUser from "../services/getUser";
+import config from "../../config.json";
 import Form from "./form";
 import Upload from "./upload";
 
