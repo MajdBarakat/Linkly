@@ -89,7 +89,7 @@ class Links extends Component{
   handleAdd = async () => {
     const result = await http
       .post(
-        process.env.REACT_APP_API + "/links/new",
+        config.api + "/links/new",
         { type: this.state.newLinkType },
         { headers: { "x-auth-token": this.jwt } }
       )
@@ -108,7 +108,7 @@ class Links extends Component{
     links.splice(index, 1);
     this.setState({ links });
     const result = await http
-      .delete(process.env.REACT_APP_API + `/links/delete/${link.id}`, {
+      .delete(config.api + `/links/delete/${link.id}`, {
         headers: { "x-auth-token": this.jwt, order: link.order },
       })
       .catch((err) => alert(err.response.data));
@@ -131,7 +131,7 @@ class Links extends Component{
     const copiedLink = { ...link };
     delete copiedLink.isEditing;
     const result = await http
-      .put(process.env.REACT_APP_API + "/links/edit", copiedLink, {
+      .put(config.api + "/links/edit", copiedLink, {
         headers: { "x-auth-token": this.jwt },
       })
       .catch((err) => alert(err.response.data));
@@ -191,7 +191,7 @@ class Links extends Component{
     const copiedLink = { ...link };
     delete copiedLink.isEditing;
     const result = await http
-      .put(process.env.REACT_APP_API + "/links/vis-toggle", copiedLink, {
+      .put(config.api + "/links/vis-toggle", copiedLink, {
         headers: { "x-auth-token": this.jwt },
       })
       .catch((err) => alert(err.response.data));
@@ -252,7 +252,7 @@ class Links extends Component{
 
     const result = await http
       .put(
-        process.env.REACT_APP_API + `/links/change-order`,
+        config.api + `/links/change-order`,
         {
           id: draggableId,
           up: isOrderUp,

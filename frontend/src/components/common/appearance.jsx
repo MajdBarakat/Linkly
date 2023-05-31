@@ -97,7 +97,7 @@ class Appearance extends Form {
     const { data } = this.state;
     const result = await http
       .put(
-        process.env.REACT_APP_API + "/users/update",
+        config.api + "/users/update",
         {
           appearance: {
             profile: {

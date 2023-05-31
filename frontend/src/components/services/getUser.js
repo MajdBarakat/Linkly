@@ -3,7 +3,7 @@ import config from "../../config.json";
 
 export default async (jwt) => {
   const result = await http
-    .get(process.env.REACT_APP_API + "/users/me", { headers: { "x-auth-token": jwt } })
+    .get(config.api + "/users/me", { headers: { "x-auth-token": jwt } })
     .catch((err) => {
       alert(err.response.data)
       localStorage.removeItem('jwt')

@@ -6,6 +6,7 @@ import http from "../services/httpService";
 import config from "../../config.json"
 import outsideClick from "./outsideClick";
 
+
 export default ({ onExit, dir, link }) => {
 	const [active, setActive] = useState("collection");
 	const [collection, setCollection] = useState([]);
@@ -26,7 +27,7 @@ export default ({ onExit, dir, link }) => {
 	const getCollection = async (dir) => {
 		const result = await http
 			.get(
-				process.env.REACT_APP_API + `/image/list?dir=${dir}/default`
+				config.api + `/image/list?dir=${dir}/default`
 		).catch(err => alert(err.response.data))
 		if (!result) return;
 		result.data.shift()
@@ -39,7 +40,7 @@ export default ({ onExit, dir, link }) => {
 		link[dir + "URL"] = choice + "?" + new Date().toISOString();
       
 		const result = await http
-			.put(process.env.REACT_APP_API + "/links/edit", link,
+			.put(config.api + "/links/edit", link,
 			{ headers: { "x-auth-token": jwt } }
 			)
 			.catch((err) => alert(err.response.data));
