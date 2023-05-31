@@ -147,7 +147,7 @@ class Profile extends Form {
             <Upload onExit={() => {
               ;
               this.setState({ isUploading: false })
-            }} dir="profile" />
+            }} dir="profile" hasOptions={false} initialActive="computer" />
           )}
         </React.Fragment>
       );

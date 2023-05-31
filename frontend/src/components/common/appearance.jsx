@@ -272,7 +272,7 @@ class Appearance extends Form {
             </div>
             
             {isUploading && (
-              <Upload onExit={() => this.setState({ isUploading: false })} dir="profile" />
+              <Upload onExit={() => this.setState({ isUploading: false })} dir="profile" hasOptions={false} initialActive="computer"/>
             )}
             {/* {pickingColor && (
               // <ColorPicker

@@ -6,8 +6,8 @@ import http from "../services/httpService";
 import config from "../../config.json"
 import outsideClick from "./outsideClick";
 
-export default ({ onExit, dir, link }) => {
-	const [active, setActive] = useState("collection");
+export default ({ onExit, dir, link, hasOptions , initialActive = "collection" }) => {
+	const [active, setActive] = useState(initialActive);
 	const [collection, setCollection] = useState([]);
 	const [choice, setChoice] = useState("");
 
@@ -65,26 +65,28 @@ export default ({ onExit, dir, link }) => {
 					<button className="exit" onClick={() => onExit()}><ArrowLeftIcon/></button>
 					<h3>{`Choose ${dir.charAt(0).toUpperCase() + dir.slice(1)} Picture`}</h3>
 				</div>
-				<div className="options">
-					<button
-						className={`collection${
-							active === "collection" ? " active" : ""
-						}`}
-						onClick={() => setActive("collection")}
-          >
-            <PhotographIcon/>
-						Browse collection
-					</button>
-					<button
-						className={`computer${
-							active === "computer" ? " active" : ""
-						}`}
-						onClick={() => setActive("computer")}
-          >
-            <DesktopComputerIcon/>
-						From computer
-					</button>
-				</div>
+				{hasOptions && 
+					<div className="options">
+						<button
+							className={`collection${
+								active === "collection" ? " active" : ""
+							}`}
+							onClick={() => setActive("collection")}
+			>
+				<PhotographIcon/>
+							Browse collection
+						</button>
+						<button
+							className={`computer${
+								active === "computer" ? " active" : ""
+							}`}
+							onClick={() => setActive("computer")}
+			>
+				<DesktopComputerIcon/>
+							From computer
+						</button>
+					</div>
+				}
 				<div className="bottom">
 					{active === "collection" && collection ?
 						<section className={"collection-container" + (choice ? " no-scroll" : "")}>
