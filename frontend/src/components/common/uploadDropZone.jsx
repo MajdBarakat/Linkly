@@ -5,7 +5,6 @@ import http from '../services/httpService';
 import config from '../../config.json'
 import getUser from "../services/getUser";
 
-
 function UploadDropZone({ dir, link }) {
   const [files, setFiles] = useState([]);
   const [dropped, setDropped] = useState(false);
@@ -42,7 +41,7 @@ function UploadDropZone({ dir, link }) {
     formData.append("file", file);
 
     const result = await http
-      .post(config.api + `/image/upload/${dir}`, formData)
+      .post(process.env.REACT_APP_API + `/image/upload/${dir}`, formData)
       .catch((err) => alert(err.response.data));
     if (!result) return
 
@@ -50,7 +49,7 @@ function UploadDropZone({ dir, link }) {
 
     if (dir === "profile") {
       const result2 = await http
-        .put(config.api + "/users/update",
+        .put(process.env.REACT_APP_API + "/users/update",
           {
             appearance: {
               profile: {
@@ -68,7 +67,7 @@ function UploadDropZone({ dir, link }) {
       link[dir + "URL"] = result.data + "?" + new Date().toISOString();
 
       const result3 = await http
-        .put(config.api + "/links/edit", link,
+        .put(process.env.REACT_APP_API + "/links/edit", link,
           { headers: { "x-auth-token": jwt } }
         )
         .catch((err) => alert(err.response.data));

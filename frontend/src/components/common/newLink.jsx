@@ -4,7 +4,6 @@ import http from "../services/httpService";
 import config from "../../config.json"
 import Input from "./input";
 
-
 export default ({ onExit }) => {
     const [ name, setName ] = useState("")
 
@@ -26,7 +25,7 @@ export default ({ onExit }) => {
         const jwt = localStorage.getItem('jwt');
         
 		const result = await http
-			.post(config.api + "/links/new", { name: name },
+			.post(process.env.REACT_APP_API + "/links/new", { name: name },
 			{ headers: { "x-auth-token": jwt } }
 			)
 			.catch((err) => alert(err.response.data));
