@@ -7,9 +7,10 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const parser = require("../middleware/parser");
 const router = express.Router();
+const cors = require("cors")
 
 //REGISTERING NEW USER
-router.post("/", formatter, parser, async (req, res) => {
+router.post("/", formatter, parser, cors(), async (req, res) => {
   const error = validate(req.body).error;
   if (error)
     return res
