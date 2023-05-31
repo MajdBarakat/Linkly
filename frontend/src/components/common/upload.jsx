@@ -101,8 +101,8 @@ export default ({ onExit, dir, link }) => {
 								<div
 									key={index}
 									className="collection-item"
-									onClick={() => setChoice(config.cdn + img)}
-									style={{"background": `url(${config.cdn + img})`}}
+									onClick={() => setChoice(process.env.REACT_APP_CDN + img)}
+									style={{"background": `url(${process.env.REACT_APP_CDN + img})`}}
 								/>
 								)
 							}

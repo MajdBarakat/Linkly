@@ -52,7 +52,7 @@ export default () => {
         return (
             <div
                 className={`background${theme ? " theme-" + theme : ""}`}
-                style={{background: `url(${config.cdn}backgrounds/themes/${theme}.svg)`}}
+                style={{background: `url(${process.env.REACT_APP_CDN}backgrounds/themes/${theme}.svg)`}}
             >
                 <div className="user-container">
                     <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
