@@ -1,5 +1,15 @@
 {
-  "defaultLinks": [],
+  "defaultLinks": [
+    {
+      "id": "default",
+      "order": 0,
+      "linkName": "Link Name Here",
+      "isVisible": true,
+      "linkURL": "https://your-link-here.com",
+      "bannerURL": "https://linkly-content.s3.eu-west-2.amazonaws.com/banner/default/default.png",
+      "thumbnailURL": "https://linkly-content.s3.eu-west-2.amazonaws.com/thumbnail/default/default.png"
+    }
+  ],
 
   "defaultAppearance": {
     "profile": {
@@ -19,14 +29,14 @@
     },
     "custom": {
       "colors": {
-        "bgdPrimary": "hex",
-        "bgdSecondary": "hex",
-        "font": "hex",
-        "links": "hex"
+        "bgdPrimary": "#0AB798",
+        "bgdSecondary": "#000000",
+        "font": "#FFFFFF",
+        "links": "#FFFFFF"
       },
       "background": {
         "isUsingBackgroundImage": false,
-        "backgroundImageURL": "https://putcdnlinkhere.com",
+        "backgroundImageURL": "",
         "backgroundId": 0
       },
       "fontId": 0
