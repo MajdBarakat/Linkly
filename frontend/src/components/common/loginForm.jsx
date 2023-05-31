@@ -35,8 +35,8 @@ class LoginFrom extends Form {
     };
 
     console.log("authenticated successfully!");
-
     localStorage.setItem('jwt', result.data)
+    window.location.href= '/admin/links'
   };
 
   render() {
