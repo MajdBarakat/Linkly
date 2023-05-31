@@ -12,6 +12,13 @@ const image = require("../routes/image");
 module.exports = function (app) {
   //middleware
   app.use(express.json());
+  
+  app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Methods", "*")
+    res.setHeader("Access-Control-Allow-Headers", "*")
+  })
+
   app.use(cors());
   app.use("/api/register", reg); //REGISTER NEW USER
   app.use("/api/auth", auth); //LOGGING IN EXISTING USER
