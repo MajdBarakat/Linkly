@@ -27,6 +27,7 @@ export default ({ active }) => {
   const doLogout = () => {
     localStorage.removeItem('jwt')
     setUser('');
+    window.location.href= '/'
   }
 
   const dropdown =
@@ -34,7 +35,7 @@ export default ({ active }) => {
       <div><Link to={`/${user.username}`}><h4>@{user.username}</h4></Link></div>
       <Link to="/profile" className={active === "Profile" ? "active" : ""}>Profile</Link>
       <Link to="/admin/settings" className={active === "Settings" ? "active" : ""}>Settings</Link>
-      <Link to="/login" className="logout" onClick={() => doLogout()}>Logout</Link>
+      <Link className="logout" onClick={() => doLogout()}>Logout</Link>
     </div>
   
   return (
