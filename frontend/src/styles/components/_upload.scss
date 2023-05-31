@@ -106,6 +106,7 @@ div.upload-modal {
             display: flex;
             overflow: scroll;
             flex-wrap: wrap;
+            justify-content: center;
 
             &.no-scroll {
                 overflow: auto;
