@@ -6,7 +6,7 @@ import http from "../services/httpService";
 import config from "../../config.json"
 import outsideClick from "./outsideClick";
 
-export default ({ onExit, dir, link, hasOptions , initialActive = "collection" }) => {
+export default ({ onExit, dir, link, hasOptions = "true" , initialActive = "collection" }) => {
 	const [active, setActive] = useState(initialActive);
 	const [collection, setCollection] = useState([]);
 	const [choice, setChoice] = useState("");

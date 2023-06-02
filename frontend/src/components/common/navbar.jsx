@@ -9,17 +9,19 @@ export default ({ active }) => {
   const navigation = [
     { label: "Links", to: "/admin/links"},
     { label: "Appearance", to: "/admin/appearance"},
-    { label: "Settings", to: "/admin/settings"},
+    // { label: "Settings", to: "/admin/settings"},
   ]
 
   
   const [user, setUser] = useState('')
+  const [fetched, setFetched] = useState(false)
   const jwt = localStorage.getItem('jwt')
   
   useEffect(() => {
     const assignUser = async () => {
       const user = await getUser(jwt) || ""
       setUser(user)
+      setFetched(true)
     }
     if (!user) assignUser();
   })
@@ -34,7 +36,7 @@ export default ({ active }) => {
     <div className="dropdown-menu">
       <div><Link to={`/${user.username}`}><h4>@{user.username}</h4></Link></div>
       <Link to="/profile" className={active === "Profile" ? "active" : ""}>Profile</Link>
-      <Link to="/admin/settings" className={active === "Settings" ? "active" : ""}>Settings</Link>
+      {/* <Link to="/admin/settings" className={active === "Settings" ? "active" : ""}>Settings</Link> */}
       <Link className="logout" onClick={() => doLogout()}>Logout</Link>
     </div>
   
@@ -52,7 +54,7 @@ export default ({ active }) => {
           </div>
         </div>
         <div className="right">
-          {user ? (
+          {user && 
             <React.Fragment>
               {menuVisibility && dropdown}
               <div
@@ -61,12 +63,15 @@ export default ({ active }) => {
                 onClick={() => setMenuVisibility(!menuVisibility)}
               ></div>
             </React.Fragment>
-          ) : (
+          }
+          {!user && fetched ?
             <div className="signin-signup">
               <Link to="/login">Sign in</Link>
               <Link to="/register">Sign up</Link>
             </div>
-          )}
+            :
+            ""
+          }
         </div>
       </div>
       {user && warningVisibility && !user.isVerified ? (
