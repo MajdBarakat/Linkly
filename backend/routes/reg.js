@@ -1,12 +1,20 @@
 const { User, validate, validatePassword } = require("../models/user");
 const env = require("dotenv").config();
-const nodemailer = require("nodemailer");
+const aws = require("aws-sdk")
 const formatter = require("../middleware/formatter");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const parser = require("../middleware/parser");
 const router = express.Router();
+
+aws.config.update({
+  credentials: {
+    secretAccessKey: process.env.accessSecret,
+    accessKeyId: process.env.accessKey,
+  },
+  region: process.env.region
+})
 
 //REGISTERING NEW USER
 router.post("/", formatter, parser, async (req, res) => {
@@ -66,32 +74,50 @@ router.post("/", formatter, parser, async (req, res) => {
 
   //CHANGE POST PRODUCTION
   await sendConfirmationEmail(
-    "",
-    "",
-    `http://localhost:3001/api/confirm/${user.verificationToken}`
+    req.body.email,
+    req.body.username,
+    `${process.env.API}/confirm/${user.verificationToken}`
   ).catch(res.send(error));
 
   //   res.send(_.pick(user, ["_id", "username", "email"]));
 });
 
 sendConfirmationEmail = async (email, username, link) => {
-  let transporter = nodemailer.createTransport({
-    host: "mx.mailslurp.com",
-    port: 2525,
-    auth: {
-      user: process.env.mailname,
-      pass: process.env.mailpassword,
+
+  const params = {
+    Destination: { /* required */
+      CcAddresses: [],
+      ToAddresses: [email]
     },
+    Message: { 
+      Body: { 
+        Html: {
+         Charset: "UTF-8",
+         Data: `<b>To confirm your email, click <a href="${link}">this link</a></b>`
+        },
+        Text: {
+         Charset: "UTF-8",
+         Data: `Welcome to Linkly ${username}!`
+        }
+       },
+       Subject: {
+        Charset: 'UTF-8',
+        Data: 'Linkly Email Verification'
+       }
+      },
+    Source: 'majdbarakat.dev@gmail.com',
+    ReplyToAddresses: [],
+  };
+
+  const sendPromise = new aws.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
+
+// Handle promise's fulfilled/rejected states
+  sendPromise.then((data) => {
+    console.log("Message sent: ",data.MessageId);
+  }).catch((err) => {
+    console.error(err, err.stack);
   });
 
-  let info = await transporter.sendMail({
-    from: '"Linkly" <noreply@linkly.com>', // sender address
-    to: "76bbca9f-391d-475e-8e33-3283a048b3db@mailslurp.com", // list of receivers
-    subject: "Hello", // Subject line
-    html: `<b>To confirm your email, click <a href="${link}">this link</a></b>`, // html body
-  });
-
-  console.log("Message sent: %s", info.messageId);
 };
 
 module.exports = router;
