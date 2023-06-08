@@ -8,6 +8,7 @@ export default () => {
     const [loaded, setLoaded] = useState(false);
     const [user, setUser] = useState("")
     const [theme, setTheme] = useState(null)
+    const [background, setBackground] = useState(null)
     const params = useParams()
 
     useEffect(() => {
@@ -18,8 +19,12 @@ export default () => {
             
             if (!result) setUser(null)
             else {
+                const { isUsingTheme } = result.data.appearance.theme
                 setUser(sortLinks(result.data));
-                setTheme(result.data.appearance.theme.isUsingTheme ? result.data.appearance.theme.themeId : null);
+                isUsingTheme ?
+                    setTheme(result.data.appearance.theme.themeId)
+                    :
+                    setBackground(result.data.appearance.custom.background.backgroundId)
             }
         }
 
@@ -48,11 +53,26 @@ export default () => {
         )
     }
 
+    const renderStyle = () => {
+        const date = new Date
+        const { bgdPrimary, bgdSecondary } = user.appearance.custom.colors
+        if (theme) {
+            return { background: `url(${process.env.REACT_APP_CDN}backgrounds/themes/${theme}.svg?${date.toISOString()})` }
+        } else {
+            switch (background) {
+                case 0:
+                    return { background: `${bgdPrimary}` }
+                case 1:
+                    return { background: `linear-gradient(${bgdPrimary}, ${bgdSecondary})` }
+            }
+        }
+    }
+
     const renderUserContent = () => { 
         return (
             <div
                 className={`background${theme ? " theme-" + theme : ""}`}
-                style={{background: `url(${process.env.REACT_APP_CDN}backgrounds/themes/${theme}.svg)`}}
+                style={renderStyle()}
             >
                 <div className="user-container">
                     <div className="profile-pic" style={{background: `url(${user.appearance.profile.profilePicURL})`}}></div>
