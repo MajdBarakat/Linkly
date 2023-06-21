@@ -96,7 +96,7 @@ div.link-page {
           div.banner {
             border-radius: 20px;
             height: 100px;
-            background-color: $primary;
+            background-color: $text-input !important;
             background-size: cover !important;
             background-repeat: no-repeat !important;
             background-position: center center !important;
@@ -191,7 +191,7 @@ div.link-page {
           cursor: pointer;
           height: 87px;
           border-radius: 10px;
-          background-color: $primary;
+          background-color: $text-input !important;
           background-size: cover !important;
           background-repeat: no-repeat !important;
           background-position: center center !important;

@@ -13,11 +13,14 @@ div.navbar-container {
     background-color: $primary;
   
     .logo {
-      width: 20px;
-      height: 20px;
       align-self: center;
-      background-color: red;
       margin: 0 30px;
+      cursor: pointer;
+
+      h1 {
+        margin: 0;
+        font-weight: 700;
+      }
     }
   
     .left,

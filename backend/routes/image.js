@@ -43,23 +43,35 @@ router.post("/upload/:dir", upload.single("file"), (req, res) => {
 });
 
 router.get("/list", async (req, res) => {
-  let result = await s3.listObjectsV2({ Bucket: bucket, Prefix: req.query ? req.query.dir : undefined }).promise();
-  let fileNames = result.Contents.map((i) => i.Key);
-  res.send(fileNames);
+  try {
+    let result = await s3.listObjectsV2({ Bucket: bucket, Prefix: req.query ? req.query.dir : undefined }).promise();
+    let fileNames = result.Contents.map((i) => i.Key);
+    return res.send(fileNames);
+  } catch (error) {
+    return res.status(400).send("Failed to connect to server, please try again later.")
+  }
 });
 
 router.get("/download/:filename", async (req, res) => {
-  const fileName = req.params.filename;
-  let result = await s3.getObject({ Bucket: bucket, Key: fileName }).promise();
-  res.send(result.Body);
+  try {
+    const fileName = req.params.filename;
+    let result = await s3.getObject({ Bucket: bucket, Key: fileName }).promise();
+    res.send(result.Body);
+  } catch (error) {
+    return res.status(400).send("Failed to connect to server, please try again later.")
+  }
 });
 
 router.delete("/delete/:filename", async (req, res) => {
-  const filepath = req.body.path + req.params.filename;
-  let result = await s3
-    .deleteObject({ Bucket: bucket, Key: filepath })
-    .promise();
-  res.send("file successfully deleted!" + result);
+  try {
+    const filepath = req.body.path + req.params.filename;
+    let result = await s3
+      .deleteObject({ Bucket: bucket, Key: filepath })
+      .promise();
+    res.send("file successfully deleted!" + result);
+  } catch (error) {
+    return res.status(400).send("Failed to connect to server, please try again later.")
+  }
 });
 
 module.exports = router;

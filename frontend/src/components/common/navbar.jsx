@@ -44,7 +44,7 @@ export default ({ active }) => {
     <div className="navbar-container">
       <div className="navbar">
         <div className="left">
-          <div className="logo"></div>{" "}
+          <div className="logo"><h1>LINKLY</h1></div>
           <div className="nav-links">
             {navigation.map((e) => (
              <Link key={e.label} className={e.label === active ? "active" : ""} to={e.to}>

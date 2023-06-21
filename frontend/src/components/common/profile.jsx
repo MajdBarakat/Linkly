@@ -5,6 +5,7 @@ import getUser from "../services/getUser";
 import config from "../../config.json";
 import Form from "./form";
 import Upload from "./upload";
+import { CameraIcon } from "@heroicons/react/outline";
 
 class Profile extends Form {
   state = {
@@ -109,7 +110,9 @@ class Profile extends Form {
               className="profile-pic"
               onClick={() => this.setState({ isUploading: true })}
               style={{background: `url(${this.state.data.profilePicURL})`}}
-            ></div>
+            >
+              <div className="upload-hover"><CameraIcon /></div>
+            </div>
             <h2>@{this.state.data.username}</h2>
             <form className="container profile" onSubmit={this.handleSubmit}>
               {this.renderInput("name", "Name")}

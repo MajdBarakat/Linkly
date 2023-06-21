@@ -25,6 +25,7 @@ class LoginFrom extends Form {
 
   doSubmit = async () => {
     await this.formatInput();
+    console.log(process.env.REACT_APP_API)
     const result = await http
       .post(process.env.REACT_APP_API + "/auth", this.state.data)
       .catch((err) => alert(err.response.data));

@@ -22,17 +22,20 @@ form.container {
     display: flex;
 
     .profile-pic {
-      width: 80%;
-      padding-bottom: 80%;
+      width: 175px;
+      height: 175px;
       aspect-ratio: 1/1 !important;
+      cursor: pointer;
       
       .upload-hover {
+        width: 100%;
+        height: 100%;
         display: none;
       }
       
       &:hover {
         .upload-hover {
-          display: block;
+          display: flex;
         }
     }
     
@@ -244,10 +247,25 @@ div.picker-container {
   }
 }
 
-div.profile-pic {
-  width: 160px;
-  height: 160px;
-  margin: auto;
-  margin-bottom: 10px;
-  cursor: pointer;
+.profile {
+  .profile-pic {
+    margin: auto;
+    margin-bottom: 10px;
+    width: 160px;
+    height: 160px;
+    cursor: pointer;
+
+
+    .upload-hover {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    
+    &:hover {
+      .upload-hover {
+        display: flex;
+      }
+    }
+  }
 }
