@@ -1,4 +1,4 @@
-# Linkly
+# Linkly -- https://linkly-chi.vercel.app/
 
 Linkly is an open-source links management application that allows you to create a simple, personalized landing page with links to all your important content. It provides a single link that houses multiple links, making it easier for your audience to explore your various online profiles, websites, and social media accounts.
 
